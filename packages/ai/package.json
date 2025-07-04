@@ -1,0 +1,17 @@
+{
+  "name": "@job-board/ai",
+  "version": "1.0.0",
+  "description": "AI utilities and OpenAI integration for job board platform",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "openai": "^4.53.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "@types/node": "^20.14.12"
+  }
+}

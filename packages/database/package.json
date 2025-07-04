@@ -1,0 +1,19 @@
+{
+  "name": "@job-board/database",
+  "version": "1.0.0",
+  "description": "Supabase database utilities and types",
+  "main": "index.ts",
+  "scripts": {
+    "generate": "supabase gen types typescript --project-id rzwumwbmjvbkaedrgmbo > types/database.types.ts",
+    "migrate": "echo 'Use Supabase dashboard or MCP for migrations'",
+    "seed": "tsx seed.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "@types/node": "^20.14.12",
+    "tsx": "^4.16.2"
+  }
+}

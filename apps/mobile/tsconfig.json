@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react-native",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["../../packages/ui/*"],
+      "@/shared/*": ["../../packages/shared/*"],
+      "@/database/*": ["../../packages/database/*"],
+      "@/ai/*": ["../../packages/ai/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}
