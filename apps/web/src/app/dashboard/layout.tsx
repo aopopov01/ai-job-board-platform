@@ -12,23 +12,21 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user, profile, initialized, loading } = useAuthStore()
+  const { user, profile } = useAuthStore()
   const router = useRouter()
   const signOut = useSignOut()
 
   useEffect(() => {
-    if (initialized && !loading) {
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      if (!profile) {
-        router.push('/auth/setup')
-        return
-      }
+    if (!user) {
+      router.push('/auth/login')
+      return
     }
-  }, [user, profile, initialized, loading, router])
+
+    if (!profile) {
+      router.push('/auth/setup')
+      return
+    }
+  }, [user, profile, router])
 
   const handleSignOut = async () => {
     try {
@@ -39,7 +37,7 @@ export default function DashboardLayout({
     }
   }
 
-  if (loading || !initialized) {
+  if (!user || !profile) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -48,10 +46,6 @@ export default function DashboardLayout({
         </div>
       </div>
     )
-  }
-
-  if (!user || !profile) {
-    return null
   }
 
   const isCompany = profile.user_type === 'company'
@@ -87,14 +81,14 @@ export default function DashboardLayout({
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 {navigation.map((item) => (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.href}
                     className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm inline-flex items-center"
                   >
                     <span className="mr-2">{item.icon}</span>
                     {item.name}
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -117,14 +111,14 @@ export default function DashboardLayout({
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
-              <Link
+              <a
                 key={item.name}
                 href={item.href}
                 className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
               >
                 <span className="mr-2">{item.icon}</span>
                 {item.name}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

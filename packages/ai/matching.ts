@@ -251,8 +251,8 @@ Only include jobs with a match score of 40 or higher. Sort by match score descen
           priority: score > 70 ? 'high' as const : score > 55 ? 'medium' as const : 'low' as const
         }
       })
-      .filter(Boolean)
-      .sort((a, b) => (b?.matchScore || 0) - (a?.matchScore || 0))
+      .filter((item): item is JobRecommendation => item !== null)
+      .sort((a, b) => b.matchScore - a.matchScore)
       .slice(0, request.limit || 5)
   }
 }

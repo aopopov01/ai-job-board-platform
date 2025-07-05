@@ -61,12 +61,12 @@ export default function JobDetailPage() {
         const { data, error } = await jobService.getById(params.id as string)
         if (error) throw error
         
-        setJob(data)
+        setJob(data as any)
 
         // Check if user has already applied
         if (user && profile?.user_type === 'individual') {
           const existingApplication = data?.applications?.find(
-            app => app.candidate_id === profile.id
+            app => (app as any).candidate_id === profile.id
           )
           setHasApplied(!!existingApplication)
         }
@@ -133,7 +133,7 @@ export default function JobDetailPage() {
     )
   }
 
-  const isJobOwner = profile?.user_type === 'company' && profile.id === job.company_profiles.user_profiles.id
+  const isJobOwner = profile?.user_type === 'company' && profile.id === (job as any)?.company_id
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,9 +145,9 @@ export default function JobDetailPage() {
               <Button variant="outline" size="sm">← Back to Jobs</Button>
             </Link>
             {isJobOwner && (
-              <Link href={`/dashboard/jobs/${job.id}/edit`}>
+              <a href={`/dashboard/jobs/${job.id}/edit`}>
                 <Button variant="outline" size="sm">Edit Job</Button>
-              </Link>
+              </a>
             )}
           </div>
 

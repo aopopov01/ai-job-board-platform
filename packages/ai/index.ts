@@ -3,8 +3,8 @@ export { getOpenAIClient } from './client'
 export type { OpenAI } from './client'
 
 // Export matching functionality
-export { matchCandidateToJob } from './matching'
-export type { JobMatchRequest, JobMatchResponse } from './matching'
+export { matchCandidateToJob, getJobRecommendations } from './matching'
+export type { JobMatchRequest, JobMatchResponse, JobRecommendationRequest, JobRecommendation } from './matching'
 
 // Export parsing functionality
 export { parseCVContent, generateJobRecommendations } from './parsing'

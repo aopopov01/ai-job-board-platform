@@ -29,7 +29,7 @@ interface Job {
 
 export default function JobsPage() {
   const { profile } = useAuthStore()
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobs, setJobs] = useState<any[]>([])
   const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([])
   const [loading, setLoading] = useState(true)
   const [searchLoading, setSearchLoading] = useState(false)

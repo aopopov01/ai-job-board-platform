@@ -57,10 +57,10 @@ export default function ProfilePage() {
         last_name: profile.last_name || '',
         phone: profile.phone || '',
         location: profile.location || '',
-        bio: profile.bio || '',
-        linkedin_url: profile.linkedin_url || '',
-        github_url: profile.github_url || '',
-        language_preference: profile.language_preference || 'en'
+        bio: '',
+        linkedin_url: '',
+        github_url: '',
+        language_preference: 'en'
       })
 
       // Load specific profile data
@@ -70,14 +70,14 @@ export default function ProfilePage() {
           if (data) {
             setSpecificProfile(data)
             setIndividualProfile({
-              job_search_status: data.job_search_status || 'not_looking',
+              job_search_status: (data.job_search_status as any) || 'not_looking',
               years_of_experience: data.years_of_experience || 0,
               current_job_title: data.current_job_title || '',
-              current_company: data.current_company || '',
+              current_company: '',
               salary_expectation_min: data.salary_expectation_min || 0,
               salary_expectation_max: data.salary_expectation_max || 0,
               salary_currency: data.salary_currency || 'EUR',
-              remote_preference: data.remote_preference || 'flexible'
+              remote_preference: (data.remote_preference as any) || 'flexible'
             })
           }
         } else if (profile.user_type === 'company') {
@@ -86,11 +86,11 @@ export default function ProfilePage() {
             setSpecificProfile(data)
             setCompanyProfile({
               company_name: data.company_name || '',
-              company_size: data.company_size || '1-10',
+              company_size: (data.company_size as any) || '1-10',
               industry: data.industry || '',
-              founded_year: data.founded_year || new Date().getFullYear(),
-              company_description: data.company_description || '',
-              company_website: data.company_website || ''
+              founded_year: new Date().getFullYear(),
+              company_description: data.description || '',
+              company_website: data.website || ''
             })
           }
         }
@@ -137,7 +137,11 @@ export default function ProfilePage() {
         } else {
           await companyProfileService.create({
             id: profile.id,
-            ...validatedCompanyData
+            company_name: validatedCompanyData.company_name,
+            industry: validatedCompanyData.industry || '',
+            company_size: validatedCompanyData.company_size || null,
+            website: validatedCompanyData.company_website || null,
+            description: validatedCompanyData.company_description || null
           })
         }
       }

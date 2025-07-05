@@ -64,9 +64,22 @@ export default function NewJobPage() {
       })
 
       const { data, error } = await jobService.create({
-        ...validatedData,
+        title: validatedData.title,
+        description: validatedData.description,
         company_id: profile.id,
-        status: 'active'
+        location: validatedData.location || null,
+        work_style: validatedData.work_style,
+        job_type: validatedData.job_type,
+        experience_level: validatedData.experience_level,
+        salary_min: validatedData.salary_min,
+        salary_max: validatedData.salary_max,
+        salary_currency: validatedData.salary_currency,
+        skills_required: [],
+        skills_nice_to_have: [],
+        benefits: [],
+        application_deadline: validatedData.application_deadline || null,
+        status: 'active',
+        category_id: null
       })
 
       if (error) throw error

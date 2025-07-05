@@ -37,7 +37,7 @@ export default function ApplicationsPage() {
   const searchParams = useSearchParams()
   const jobFilter = searchParams.get('job')
   
-  const [applications, setApplications] = useState<Application[]>([])
+  const [applications, setApplications] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedStatus, setSelectedStatus] = useState<string>('all')
@@ -47,7 +47,7 @@ export default function ApplicationsPage() {
       if (!profile) return
 
       try {
-        let data: Application[] = []
+        let data: any[] = []
 
         if (profile.user_type === 'company') {
           if (jobFilter) {

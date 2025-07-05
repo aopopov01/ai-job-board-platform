@@ -89,7 +89,12 @@ export default function SetupPage() {
 
       await userProfileService.create({
         id: user!.id,
-        ...validatedData
+        email: user!.email || '',
+        first_name: validatedData.first_name || '',
+        last_name: validatedData.last_name || '',
+        user_type: validatedData.user_type,
+        phone: validatedData.phone || null,
+        location: validatedData.location || null
       })
 
       setStep(2)
@@ -116,7 +121,11 @@ export default function SetupPage() {
         const validatedData = companyProfileSchema.parse(companyProfile)
         await companyProfileService.create({
           id: user!.id,
-          ...validatedData
+          company_name: validatedData.company_name,
+          industry: validatedData.industry || '',
+          company_size: validatedData.company_size || null,
+          website: validatedData.company_website || null,
+          description: validatedData.company_description || null
         })
       }
 

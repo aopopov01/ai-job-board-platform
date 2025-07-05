@@ -38,13 +38,13 @@ export default function RecommendationsPage() {
           user_profiles: profile
         }
 
-        const userSkills = userSkillsData.data?.map(us => us.skills.name) || []
+        const userSkills = userSkillsData.data?.map(us => (us as any).skills?.name || 'Unknown') || []
         const availableJobs = jobsData.data || []
 
         // Get AI-powered recommendations
         const aiRecommendations = await getJobRecommendations({
           candidateProfile,
-          availableJobs,
+          availableJobs: availableJobs as any,
           userSkills,
           limit: 10
         })

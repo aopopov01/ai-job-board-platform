@@ -25,7 +25,7 @@ interface Job {
 
 export default function JobsPage() {
   const { profile } = useAuthStore()
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -188,21 +188,21 @@ export default function JobsPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Link href={`/dashboard/jobs/${job.id}`}>
+                  <a href={`/dashboard/jobs/${job.id}`}>
                     <Button variant="outline" size="sm">
                       View Details
                     </Button>
-                  </Link>
-                  <Link href={`/dashboard/jobs/${job.id}/edit`}>
+                  </a>
+                  <a href={`/dashboard/jobs/${job.id}/edit`}>
                     <Button variant="outline" size="sm">
                       Edit
                     </Button>
-                  </Link>
-                  <Link href={`/dashboard/applications?job=${job.id}`}>
+                  </a>
+                  <a href={`/dashboard/applications?job=${job.id}`}>
                     <Button variant="outline" size="sm">
                       Applications ({job.applications?.length || 0})
                     </Button>
-                  </Link>
+                  </a>
                   <Button
                     variant="outline"
                     size="sm"
