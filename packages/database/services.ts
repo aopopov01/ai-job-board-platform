@@ -399,3 +399,129 @@ export const jobCategoryService = {
       .single()
   }
 }
+
+// CV Documents Operations
+export const cvDocumentService = {
+  async create(data: TablesInsert<'cv_documents'>) {
+    return await supabase
+      .from('cv_documents')
+      .insert(data)
+      .select()
+      .single()
+  },
+
+  async getById(id: string) {
+    return await supabase
+      .from('cv_documents')
+      .select('*')
+      .eq('id', id)
+      .single()
+  },
+
+  async update(id: string, data: TablesUpdate<'cv_documents'>) {
+    return await supabase
+      .from('cv_documents')
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single()
+  },
+
+  async delete(id: string) {
+    return await supabase
+      .from('cv_documents')
+      .delete()
+      .eq('id', id)
+  },
+
+  async getByUser(userId: string) {
+    return await supabase
+      .from('cv_documents')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+  },
+
+  async setAsPrimary(userId: string, cvId: string) {
+    // First, unset all other CVs as primary
+    await supabase
+      .from('cv_documents')
+      .update({ is_primary: false })
+      .eq('user_id', userId)
+
+    // Then set the selected CV as primary
+    return await supabase
+      .from('cv_documents')
+      .update({ is_primary: true })
+      .eq('id', cvId)
+      .eq('user_id', userId)
+  }
+}
+
+// Skills Operations
+export const skillService = {
+  async getAll() {
+    return await supabase
+      .from('skills')
+      .select('*')
+      .order('name')
+  },
+
+  async search(query: string) {
+    return await supabase
+      .from('skills')
+      .select('*')
+      .ilike('name', `%${query}%`)
+      .order('name')
+      .limit(10)
+  },
+
+  async create(data: TablesInsert<'skills'>) {
+    return await supabase
+      .from('skills')
+      .insert(data)
+      .select()
+      .single()
+  }
+}
+
+// User Skills Operations
+export const userSkillService = {
+  async create(data: TablesInsert<'user_skills'>) {
+    return await supabase
+      .from('user_skills')
+      .insert(data)
+      .select()
+      .single()
+  },
+
+  async getByUser(userId: string) {
+    return await supabase
+      .from('user_skills')
+      .select(`
+        *,
+        skills (
+          name,
+          category
+        )
+      `)
+      .eq('user_id', userId)
+      .order('proficiency_level', { ascending: false })
+  },
+
+  async update(id: string, data: TablesUpdate<'user_skills'>) {
+    return await supabase
+      .from('user_skills')
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single()
+  },
+
+  async delete(id: string) {
+    return await supabase
+      .from('user_skills')
+      .delete()
+      .eq('id', id)
+  }
+}

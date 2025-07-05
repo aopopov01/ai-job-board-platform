@@ -9,7 +9,10 @@ export {
   companyProfileService,
   jobService,
   applicationService,
-  jobCategoryService
+  jobCategoryService,
+  cvDocumentService,
+  skillService,
+  userSkillService
 } from './services'
 
 // Export type guards and utilities

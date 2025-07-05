@@ -65,7 +65,9 @@ export default function DashboardLayout({
     ] : []),
     ...(isIndividual ? [
       { name: 'Job Search', href: '/jobs', icon: '🔍' },
+      { name: 'Recommendations', href: '/dashboard/recommendations', icon: '🎯' },
       { name: 'My Applications', href: '/dashboard/applications', icon: '📋' },
+      { name: 'CV Management', href: '/dashboard/cv', icon: '📄' },
     ] : []),
     { name: 'Profile', href: '/dashboard/profile', icon: '👤' },
     { name: 'Settings', href: '/dashboard/settings', icon: '⚙️' },
