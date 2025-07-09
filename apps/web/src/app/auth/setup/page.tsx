@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { userProfileService, individualProfileService, companyProfileService } from '@job-board/database'
 import { userProfileSchema, individualProfileSchema, companyProfileSchema } from '@job-board/shared'
 

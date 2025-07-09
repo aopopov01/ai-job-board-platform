@@ -495,7 +495,7 @@ export class AISalaryNegotiator {
       recommendation: 'Based on total compensation and growth potential...',
       analysis: 'Detailed comparison analysis...',
       scores: analysis.reduce((acc, curr) => {
-        acc[curr.id] = curr.totalComp
+        acc[curr.id] = typeof curr.totalComp === 'number' ? curr.totalComp : 0
         return acc
       }, {} as { [key: string]: number })
     }

@@ -94,7 +94,7 @@ export default function SalaryNegotiationPage() {
     setGeneratingStrategy(true)
     try {
       const strategyData = await salaryNegotiator.generateNegotiationStrategy({
-        currentOffer,
+        currentOffer: currentOffer || undefined,
         targetSalary,
         marketData,
         candidateProfile: {
@@ -151,7 +151,7 @@ export default function SalaryNegotiationPage() {
         situation,
         stressLevel: 'medium',
         timePressure: false,
-        currentOffer,
+        currentOffer: currentOffer || undefined,
         targetSalary
       })
       

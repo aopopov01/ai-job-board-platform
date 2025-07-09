@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Disable MFA
-    await mfaService.disableMFA(userId)
+    await mfaService.disableMFA(userId, token)
 
     return NextResponse.json({
       success: true,

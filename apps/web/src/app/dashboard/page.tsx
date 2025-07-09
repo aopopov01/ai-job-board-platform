@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { jobService, applicationService } from '@job-board/database'

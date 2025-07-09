@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Regenerate backup codes
-    const newBackupCodes = await mfaService.regenerateBackupCodes(userId)
+    const newBackupCodes = await mfaService.regenerateBackupCodes(userId, token)
 
     return NextResponse.json({
       success: true,

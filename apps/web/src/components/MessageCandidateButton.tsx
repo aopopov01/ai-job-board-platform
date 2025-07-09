@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Button } from '@job-board/ui'
 import { messageService } from '@job-board/database'
 import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
@@ -42,9 +42,6 @@ export default function MessageCandidateButton({
         sender_id: user.id,
         recipient_id: candidateId,
         content: message.trim(),
-        conversation_id: `${[user.id, candidateId].sort().join('-')}`,
-        job_id: jobId || null,
-        application_id: applicationId || null,
         is_read: false
       })
 
@@ -185,7 +182,6 @@ export function QuickMessageButton({
         sender_id: user.id,
         recipient_id: candidateId,
         content: messageContent,
-        conversation_id: `${[user.id, candidateId].sort().join('-')}`,
         is_read: false
       })
 

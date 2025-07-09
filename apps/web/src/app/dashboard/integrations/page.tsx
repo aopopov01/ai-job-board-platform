@@ -2,17 +2,31 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { Badge } from '@job-board/ui'
 import { CheckCircle, XCircle, RefreshCw, ExternalLink, AlertCircle, Settings } from 'lucide-react'
-import type { IntegrationStatus } from '@job-board/integrations'
+type IntegrationStatus = 'connected' | 'disconnected' | 'error' | 'pending'
+
+interface Integration {
+  id: string
+  name: string
+  description: string
+  status: IntegrationStatus
+  icon: string
+  category: string
+  config?: Record<string, any>
+  last_sync?: string
+  records_count?: number
+  sync_status?: string
+  error_message?: string
+}
 
 export default function IntegrationsPage() {
   const { user } = useAuthStore()
   const searchParams = useSearchParams()
-  const [integrations, setIntegrations] = useState<IntegrationStatus[]>([])
+  const [integrations, setIntegrations] = useState<Integration[]>([])
   const [loading, setLoading] = useState(true)
   const [syncing, setSyncing] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -202,16 +216,16 @@ export default function IntegrationsPage() {
     }
   }
 
-  const getStatusBadge = (integration: IntegrationStatus) => {
-    if (!integration.connected) {
+  const getStatusBadge = (integration: Integration) => {
+    if (integration.status === 'disconnected') {
       return <Badge variant="secondary">Not Connected</Badge>
     }
 
-    if (integration.sync_status === 'syncing') {
+    if (integration.status === 'pending') {
       return <Badge variant="outline" className="text-blue-600">Syncing...</Badge>
     }
 
-    if (integration.sync_status === 'failed') {
+    if (integration.status === 'error') {
       return <Badge variant="destructive">Sync Failed</Badge>
     }
 
@@ -257,15 +271,15 @@ export default function IntegrationsPage() {
       {/* Integration Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {integrations.map((integration) => (
-          <Card key={integration.type} className="relative">
+          <Card key={integration.id} className="relative">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  {getIntegrationIcon(integration.type)}
+                  {getIntegrationIcon(integration.category)}
                   <div>
-                    <CardTitle className="text-lg">{getIntegrationTitle(integration.type)}</CardTitle>
+                    <CardTitle className="text-lg">{integration.name}</CardTitle>
                     <CardDescription className="text-sm">
-                      {getIntegrationDescription(integration.type)}
+                      {integration.description}
                     </CardDescription>
                   </div>
                 </div>
@@ -274,7 +288,7 @@ export default function IntegrationsPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {integration.connected && (
+                {integration.status === 'connected' && (
                   <div className="text-sm text-gray-600 space-y-1">
                     {integration.last_sync && (
                       <div>
@@ -290,20 +304,20 @@ export default function IntegrationsPage() {
                 )}
 
                 <div className="flex space-x-2">
-                  {integration.connected ? (
+                  {integration.status === 'connected' ? (
                     <>
                       <Button
-                        onClick={() => handleSync(integration.type)}
-                        disabled={syncing === integration.type}
+                        onClick={() => handleSync(integration.id)}
+                        disabled={syncing === integration.id}
                         variant="outline"
                         size="sm"
                         className="flex items-center space-x-1"
                       >
-                        <RefreshCw className={`h-4 w-4 ${syncing === integration.type ? 'animate-spin' : ''}`} />
+                        <RefreshCw className={`h-4 w-4 ${syncing === integration.id ? 'animate-spin' : ''}`} />
                         <span>Sync</span>
                       </Button>
                       <Button
-                        onClick={() => handleDisconnect(integration.type)}
+                        onClick={() => handleDisconnect(integration.id)}
                         variant="destructive"
                         size="sm"
                       >
@@ -312,7 +326,7 @@ export default function IntegrationsPage() {
                     </>
                   ) : (
                     <Button
-                      onClick={() => handleConnect(integration.type)}
+                      onClick={() => handleConnect(integration.id)}
                       className="flex items-center space-x-1"
                       size="sm"
                     >

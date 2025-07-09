@@ -23,9 +23,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the token and enable MFA
-    const result = await mfaService.verifyAndEnableMFA(userId, token)
+    const success = await mfaService.verifyAndEnableMFA(userId, token)
 
-    if (result.success) {
+    if (success) {
       return NextResponse.json({
         success: true,
         message: 'MFA has been successfully enabled'

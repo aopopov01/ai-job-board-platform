@@ -140,7 +140,7 @@ export class EnhancedSessionManager {
       
       return session
     } catch (error) {
-      logger.error('Failed to create enhanced session', error, { userId })
+      logger.error('Failed to create enhanced session', error instanceof Error ? error : new Error(String(error)), { userId })
       throw error
     }
   }
@@ -271,7 +271,7 @@ export class EnhancedSessionManager {
         riskScore
       }
     } catch (error) {
-      logger.error('Failed to validate session', error, { sessionId })
+      logger.error('Failed to validate session', error instanceof Error ? error : new Error(String(error)), { sessionId })
       return {
         isValid: false,
         requiresReauth: true,
@@ -317,7 +317,7 @@ export class EnhancedSessionManager {
         timestamp: now
       })
     } catch (error) {
-      logger.error('Failed to update session activity', error, {
+      logger.error('Failed to update session activity', error instanceof Error ? error : new Error(String(error)), {
         sessionId: session.sessionId
       })
     }
@@ -351,7 +351,7 @@ export class EnhancedSessionManager {
       
       logger.info('Session invalidated', { sessionId })
     } catch (error) {
-      logger.error('Failed to invalidate session', error, { sessionId })
+      logger.error('Failed to invalidate session', error instanceof Error ? error : new Error(String(error)), { sessionId })
     }
   }
   
@@ -365,7 +365,7 @@ export class EnhancedSessionManager {
       
       logger.info('All user sessions invalidated', { userId })
     } catch (error) {
-      logger.error('Failed to invalidate all user sessions', error, { userId })
+      logger.error('Failed to invalidate all user sessions', error instanceof Error ? error : new Error(String(error)), { userId })
     }
   }
   
@@ -383,7 +383,7 @@ export class EnhancedSessionManager {
       
       return sessions?.map(this.mapDatabaseToSession) || []
     } catch (error) {
-      logger.error('Failed to get user active sessions', error, { userId })
+      logger.error('Failed to get user active sessions', error instanceof Error ? error : new Error(String(error)), { userId })
       return []
     }
   }
@@ -421,7 +421,7 @@ export class EnhancedSessionManager {
         logger.info('Cleaned up expired sessions', { count: expiredSessions.length })
       }
     } catch (error) {
-      logger.error('Failed to cleanup expired sessions', error)
+      logger.error('Failed to cleanup expired sessions', error instanceof Error ? error : new Error(String(error)))
     }
   }
   
@@ -455,7 +455,7 @@ export class EnhancedSessionManager {
         timezone: 'America/Los_Angeles'
       }
     } catch (error) {
-      logger.error('Failed to get location data', error, { ipAddress })
+      logger.error('Failed to get location data', error instanceof Error ? error : new Error(String(error)), { ipAddress })
       return null
     }
   }
@@ -496,7 +496,7 @@ export class EnhancedSessionManager {
       
       return suspiciousEvents >= this.suspiciousActivityThreshold
     } catch (error) {
-      logger.error('Failed to check suspicious activity', error, { userId })
+      logger.error('Failed to check suspicious activity', error instanceof Error ? error : new Error(String(error)), { userId })
       return false
     }
   }
@@ -522,7 +522,7 @@ export class EnhancedSessionManager {
         await this.invalidateSession(oldestSession.session_id)
       }
     } catch (error) {
-      logger.error('Failed to invalidate oldest session', error, { userId })
+      logger.error('Failed to invalidate oldest session', error instanceof Error ? error : new Error(String(error)), { userId })
     }
   }
   
@@ -563,7 +563,7 @@ export class EnhancedSessionManager {
         created_at: event.timestamp
       })
     } catch (error) {
-      logger.error('Failed to log security event', error, { event })
+      logger.error('Failed to log security event', error instanceof Error ? error : new Error(String(error)), { event })
     }
   }
   
@@ -613,7 +613,7 @@ export class EnhancedSessionManager {
         securityFlags
       }
     } catch (error) {
-      logger.error('Failed to get session analytics', error, { userId })
+      logger.error('Failed to get session analytics', error instanceof Error ? error : new Error(String(error)), { userId })
       return {
         totalSessions: 0,
         activeSessions: 0,

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { subscriptionPlans } from '@job-board/shared'
+import { getSubscriptionPlan } from '@job-board/shared'
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
     }
 
-    const currentPlan = subscriptionPlans.find(plan => plan.id === profile.subscription_plan)
+    const currentPlan = getSubscriptionPlan(profile.subscription_plan)
     if (!currentPlan) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 })
     }

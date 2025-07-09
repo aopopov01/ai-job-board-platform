@@ -2,6 +2,13 @@
 export * from './utils/validation'
 export * from './utils/helpers'
 
+// Export configurations
+export type { SubscriptionPlan } from './config/subscription-plans'
+export { subscriptionPlans, getSubscriptionPlan, getSubscriptionPlansByUserType } from './config/subscription-plans'
+
+// Export services
+export * from './src/services/paymentService'
+
 // Export constants
 export const APP_NAME = 'Job Board Platform'
 export const APP_DESCRIPTION = 'AI-powered job board with intelligent matching'

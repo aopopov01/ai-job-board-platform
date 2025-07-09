@@ -1,6 +1,8 @@
-import { beforeAll, afterAll, afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
+import { beforeAll, afterAll, afterEach, vi } from 'vitest'
+import { cleanup, render } from '@testing-library/react'
 import { createClient } from '@supabase/supabase-js'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import React from 'react'
 import { server } from './mocks/server'
 
 // Setup test environment
@@ -153,15 +155,17 @@ export const setupTestDatabase = async () => {
 // Render utilities with providers
 export const renderWithProviders = (ui: React.ReactElement, options = {}) => {
   const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <QueryClientProvider client={new QueryClient({
-        defaultOptions: {
-          queries: { retry: false },
-          mutations: { retry: false }
-        }
-      })}>
-        {children}
-      </QueryClientProvider>
+    return React.createElement(
+      QueryClientProvider,
+      {
+        client: new QueryClient({
+          defaultOptions: {
+            queries: { retry: false },
+            mutations: { retry: false }
+          }
+        })
+      },
+      children
     )
   }
 
@@ -188,10 +192,15 @@ global.fetch = vi.fn()
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
+  root = null
+  rootMargin = '0px'
+  thresholds = [0]
+  
   constructor() {}
   disconnect() {}
   observe() {}
   unobserve() {}
+  takeRecords() { return [] }
 }
 
 // Mock ResizeObserver
@@ -216,13 +225,23 @@ global.matchMedia = vi.fn().mockImplementation((query) => ({
 
 // Mock window.location
 delete (window as any).location
-window.location = {
-  ...window.location,
-  assign: vi.fn(),
-  replace: vi.fn(),
-  reload: vi.fn(),
-  href: 'http://localhost:3000'
-}
+Object.defineProperty(window, 'location', {
+  value: {
+    href: 'http://localhost:3000',
+    origin: 'http://localhost:3000',
+    protocol: 'http:',
+    host: 'localhost:3000',
+    hostname: 'localhost',
+    port: '3000',
+    pathname: '/',
+    search: '',
+    hash: '',
+    assign: vi.fn(),
+    replace: vi.fn(),
+    reload: vi.fn()
+  },
+  writable: true,
+})
 
 // Mock next/router
 vi.mock('next/router', () => ({
@@ -281,6 +300,11 @@ vi.mock('@supabase/auth-helpers-nextjs', () => ({
 // Mock Stripe
 vi.mock('stripe', () => ({
   default: class MockStripe {
+    checkout: any
+    billingPortal: any
+    subscriptions: any
+    webhooks: any
+    
     constructor() {
       this.checkout = {
         sessions: {
@@ -313,6 +337,8 @@ vi.mock('stripe', () => ({
 // Mock OpenAI
 vi.mock('openai', () => ({
   default: class MockOpenAI {
+    chat: any
+    
     constructor() {
       this.chat = {
         completions: {

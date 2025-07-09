@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
@@ -103,12 +103,17 @@ export default function MessagesPage() {
     loadConversations()
 
     // Subscribe to new messages
-    const subscription = messageService.subscribeToMessages(user.id, (payload) => {
+    let subscription: any = null
+    messageService.subscribeToMessages(user.id, (payload) => {
       loadConversations() // Refresh conversations when new message arrives
+    }).then(sub => {
+      subscription = sub
     })
 
     return () => {
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
     }
   }, [user])
 
@@ -119,7 +124,11 @@ export default function MessagesPage() {
       const { data, error } = await messageService.getConversation(user.id, otherUserId)
       if (error) throw error
 
-      setMessages(data || [])
+      setMessages((data || []).map((msg: any) => ({
+        ...msg,
+        sender: msg.sender || { first_name: 'Unknown', last_name: 'User' },
+        recipient: msg.recipient || { first_name: 'Unknown', last_name: 'User' }
+      })))
       
       // Mark messages as read
       await messageService.markConversationAsRead(user.id, otherUserId)
@@ -146,13 +155,16 @@ export default function MessagesPage() {
         sender_id: user.id,
         recipient_id: selectedConversation,
         content: newMessage.trim(),
-        conversation_id: `${[user.id, selectedConversation].sort().join('-')}`,
         is_read: false
       })
 
       if (error) throw error
 
-      setMessages(prev => [...prev, data])
+      setMessages(prev => [...prev, {
+        ...(data as any),
+        sender: (data as any).sender || { first_name: 'Unknown', last_name: 'User' },
+        recipient: (data as any).recipient || { first_name: 'Unknown', last_name: 'User' }
+      }])
       setNewMessage('')
     } catch (error: any) {
       setError(error.message || 'Failed to send message')

@@ -1,5 +1,4 @@
 import { loadStripe } from '@stripe/stripe-js'
-import { useState } from 'react'
 
 // Environment validation
 const validateEnvironment = () => {
@@ -338,50 +337,5 @@ export class PaymentService {
 
 export const paymentService = new PaymentService()
 
-// Hook for subscription management
-export const useSubscription = () => {
-  const [subscription, setSubscription] = useState<Subscription | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const loadSubscription = async () => {
-    try {
-      setLoading(true)
-      const sub = await paymentService.getCurrentSubscription()
-      setSubscription(sub)
-    } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const cancelSubscription = async () => {
-    try {
-      await paymentService.cancelSubscription()
-      await loadSubscription() // Refresh subscription data
-    } catch (err: any) {
-      setError(err.message)
-      throw err
-    }
-  }
-
-  const openPortal = async () => {
-    try {
-      const { url } = await paymentService.createPortalSession()
-      window.location.href = url
-    } catch (err: any) {
-      setError(err.message)
-      throw err
-    }
-  }
-
-  return {
-    subscription,
-    loading,
-    error,
-    loadSubscription,
-    cancelSubscription,
-    openPortal
-  }
-}
+// Payment service is now server-side only
+// Client-side hooks should be created separately in the client package

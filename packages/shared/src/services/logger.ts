@@ -389,7 +389,7 @@ export function withLogging(handler: (req: any, res: any) => Promise<any>) {
     } catch (error) {
       const responseTime = Date.now() - startTime
       
-      logger.error('Request handler error', error, {
+      logger.error('Request handler error', error instanceof Error ? error : new Error(String(error)), {
         endpoint: req.url,
         method: req.method,
         response_time: responseTime

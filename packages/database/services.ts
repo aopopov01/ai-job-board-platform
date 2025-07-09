@@ -513,7 +513,9 @@ export const applicationService = {
     }
     
     applications?.forEach(app => {
-      stats.by_status[app.status] = (stats.by_status[app.status] || 0) + 1
+      if (app.status) {
+        stats.by_status[app.status] = (stats.by_status[app.status] || 0) + 1
+      }
     })
     
     return stats

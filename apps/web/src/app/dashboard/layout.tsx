@@ -3,9 +3,9 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Button } from '@job-board/ui'
-import { useSignOut } from '@job-board/shared'
+import { useSignOut } from '@job-board/shared/client'
 
 export default function DashboardLayout({
   children,

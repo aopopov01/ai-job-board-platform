@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
-import { useSignIn } from '@job-board/shared'
+import { useSignIn } from '@job-board/shared/client'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')

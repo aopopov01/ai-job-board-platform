@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { jobService, individualProfileService, userSkillService } from '@job-board/database'
@@ -74,7 +74,13 @@ export default function AdvancedMatchingPage() {
         // Load company jobs
         const { data: jobsData, error: jobsError } = await jobService.getByCompany(profile.id)
         if (jobsError) throw jobsError
-        setJobs(jobsData || [])
+        setJobs((jobsData || []).map(job => ({
+          ...job,
+          requirements: (job as any).requirements || '',
+          company_culture: (job as any).company_culture || '',
+          team_size: (job as any).team_size || 5,
+          growth_opportunities: (job as any).growth_opportunities || ''
+        })))
 
         // Load active candidates
         const { data: candidatesData, error: candidatesError } = await individualProfileService.getByJobSearchStatus('actively_looking')
@@ -151,9 +157,9 @@ export default function AdvancedMatchingPage() {
           growth_opportunities: selectedJobData.growth_opportunities || 'Excellent growth potential'
         },
         contextualFactors: {
-          company_size: profile.company_size || 'mid-size',
-          industry: profile.industry || 'Technology',
-          company_age: new Date().getFullYear() - (profile.founded_year || 2020),
+          company_size: (profile as any)?.company_size || 'mid-size',
+          industry: (profile as any)?.industry || 'Technology',
+          company_age: new Date().getFullYear() - ((profile as any)?.founded_year || 2020),
           market_position: 'Growing',
           recent_news: []
         },

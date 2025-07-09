@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { jobService, individualProfileService, userSkillService } from '@job-board/database'

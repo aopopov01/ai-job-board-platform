@@ -195,6 +195,15 @@ export interface VisualPreferences {
   graphicsStyle: 'modern' | 'classic' | 'minimalist' | 'bold'
 }
 
+export interface InteractiveElement {
+  id: string
+  type: 'hotspot' | 'button' | 'information' | 'navigation' | 'quiz'
+  position: { x: number; y: number; z: number }
+  content: string
+  action: string
+  metadata: Record<string, any>
+}
+
 export interface VROfficeExperience {
   id: string
   companyId: string

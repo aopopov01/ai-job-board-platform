@@ -266,10 +266,8 @@ export class GitHubIntegration {
   // Import GitHub profile to job board
   async importProfile(userId: string, accessToken: string): Promise<void> {
     try {
-      const [profile, contributions] = await Promise.all([
-        this.getProfile(accessToken),
-        this.analyzeContributions(accessToken, profile.login)
-      ])
+      const profile = await this.getProfile(accessToken)
+      const contributions = await this.analyzeContributions(accessToken, profile.login)
 
       // Update user profile
       await supabase

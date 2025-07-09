@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { messageService } from '@job-board/database'
 import { Card, CardContent } from '@job-board/ui'
 import { Button } from '@job-board/ui'
@@ -42,7 +42,11 @@ export default function MessageNotifications() {
           msg.recipient_id === user.id && !msg.is_read
         ).slice(0, 5) || []
         
-        setRecentMessages(unreadMessages)
+        setRecentMessages(unreadMessages.map((msg: any) => ({
+          ...msg,
+          sender: msg.sender || { first_name: 'Unknown', last_name: 'User' },
+          recipient: msg.recipient || { first_name: 'Unknown', last_name: 'User' }
+        })))
       } catch (error) {
         console.error('Error loading unread messages:', error)
       }
@@ -51,7 +55,8 @@ export default function MessageNotifications() {
     loadUnreadMessages()
 
     // Subscribe to new messages
-    const subscription = messageService.subscribeToMessages(user.id, (payload) => {
+    let subscription: any = null
+    messageService.subscribeToMessages(user.id, (payload) => {
       loadUnreadMessages()
       
       // Show browser notification if supported
@@ -62,10 +67,14 @@ export default function MessageNotifications() {
           icon: '/favicon.ico'
         })
       }
+    }).then(sub => {
+      subscription = sub
     })
 
     return () => {
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
     }
   }, [user])
 
@@ -188,12 +197,17 @@ export function useMessageNotifications() {
     loadUnreadCount()
 
     // Subscribe to new messages
-    const subscription = messageService.subscribeToMessages(user.id, () => {
+    let subscription: any = null
+    messageService.subscribeToMessages(user.id, () => {
       loadUnreadCount()
+    }).then(sub => {
+      subscription = sub
     })
 
     return () => {
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
     }
   }, [user])
 

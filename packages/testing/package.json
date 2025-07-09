@@ -9,7 +9,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "build": "echo 'Testing package does not need building'"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.1.4",

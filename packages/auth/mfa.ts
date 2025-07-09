@@ -97,8 +97,7 @@ export class PracticalMFAService {
       const secret = this.decrypt(mfaSettings.secret)
       const isValid = authenticator.verify({ 
         token, 
-        secret,
-        window: 2 // Allow 2 time windows for clock drift
+        secret
       })
       
       if (isValid) {
@@ -151,8 +150,7 @@ export class PracticalMFAService {
       // Try TOTP verification first
       const isValidTOTP = authenticator.verify({ 
         token, 
-        secret,
-        window: 2
+        secret
       })
       
       if (isValidTOTP) {

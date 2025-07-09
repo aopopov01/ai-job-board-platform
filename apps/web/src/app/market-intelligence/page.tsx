@@ -47,10 +47,8 @@ import {
   Compass,
   Network,
   BookOpen,
-  FlashOff,
   Flame,
-  ThermometerSun,
-  TrendingFlat
+  ThermometerSun
 } from 'lucide-react'
 import {
   MarketIntelligenceProfile,
@@ -106,13 +104,45 @@ export default function MarketIntelligencePage() {
           industry: profileData.industry,
           location: {
             city: profileData.location.split(', ')[0],
-            country: 'United States'
-          },
+            country: 'United States',
+            region: profileData.location.split(', ')[1] || 'Unknown',
+            timezone: 'UTC-8',
+            costOfLiving: { 
+              index: 100, 
+              housing: 100, 
+              food: 100, 
+              transportation: 100, 
+              healthcare: 100, 
+              taxes: { 
+                federal: 100, 
+                state: 100, 
+                local: 100 
+              } as any, 
+              purchasing_power: 100 
+            } as any,
+            marketSize: { total_jobs: 10000, growth_rate: 5, demand_level: 'high' } as any,
+            remotePolicy: { percentage: 50, trends: 'increasing', policies: 'flexible' }
+          } as any,
           experience: {
             years_total: profileData.experience,
-            seniority_level: profileData.experience < 3 ? 'junior' : profileData.experience < 7 ? 'mid' : 'senior'
-          },
-          skills: profileData.skills.map(skill => ({ name: skill }))
+            seniority_level: profileData.experience < 3 ? 'junior' : profileData.experience < 7 ? 'mid' : 'senior',
+            years_current_role: profileData.experience,
+            years_current_company: profileData.experience,
+            years_industry: profileData.experience,
+            career_progression: 'steady',
+            specializations: profileData.skills,
+            achievements: []
+          } as any,
+          skills: profileData.skills.map(skill => ({ 
+            name: skill,
+            category: 'technical',
+            proficiency: 'intermediate',
+            years_experience: 2,
+            market_demand: 'high',
+            growth_trend: 'increasing',
+            salary_impact: 'positive',
+            certifications: []
+          })) as any
         },
         analysisDepth: 'comprehensive',
         dataReferences: [
@@ -158,13 +188,45 @@ export default function MarketIntelligencePage() {
           industry: profileData.industry,
           location: {
             city: profileData.location.split(', ')[0],
-            country: 'United States'
-          },
+            country: 'United States',
+            region: profileData.location.split(', ')[1] || 'Unknown',
+            timezone: 'UTC-8',
+            costOfLiving: { 
+              index: 100, 
+              housing: 100, 
+              food: 100, 
+              transportation: 100, 
+              healthcare: 100, 
+              taxes: { 
+                federal: 100, 
+                state: 100, 
+                local: 100 
+              } as any, 
+              purchasing_power: 100 
+            } as any,
+            marketSize: { total_jobs: 10000, growth_rate: 5, demand_level: 'high' } as any,
+            remotePolicy: { percentage: 50, trends: 'increasing', policies: 'flexible' }
+          } as any,
           experience: {
             years_total: profileData.experience,
-            seniority_level: profileData.experience < 3 ? 'junior' : profileData.experience < 7 ? 'mid' : 'senior'
-          },
-          skills: profileData.skills.map(skill => ({ name: skill }))
+            seniority_level: profileData.experience < 3 ? 'junior' : profileData.experience < 7 ? 'mid' : 'senior',
+            years_current_role: profileData.experience,
+            years_current_company: profileData.experience,
+            years_industry: profileData.experience,
+            career_progression: 'steady',
+            specializations: profileData.skills,
+            achievements: []
+          } as any,
+          skills: profileData.skills.map(skill => ({ 
+            name: skill,
+            category: 'technical',
+            proficiency: 'intermediate',
+            years_experience: 2,
+            market_demand: 'high',
+            growth_trend: 'increasing',
+            salary_impact: 'positive',
+            certifications: []
+          })) as any
         },
         analysisDepth: 'comprehensive',
         dataReferences: [
@@ -197,7 +259,7 @@ export default function MarketIntelligencePage() {
   const getTrendIcon = (direction: string, size: string = 'h-4 w-4') => {
     const icons = {
       declining: <TrendingDown className={`${size} text-red-500`} />,
-      stable: <TrendingFlat className={`${size} text-gray-500`} />,
+      stable: <Minus className={`${size} text-gray-500`} />,
       rising: <TrendingUp className={`${size} text-green-500`} />,
       hot: <Flame className={`${size} text-orange-500`} />
     }
@@ -810,7 +872,7 @@ export default function MarketIntelligencePage() {
                       {/* Declining Skills */}
                       <div>
                         <h4 className="font-medium mb-3 flex items-center">
-                          <FlashOff className="mr-2 h-4 w-4 text-red-500" />
+                          <Zap className="mr-2 h-4 w-4 text-red-500" />
                           Declining Skills
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { jobService, jobCategoryService } from '@job-board/database'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 
 interface Job {
   id: string

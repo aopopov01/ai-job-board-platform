@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const priceId = priceMap[planId]?.[billing_cycle]
+    const priceId = priceMap[planId]?.[billing_cycle as keyof typeof priceMap[typeof planId]]
     if (!priceId) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }

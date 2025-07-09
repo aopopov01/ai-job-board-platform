@@ -79,7 +79,7 @@ export class SecurityMiddleware {
       // Rate limiting
       if (this.config.enableRateLimit) {
         const rateLimitResult = await this.checkRateLimit(request, securityContext)
-        if (!rateLimitResult.success) {
+        if (!rateLimitResult.success && rateLimitResult.response) {
           return rateLimitResult.response
         }
       }
@@ -87,7 +87,7 @@ export class SecurityMiddleware {
       // Input validation for POST/PUT requests
       if (this.config.enableInputValidation && ['POST', 'PUT', 'PATCH'].includes(request.method)) {
         const validationResult = await this.validateInput(request)
-        if (!validationResult.success) {
+        if (!validationResult.success && validationResult.response) {
           return validationResult.response
         }
       }
@@ -95,7 +95,7 @@ export class SecurityMiddleware {
       // Authentication check
       if (!this.isPublicPath(path)) {
         const authResult = await this.checkAuthentication(request, securityContext)
-        if (!authResult.success) {
+        if (!authResult.success && authResult.response) {
           return authResult.response
         }
       }
@@ -103,7 +103,7 @@ export class SecurityMiddleware {
       // Admin access check
       if (this.isAdminPath(path)) {
         const adminResult = await this.checkAdminAccess(request, securityContext)
-        if (!adminResult.success) {
+        if (!adminResult.success && adminResult.response) {
           return adminResult.response
         }
       }
@@ -111,7 +111,7 @@ export class SecurityMiddleware {
       // MFA validation
       if (this.config.enableMFA && securityContext.requiresMFA) {
         const mfaResult = await this.checkMFAStatus(request, securityContext)
-        if (!mfaResult.success) {
+        if (!mfaResult.success && mfaResult.response) {
           return mfaResult.response
         }
       }
@@ -119,7 +119,7 @@ export class SecurityMiddleware {
       // Session validation
       if (this.config.enableSessionValidation && securityContext.sessionId) {
         const sessionResult = await this.validateSession(request, securityContext)
-        if (!sessionResult.success) {
+        if (!sessionResult.success && sessionResult.response) {
           return sessionResult.response
         }
       }
@@ -248,7 +248,7 @@ export class SecurityMiddleware {
                 'X-RateLimit-Limit': rateLimitResult.limit.toString(),
                 'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
                 'X-RateLimit-Reset': rateLimitResult.reset.toISOString(),
-                'Retry-After': rateLimitResult.retryAfter?.toString() || '60'
+                'Retry-After': (rateLimitResult.retryAfter as unknown as number | undefined)?.toString() || '60'
               }
             }
           )

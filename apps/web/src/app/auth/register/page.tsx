@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
-import { useSignUp } from '@job-board/shared'
+import { useSignUp } from '@job-board/shared/client'
 import { USER_TYPES } from '@job-board/shared'
 
 export default function RegisterPage() {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { applicationService } from '@job-board/database'
@@ -11,8 +11,8 @@ interface ApplicationStats {
   by_status: Record<string, number>
   recent: Array<{
     id: string
-    status: string
-    applied_at: string
+    status: string | null
+    applied_at: string | null
     jobs: { title: string }
     individual_profiles: {
       user_profiles: {
@@ -35,7 +35,17 @@ export default function AnalyticsPage() {
 
       try {
         const data = await applicationService.getApplicationStats(profile.id)
-        setStats(data)
+        setStats({
+          total: data.total,
+          by_status: data.by_status,
+          recent: (data.recent || []).map((app: any) => ({
+            id: app.id,
+            status: app.status || 'pending',
+            applied_at: app.applied_at || new Date().toISOString(),
+            jobs: app.jobs || { title: 'Unknown' },
+            individual_profiles: app.individual_profiles || { user_profiles: { first_name: 'Unknown', last_name: 'User' } }
+          }))
+        })
       } catch (error: any) {
         setError(error.message || 'Failed to load analytics')
       } finally {
@@ -252,10 +262,10 @@ export default function AnalyticsPage() {
                       application.status === 'hired' ? 'bg-green-100 text-green-800' :
                       'bg-gray-100 text-gray-800'
                     }`}>
-                      {application.status.replace('_', ' ')}
+                      {application.status?.replace('_', ' ') || 'pending'}
                     </div>
                     <div className="text-sm text-gray-500 mt-1">
-                      {new Date(application.applied_at).toLocaleDateString()}
+                      {new Date(application.applied_at || Date.now()).toLocaleDateString()}
                     </div>
                   </div>
                 </div>

@@ -213,7 +213,7 @@ export default function RecommendationsScreen() {
                         {recommendation.matchScore}%
                       </Text>
                       <Text className="text-xs text-gray-500">match</Text>
-                    </div>
+                    </View>
                   </View>
 
                   {/* Priority Badge */}

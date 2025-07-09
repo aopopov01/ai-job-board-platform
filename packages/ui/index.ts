@@ -15,5 +15,18 @@ export {
 } from './components/card'
 export type { CardProps } from './components/card'
 
+export { Badge, badgeVariants } from './components/badge'
+export type { BadgeProps } from './components/badge'
+
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/tabs'
+
+export { Progress } from './components/progress'
+
+export { Alert, AlertTitle, AlertDescription } from './components/alert'
+
+export { Label } from './components/label'
+
+export { Separator } from './components/separator'
+
 // Export utilities
 export { cn } from './lib/utils'

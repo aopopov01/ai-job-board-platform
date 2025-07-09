@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
+import { Button } from '@job-board/ui'
+import { Input } from '@job-board/ui'
+import { Label } from '@job-board/ui'
+import { Alert, AlertDescription } from '@job-board/ui'
+import { Badge } from '@job-board/ui'
+import { Separator } from '@job-board/ui'
 import { 
   Shield, 
   Smartphone, 

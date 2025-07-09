@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'

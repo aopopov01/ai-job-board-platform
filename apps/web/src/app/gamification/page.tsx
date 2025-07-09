@@ -97,7 +97,7 @@ export default function GamificationPage() {
           id: 'newcomer',
           name: 'Newcomer',
           description: 'Completed first activity',
-          category: 'first_steps',
+          category: 'learning_achievement',
           rarity: 'common',
           iconUrl: '/badges/newcomer.png',
           earnedAt: new Date('2024-01-15'),
@@ -1079,7 +1079,7 @@ export default function GamificationPage() {
                         
                         <div className="flex items-center space-x-2">
                           <div className="flex space-x-1">
-                            {entry.badges?.slice(0, 2).map((badge, badgeIndex) => (
+                            {entry.badges?.slice(0, 2).map((badge: any, badgeIndex: number) => (
                               <div key={badgeIndex} className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center">
                                 <Medal className="h-3 w-3 text-purple-600" />
                               </div>

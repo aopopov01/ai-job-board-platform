@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useAuthStore } from '@job-board/shared'
+import { useAuthStore } from '@job-board/shared/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
 import { Button } from '@job-board/ui'
-import { paymentService, subscriptionPlans, type Subscription } from '@job-board/shared'
+import { paymentService, type Subscription } from '@job-board/shared'
+import { subscriptionPlans } from '@job-board/shared/src/services/paymentService'
 import { CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react'
 
 interface UsageStats {
@@ -73,9 +74,9 @@ export default function BillingPage() {
     }
   }
 
-  const currentPlan = subscriptionPlans.find(plan => plan.id === profile?.subscription_plan)
+  const currentPlan = subscriptionPlans.find(plan => plan.id === (profile as any)?.subscription_plan)
   const availablePlans = subscriptionPlans.filter(plan => 
-    plan.user_type === profile?.user_type && plan.id !== profile?.subscription_plan
+    plan.user_type === profile?.user_type && plan.id !== (profile as any)?.subscription_plan
   )
 
   const getStatusIcon = (status: string) => {
@@ -164,9 +165,9 @@ export default function BillingPage() {
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{currentPlan.name}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">{currentPlan?.name || 'Free Plan'}</h3>
                   <p className="text-sm text-gray-600">
-                    {paymentService.formatPrice(currentPlan.price_monthly)} / month
+                    {paymentService.formatPrice(currentPlan?.price_monthly || 0)} / month
                   </p>
                 </div>
                 <div className="text-right">
