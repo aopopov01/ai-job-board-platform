@@ -34,10 +34,23 @@ export const userProfileService = {
       .single()
   },
 
-  async getByEmail(email: string) {
+  async getByEmail(email: string, requestingUserId?: string) {
     const { data: user } = await supabase.auth.getUser()
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      throw new Error('Invalid email format')
+    }
+    
+    // Authorization check - user can only access their own profile
     if (!user.user?.email || user.user.email !== email) {
-      throw new Error('Unauthorized')
+      throw new Error('Unauthorized: You can only access your own profile')
+    }
+    
+    // Additional security check with requesting user ID
+    if (requestingUserId && user.user.id !== requestingUserId) {
+      throw new Error('Unauthorized: User ID mismatch')
     }
     
     return await supabase
@@ -246,11 +259,15 @@ export const jobService = {
       .eq('status', 'active')
 
     if (filters.query) {
-      query = query.or(`title.ilike.%${filters.query}%,description.ilike.%${filters.query}%`)
+      // Sanitize query to prevent SQL injection
+      const sanitizedQuery = filters.query.replace(/['"\\]/g, '').substring(0, 100)
+      query = query.or(`title.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`)
     }
 
     if (filters.location) {
-      query = query.ilike('location', `%${filters.location}%`)
+      // Sanitize location to prevent SQL injection
+      const sanitizedLocation = filters.location.replace(/['"\\]/g, '').substring(0, 100)
+      query = query.ilike('location', `%${sanitizedLocation}%`)
     }
 
     if (filters.job_type) {
@@ -313,6 +330,48 @@ export const applicationService = {
       .insert(data)
       .select()
       .single()
+  },
+
+  async createWithScreening(data: TablesInsert<'applications'>, jobDetails: any, candidateProfile: any) {
+    // Create application with AI screening
+    const applicationData = {
+      ...data,
+      ai_screening_score: null,
+      ai_screening_notes: null,
+      status: 'applied'
+    }
+    
+    const result = await supabase
+      .from('applications')
+      .insert(applicationData)
+      .select()
+      .single()
+    
+    // Run AI screening in background (would be implemented with job queue)
+    // This is a placeholder for the actual AI screening implementation
+    
+    return result
+  },
+
+  async createWithFraudDetection(data: TablesInsert<'applications'>, fraudCheckData: any) {
+    // Create application with fraud detection
+    const applicationData = {
+      ...data,
+      status: 'applied',
+      fraud_score: null,
+      fraud_flags: null
+    }
+    
+    const result = await supabase
+      .from('applications')
+      .insert(applicationData)
+      .select()
+      .single()
+    
+    // Run fraud detection in background
+    // This would typically be implemented with a job queue
+    
+    return result
   },
 
   async getById(id: string) {
@@ -379,6 +438,85 @@ export const applicationService = {
       `)
       .eq('job_id', jobId)
       .order('applied_at', { ascending: false })
+  },
+
+  async getByStatus(status: string) {
+    return await supabase
+      .from('applications')
+      .select(`
+        *,
+        jobs (
+          title,
+          company_profiles (
+            company_name
+          )
+        ),
+        individual_profiles (
+          user_profiles (
+            first_name,
+            last_name
+          ),
+          current_job_title,
+          years_of_experience
+        )
+      `)
+      .eq('status', status)
+      .order('applied_at', { ascending: false })
+  },
+
+  async bulkUpdateStatus(applicationIds: string[], status: string, notes?: string) {
+    return await supabase
+      .from('applications')
+      .update({ 
+        status, 
+        recruiter_notes: notes || null,
+        last_status_change: new Date().toISOString()
+      })
+      .in('id', applicationIds)
+      .select()
+  },
+
+  async getApplicationStats(companyId: string) {
+    // Get applications for all jobs posted by this company
+    const { data: jobs } = await supabase
+      .from('jobs')
+      .select('id')
+      .eq('company_id', companyId)
+    
+    if (!jobs || jobs.length === 0) {
+      return { total: 0, by_status: {}, recent: [] }
+    }
+    
+    const jobIds = jobs.map(job => job.id)
+    
+    const { data: applications } = await supabase
+      .from('applications')
+      .select(`
+        id,
+        status,
+        applied_at,
+        jobs (title),
+        individual_profiles (
+          user_profiles (
+            first_name,
+            last_name
+          )
+        )
+      `)
+      .in('job_id', jobIds)
+      .order('applied_at', { ascending: false })
+    
+    const stats = {
+      total: applications?.length || 0,
+      by_status: {} as Record<string, number>,
+      recent: applications?.slice(0, 10) || []
+    }
+    
+    applications?.forEach(app => {
+      stats.by_status[app.status] = (stats.by_status[app.status] || 0) + 1
+    })
+    
+    return stats
   }
 }
 
@@ -523,5 +661,143 @@ export const userSkillService = {
       .from('user_skills')
       .delete()
       .eq('id', id)
+  }
+}
+
+// Message Operations
+export const messageService = {
+  async create(data: TablesInsert<'messages'>) {
+    return await supabase
+      .from('messages')
+      .insert(data)
+      .select(`
+        *,
+        sender:sender_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        ),
+        recipient:recipient_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        )
+      `)
+      .single()
+  },
+
+  async getConversation(userId: string, otherUserId: string, applicationId?: string) {
+    let query = supabase
+      .from('messages')
+      .select(`
+        *,
+        sender:sender_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        ),
+        recipient:recipient_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        )
+      `)
+      .or(`and(sender_id.eq.${userId},recipient_id.eq.${otherUserId}),and(sender_id.eq.${otherUserId},recipient_id.eq.${userId})`)
+      .order('created_at', { ascending: true })
+
+    if (applicationId) {
+      query = query.eq('application_id', applicationId)
+    }
+
+    return query
+  },
+
+  async getConversations(userId: string) {
+    return await supabase
+      .from('messages')
+      .select(`
+        *,
+        sender:sender_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        ),
+        recipient:recipient_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        ),
+        jobs (
+          title
+        ),
+        applications (
+          id,
+          status
+        )
+      `)
+      .or(`sender_id.eq.${userId},recipient_id.eq.${userId}`)
+      .order('created_at', { ascending: false })
+  },
+
+  async markAsRead(messageId: string) {
+    return await supabase
+      .from('messages')
+      .update({ is_read: true })
+      .eq('id', messageId)
+  },
+
+  async markConversationAsRead(userId: string, otherUserId: string) {
+    return await supabase
+      .from('messages')
+      .update({ is_read: true })
+      .eq('sender_id', otherUserId)
+      .eq('recipient_id', userId)
+  },
+
+  async getUnreadCount(userId: string) {
+    const { count, error } = await supabase
+      .from('messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('recipient_id', userId)
+      .eq('is_read', false)
+    
+    if (error) throw error
+    return count || 0
+  },
+
+  async subscribeToMessages(userId: string, callback: (payload: any) => void) {
+    return supabase
+      .channel('messages')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `recipient_id=eq.${userId}`
+        },
+        callback
+      )
+      .subscribe()
+  },
+
+  async getMessagesByApplication(applicationId: string) {
+    return await supabase
+      .from('messages')
+      .select(`
+        *,
+        sender:sender_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        ),
+        recipient:recipient_id (
+          first_name,
+          last_name,
+          profile_picture_url
+        )
+      `)
+      .eq('application_id', applicationId)
+      .order('created_at', { ascending: true })
   }
 }

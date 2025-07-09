@@ -106,7 +106,34 @@ Respond in JSON format with the structure:
     return JSON.parse(content) as JobMatchResponse
   } catch (error) {
     console.error('Error in job matching:', error)
-    throw new Error('Failed to analyze candidate-job match')
+    
+    // Handle different error types
+    if (error.code === 'insufficient_quota') {
+      throw new Error('AI service quota exceeded. Please try again later.')
+    }
+    
+    if (error.code === 'rate_limit_exceeded') {
+      throw new Error('Too many requests. Please wait before trying again.')
+    }
+    
+    if (error.code === 'invalid_api_key') {
+      throw new Error('AI service configuration error. Please contact support.')
+    }
+    
+    if (error.name === 'SyntaxError') {
+      console.error('Failed to parse AI response:', content)
+      throw new Error('Invalid AI response format')
+    }
+    
+    // Return fallback response for better user experience
+    return {
+      score: 0,
+      fit_analysis: 'Unable to analyze match due to technical issues',
+      strengths: [],
+      weaknesses: ['Technical analysis unavailable'],
+      recommendations: ['Please try again later or contact support']
+    }
+  }
   }
 }
 

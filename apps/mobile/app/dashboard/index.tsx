@@ -206,6 +206,15 @@ export default function DashboardScreen() {
                     📋 Review Applications
                   </Text>
                 </TouchableOpacity>
+                
+                <TouchableOpacity
+                  className="bg-white border border-gray-300 p-4 rounded-lg flex-row items-center"
+                  onPress={() => router.push('/dashboard/messages')}
+                >
+                  <Text className="text-gray-700 font-medium text-base ml-2">
+                    💬 Messages
+                  </Text>
+                </TouchableOpacity>
               </>
             )}
 
@@ -217,6 +226,15 @@ export default function DashboardScreen() {
                 >
                   <Text className="text-white font-medium text-base ml-2">
                     🔍 Search Jobs
+                  </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  className="bg-white border border-gray-300 p-4 rounded-lg flex-row items-center"
+                  onPress={() => router.push('/dashboard/recommendations')}
+                >
+                  <Text className="text-gray-700 font-medium text-base ml-2">
+                    🎯 AI Recommendations
                   </Text>
                 </TouchableOpacity>
                 
@@ -235,6 +253,15 @@ export default function DashboardScreen() {
                 >
                   <Text className="text-gray-700 font-medium text-base ml-2">
                     👤 Update Profile
+                  </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  className="bg-white border border-gray-300 p-4 rounded-lg flex-row items-center"
+                  onPress={() => router.push('/dashboard/messages')}
+                >
+                  <Text className="text-gray-700 font-medium text-base ml-2">
+                    💬 Messages
                   </Text>
                 </TouchableOpacity>
               </>

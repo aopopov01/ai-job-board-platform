@@ -12,7 +12,8 @@ export {
   jobCategoryService,
   cvDocumentService,
   skillService,
-  userSkillService
+  userSkillService,
+  messageService
 } from './services'
 
 // Export type guards and utilities

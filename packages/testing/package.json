@@ -1,0 +1,56 @@
+{
+  "name": "@job-board/testing",
+  "version": "1.0.0",
+  "description": "Testing utilities and setup for job board platform",
+  "main": "index.ts",
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest watch",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.1",
+    "@tanstack/react-query": "^5.8.4",
+    "@types/node": "^20.8.10",
+    "@vitejs/plugin-react": "^4.1.1",
+    "axe-core": "^4.8.2",
+    "jsdom": "^23.0.1",
+    "msw": "^2.0.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vitest": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "typescript": "^5.2.2"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.ts",
+      "types": "./index.ts"
+    },
+    "./setup": {
+      "import": "./setup.ts",
+      "require": "./setup.ts",
+      "types": "./setup.ts"
+    },
+    "./utils": {
+      "import": "./utils/test-utils.ts",
+      "require": "./utils/test-utils.ts",
+      "types": "./utils/test-utils.ts"
+    },
+    "./mocks": {
+      "import": "./mocks/server.ts",
+      "require": "./mocks/server.ts",
+      "types": "./mocks/server.ts"
+    }
+  }
+}

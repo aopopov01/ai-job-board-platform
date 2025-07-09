@@ -7,8 +7,12 @@ export { matchCandidateToJob, getJobRecommendations } from './matching'
 export type { JobMatchRequest, JobMatchResponse, JobRecommendationRequest, JobRecommendation } from './matching'
 
 // Export parsing functionality
-export { parseCVContent, generateJobRecommendations } from './parsing'
-export type { CVParsingRequest, CVParsingResponse } from './parsing'
+export { parseCVContent, generateJobRecommendations, screenApplication } from './parsing'
+export type { CVParsingRequest, CVParsingResponse, ApplicationScreeningRequest, ApplicationScreeningResponse } from './parsing'
+
+// Export advanced matching functionality
+export { performAdvancedMatching, performBatchMatching, detectApplicationFraud } from './advanced-matching'
+export type { AdvancedMatchingRequest, AdvancedMatchingResponse, BatchMatchingRequest, BatchMatchingResponse, FraudDetectionRequest, FraudDetectionResponse } from './advanced-matching'
 
 // AI utilities
 export const extractSkillsFromText = async (text: string): Promise<string[]> => {
