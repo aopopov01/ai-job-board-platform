@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { mfaService } from '../../../../../packages/auth/mfa'
+import { mfaService } from '@/auth/mfa'
 import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(

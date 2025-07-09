@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { withSecurity } from '../../packages/shared/src/middleware/security-middleware'
+import { withSecurity } from '@/shared/src/middleware/security-middleware'
 
 // Configure security middleware
 export default withSecurity({

@@ -134,7 +134,6 @@ Respond in JSON format with the structure:
       recommendations: ['Please try again later or contact support']
     }
   }
-  }
 }
 
 export const getJobRecommendations = async (request: JobRecommendationRequest): Promise<JobRecommendation[]> => {

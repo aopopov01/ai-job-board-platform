@@ -12,7 +12,10 @@
       "@/components/*": ["../../packages/ui/*"],
       "@/shared/*": ["../../packages/shared/*"],
       "@/database/*": ["../../packages/database/*"],
-      "@/ai/*": ["../../packages/ai/*"]
+      "@/ai/*": ["../../packages/ai/*"],
+      "@/auth/*": ["../../packages/auth/*"],
+      "@/integrations/*": ["../../packages/integrations/*"],
+      "@/security/*": ["../../packages/security/*"]
     }
   },
   "include": [

@@ -31,9 +31,9 @@ export const generateJobDescription = async (
   return ''
 }
 
-export const detectApplicationFraud = async (
+export const analyzeApplicationPattern = async (
   applicationData: any
-): Promise<{ isFraudulent: boolean; reasons: string[] }> => {
-  // This would analyze application patterns for fraud detection
-  return { isFraudulent: false, reasons: [] }
+): Promise<{ isSuspicious: boolean; patterns: string[] }> => {
+  // This would analyze application patterns for suspicious behavior
+  return { isSuspicious: false, patterns: [] }
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { IntegrationUtils } from '@job-board/integrations'
+import { IntegrationUtils } from '@/integrations/index'
 
 export async function GET(req: NextRequest) {
   try {

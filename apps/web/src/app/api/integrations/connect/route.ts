@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { IntegrationUtils } from '@job-board/integrations'
+import { IntegrationUtils } from '@/integrations/index'
 
 export async function POST(req: NextRequest) {
   try {
