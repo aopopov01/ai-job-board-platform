@@ -16,48 +16,73 @@ import {
   Award
 } from 'lucide-react'
 
-// Hero Section Component
+// Enhanced Hero Section Component with Modern Design
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-white via-primary/5 to-accent/20">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/5"></div>
-      <div className="container relative">
-        <div className="section flex flex-col items-center text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 animate-fade-in-up">
+    <section className="relative overflow-hidden bg-gradient-to-br from-neutral-50 via-primary/5 to-accent/10 min-h-[90vh] flex items-center">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-transparent to-primary/6"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      
+      <div className="container relative z-10">
+        <div className="section flex flex-col items-center text-center max-w-5xl mx-auto">
+          {/* Enhanced Badge */}
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary px-6 py-3 rounded-full text-sm font-medium mb-8 animate-fade-in-up shadow-lg backdrop-blur-sm">
             <Zap className="w-4 h-4" />
-            AI-Powered Job Matching
+            AI-Powered Job Matching Platform
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse ml-2"></div>
           </div>
           
-          <h1 className="text-responsive-4xl font-bold text-gradient mb-6 animate-fade-in-up">
-            Revolutionize Your Career with AI
+          {/* Enhanced Hero Title */}
+          <h1 className="text-responsive-4xl lg:text-6xl xl:text-7xl font-bold text-gradient mb-8 animate-fade-in-up leading-tight">
+            Revolutionize Your Career
+            <br />
+            <span className="text-primary">with AI</span>
           </h1>
           
-          <p className="text-responsive-xl text-muted-foreground mb-8 max-w-2xl animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+          {/* Enhanced Description */}
+          <p className="text-responsive-xl lg:text-2xl text-neutral-600 mb-12 max-w-3xl animate-fade-in-up leading-relaxed" style={{animationDelay: '0.2s'}}>
             Experience the future of job searching with TalentAIze. Our advanced AI algorithms analyze your skills, preferences, and career goals to match you with perfect opportunities and optimize your professional journey.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md animate-fade-in-up" style={{animationDelay: '0.4s'}}>
-            <Link href="/auth/register" className="btn btn-primary btn-lg flex-1">
+          {/* Enhanced CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 w-full max-w-lg animate-fade-in-up" style={{animationDelay: '0.4s'}}>
+            <Link href="/auth/register" className="btn btn-primary btn-lg px-8 py-4 text-base font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+              <Zap className="w-5 h-5 mr-2" />
               Get Started Free
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
-            <Link href="/jobs" className="btn btn-secondary btn-lg flex-1">
+            <Link href="/jobs" className="btn btn-outline btn-lg px-8 py-4 text-base font-semibold border-2 hover:bg-primary hover:text-white hover:border-primary transform hover:scale-105 transition-all duration-300">
+              <Search className="w-5 h-5 mr-2" />
               Browse Jobs
             </Link>
           </div>
           
-          <div className="flex items-center gap-8 mt-12 text-sm text-muted-foreground animate-fade-in-up" style={{animationDelay: '0.6s'}}>
-            <div className="flex items-center gap-2">
+          {/* Enhanced Trust Indicators */}
+          <div className="flex items-center justify-center gap-8 mt-16 text-sm text-neutral-600 animate-fade-in-up flex-wrap" style={{animationDelay: '0.6s'}}>
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-neutral-200/50 shadow-sm">
               <CheckCircle className="w-4 h-4 text-success" />
               Free to use
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-success" />
-              No spam
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-neutral-200/50 shadow-sm">
+              <Shield className="w-4 h-4 text-success" />
+              No spam guaranteed
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-success" />
-              Instant matching
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-neutral-200/50 shadow-sm">
+              <Target className="w-4 h-4 text-success" />
+              Instant AI matching
+            </div>
+          </div>
+          
+          {/* Social Proof */}
+          <div className="mt-16 text-center animate-fade-in-up" style={{animationDelay: '0.8s'}}>
+            <p className="text-sm text-neutral-500 mb-4">Trusted by professionals at</p>
+            <div className="flex items-center justify-center gap-8 opacity-60 flex-wrap">
+              <div className="text-neutral-400 font-semibold">TechCorp</div>
+              <div className="text-neutral-400 font-semibold">StartupCo</div>
+              <div className="text-neutral-400 font-semibold">InnovateInc</div>
+              <div className="text-neutral-400 font-semibold">CreativeStudio</div>
             </div>
           </div>
         </div>
@@ -66,87 +91,163 @@ function HeroSection() {
   )
 }
 
-// Stats Section Component
+// Enhanced Stats Section Component
 function StatsSection() {
   const stats = [
-    { number: '50K+', label: 'AI-Matched Jobs', icon: Briefcase },
-    { number: '25K+', label: 'AI-Powered Companies', icon: Users },
-    { number: '1M+', label: 'AI-Optimized Careers', icon: TrendingUp },
-    { number: '98%', label: 'AI Match Accuracy', icon: Star },
+    { number: '50K+', label: 'AI-Matched Jobs', icon: Briefcase, color: 'from-blue-500 to-blue-600' },
+    { number: '25K+', label: 'AI-Powered Companies', icon: Users, color: 'from-green-500 to-green-600' },
+    { number: '1M+', label: 'AI-Optimized Careers', icon: TrendingUp, color: 'from-purple-500 to-purple-600' },
+    { number: '98%', label: 'AI Match Accuracy', icon: Star, color: 'from-orange-500 to-orange-600' },
   ]
 
   return (
-    <section className="section-sm bg-muted/30">
-      <div className="container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="section-sm bg-gradient-to-br from-neutral-50 to-neutral-100/50 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-grid-neutral-200/50 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]"></div>
+      
+      <div className="container relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-responsive-3xl font-bold text-gradient mb-4">
+            Powering Careers with AI Intelligence
+          </h2>
+          <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+            Join millions of professionals who trust TalentAIze to accelerate their career growth
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
-            <div key={stat.label} className="stat-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <stat.icon className="w-8 h-8 mx-auto mb-4 text-primary" />
-              <div className="stat-number">{stat.number}</div>
-              <div className="stat-label">{stat.label}</div>
+            <div key={stat.label} className="group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+              <div className="card-interactive p-8 text-center bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl">
+                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+                <div className="stat-number text-4xl font-bold text-neutral-800 mb-2 group-hover:text-primary transition-colors duration-300">
+                  {stat.number}
+                </div>
+                <div className="stat-label text-neutral-600 font-medium">
+                  {stat.label}
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+        
+        {/* Enhanced Trust Badge */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-3 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full border border-neutral-200/50 shadow-lg">
+            <Award className="w-5 h-5 text-primary" />
+            <span className="text-sm font-medium text-neutral-700">Industry Leading AI Technology</span>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-// Features Section Component
+// Enhanced Features Section Component
 function FeaturesSection() {
   const features = [
     {
       icon: Target,
       title: 'AI-Powered Matching',
-      description: 'Advanced machine learning algorithms analyze your skills, experience, and career goals to deliver hyper-personalized job recommendations.'
+      description: 'Advanced machine learning algorithms analyze your skills, experience, and career goals to deliver hyper-personalized job recommendations.',
+      color: 'from-blue-500 to-indigo-600',
+      bgColor: 'bg-blue-50'
     },
     {
       icon: Shield,
       title: 'Privacy First',
-      description: 'Your data is secure and private. Control what information you share and with whom.'
+      description: 'Your data is secure and private. Control what information you share and with whom.',
+      color: 'from-green-500 to-emerald-600',
+      bgColor: 'bg-green-50'
     },
     {
       icon: Globe,
       title: 'Global Opportunities',
-      description: 'Access jobs from companies worldwide, including remote positions and international opportunities.'
+      description: 'Access jobs from companies worldwide, including remote positions and international opportunities.',
+      color: 'from-purple-500 to-violet-600',
+      bgColor: 'bg-purple-50'
     },
     {
       icon: Zap,
       title: 'AI Instant Alerts',
-      description: 'Intelligent notifications powered by AI predict and alert you about opportunities before they become competitive.'
+      description: 'Intelligent notifications powered by AI predict and alert you about opportunities before they become competitive.',
+      color: 'from-yellow-500 to-orange-600',
+      bgColor: 'bg-yellow-50'
     },
     {
       icon: Users,
       title: 'AI Company Intelligence',
-      description: 'AI-powered company analysis provides deep insights into culture, growth potential, and hiring patterns to help you make informed decisions.'
+      description: 'AI-powered company analysis provides deep insights into culture, growth potential, and hiring patterns to help you make informed decisions.',
+      color: 'from-pink-500 to-rose-600',
+      bgColor: 'bg-pink-50'
     },
     {
       icon: Award,
       title: 'Career Growth',
-      description: 'Track your career progression and get personalized advice to advance your professional journey.'
+      description: 'Track your career progression and get personalized advice to advance your professional journey.',
+      color: 'from-indigo-500 to-blue-600',
+      bgColor: 'bg-indigo-50'
     },
   ]
 
   return (
-    <section className="section">
-      <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="text-responsive-3xl font-bold text-gradient mb-6">
-            Everything You Need to Find Your Dream Job
+    <section className="section bg-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
+      <div className="absolute top-10 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+      
+      <div className="container relative z-10">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Zap className="w-4 h-4" />
+            Powerful Features
+          </div>
+          <h2 className="text-responsive-3xl lg:text-5xl font-bold text-gradient mb-6">
+            Everything You Need to Find
+            <br />Your Dream Job
           </h2>
-          <p className="text-responsive-xl text-muted-foreground max-w-2xl mx-auto">
-            Our platform combines cutting-edge technology with human insight to make job searching more effective and enjoyable.
+          <p className="text-responsive-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+            Our platform combines cutting-edge AI technology with human insight to make job searching more effective, efficient, and enjoyable than ever before.
           </p>
         </div>
         
-        <div className="grid grid-auto-fit gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={feature.title} className="feature-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <feature.icon className="feature-icon" />
-              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+            <div key={feature.title} className="group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+              <div className={`card-interactive p-8 h-full ${feature.bgColor} border-0 shadow-lg hover:shadow-2xl bg-white/80 backdrop-blur-sm`}>
+                {/* Icon */}
+                <div className={`w-14 h-14 mb-6 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-7 h-7 text-white" />
+                </div>
+                
+                {/* Content */}
+                <h3 className="text-xl font-bold text-neutral-800 mb-4 group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </h3>
+                <p className="text-neutral-600 leading-relaxed">
+                  {feature.description}
+                </p>
+                
+                {/* Hover Arrow */}
+                <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ArrowRight className="w-5 h-5 text-primary" />
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+        
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <Link href="/jobs" className="btn btn-primary btn-lg px-8 py-4 text-base font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+            <Target className="w-5 h-5 mr-2" />
+            Explore All Features
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Link>
         </div>
       </div>
     </section>
@@ -338,9 +439,9 @@ export default function LandingPage() {
           <div className="section-sm">
             <div className="grid md:grid-cols-4 gap-8">
               <div>
-                <div className="text-2xl font-bold text-gradient mb-4">TalentFlow</div>
+                <div className="text-2xl font-bold text-gradient mb-4">TalentAIze</div>
                 <p className="text-gray-400 mb-4">
-                  Where great careers begin. Connect with opportunities that match your potential.
+                  Where AI meets talent. Revolutionize your career with intelligent job matching and optimization.
                 </p>
                 <div className="flex gap-4">
                   {/* Social links would go here */}

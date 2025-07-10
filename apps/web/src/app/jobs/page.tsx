@@ -74,12 +74,12 @@ function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => vo
   }
 
   return (
-    <div className={`card relative group ${job.featured ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-accent/10' : ''}`}>
+    <div className={`card-interactive relative group p-6 bg-white/90 backdrop-blur-sm ${job.featured ? 'ring-2 ring-primary/20 shadow-xl border-primary/30 bg-gradient-to-br from-primary/5 to-accent/10' : 'shadow-sm hover:shadow-xl'}`}>
       {job.featured && (
-        <div className="absolute -top-2 left-6">
-          <span className="inline-flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
-            <Star className="w-3 h-3 fill-current" />
-            Featured
+        <div className="absolute -top-3 left-6">
+          <span className="inline-flex items-center gap-1 bg-gradient-to-r from-primary to-primary-600 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg">
+            <Zap className="w-3 h-3" />
+            AI Featured
           </span>
         </div>
       )}
@@ -288,69 +288,106 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      {/* Header */}
-      <div className="bg-white border-b border-border">
-        <div className="container">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary/5">
+      {/* Enhanced Header with Hero Design */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-white to-accent/10 border-b border-border/50">
+        {/* Background Elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/15 rounded-full blur-3xl"></div>
+        
+        <div className="container relative z-10">
           <div className="section-sm">
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h1 className="text-responsive-3xl font-bold text-gradient mb-2">Find Your Dream Job</h1>
-                <p className="text-responsive-xl text-muted-foreground">
-                  Discover {jobs.length} amazing opportunities from top companies
+            <div className="flex justify-between items-center mb-12">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                  <Zap className="w-4 h-4" />
+                  AI-Powered Job Discovery
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse ml-2"></div>
+                </div>
+                <h1 className="text-responsive-3xl lg:text-5xl font-bold text-gradient mb-4">
+                  Find Your Dream Job with AI
+                </h1>
+                <p className="text-responsive-xl text-neutral-600 mb-2">
+                  Discover {jobs.length} amazing opportunities from top companies, intelligently matched to your skills and preferences
                 </p>
+                <div className="flex items-center gap-6 text-sm text-neutral-500">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Live job updates
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    AI-powered matching
+                  </div>
+                </div>
               </div>
               {profile && (
-                <Link href="/dashboard" className="btn btn-secondary">
-                  <Building2 className="w-4 h-4 mr-2" />
+                <Link href="/dashboard" className="btn btn-outline btn-lg hidden md:flex">
+                  <Building2 className="w-5 h-5 mr-2" />
                   Dashboard
                 </Link>
               )}
             </div>
 
-            {/* Modern Search Bar */}
-            <div className="max-w-4xl mx-auto">
-              <div className="grid lg:grid-cols-3 gap-4 p-4 bg-muted/50 rounded-2xl">
-                <div className="search-container">
-                  <Search className="search-icon" />
-                  <input
-                    type="text"
-                    placeholder="Job title, company, or keywords"
-                    value={filters.query}
-                    onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                    className="search-input"
-                  />
+            {/* Enhanced Search Bar */}
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-2xl shadow-xl p-6">
+                <div className="grid lg:grid-cols-3 gap-4">
+                  <div className="search-container">
+                    <Search className="search-icon text-primary" />
+                    <input
+                      type="text"
+                      placeholder="Job title, company, or keywords"
+                      value={filters.query}
+                      onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                      className="input input-lg bg-white/80 border-neutral-200 focus:border-primary focus:ring-primary/20"
+                    />
+                  </div>
+                  
+                  <div className="search-container">
+                    <MapPin className="search-icon text-primary" />
+                    <input
+                      type="text"
+                      placeholder="City, state, or remote"
+                      value={filters.location}
+                      onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
+                      className="input input-lg bg-white/80 border-neutral-200 focus:border-primary focus:ring-primary/20"
+                    />
+                  </div>
+                  
+                  <button 
+                    onClick={handleSearch}
+                    disabled={searchLoading}
+                    className="btn btn-primary btn-lg px-8 py-4 text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  >
+                    {searchLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                        Searching AI Database...
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="w-5 h-5 mr-2" />
+                        Find Jobs with AI
+                      </>
+                    )}
+                  </button>
                 </div>
                 
-                <div className="search-container">
-                  <MapPin className="search-icon" />
-                  <input
-                    type="text"
-                    placeholder="City, state, or remote"
-                    value={filters.location}
-                    onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                    className="search-input"
-                  />
+                {/* Quick Filter Tags */}
+                <div className="flex items-center gap-3 mt-6 flex-wrap">
+                  <span className="text-sm text-neutral-600 font-medium">Popular:</span>
+                  {['Remote', 'Full-time', 'React', 'AI/ML', 'Product Manager'].map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setFilters(prev => ({ ...prev, query: tag }))}
+                      className="px-3 py-1 bg-neutral-100 hover:bg-primary hover:text-white text-neutral-700 rounded-full text-sm transition-colors"
+                    >
+                      {tag}
+                    </button>
+                  ))}
                 </div>
-                
-                <button 
-                  onClick={handleSearch}
-                  disabled={searchLoading}
-                  className="btn btn-primary btn-lg w-full"
-                >
-                  {searchLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin mr-2"></div>
-                      Searching...
-                    </>
-                  ) : (
-                    <>
-                      <Search className="w-5 h-5 mr-2" />
-                      Search Jobs
-                    </>
-                  )}
-                </button>
               </div>
             </div>
           </div>
