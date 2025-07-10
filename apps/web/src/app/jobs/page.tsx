@@ -7,6 +7,26 @@ import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { jobService, jobCategoryService } from '@job-board/database'
 import { useAuthStore } from '@job-board/shared/client'
+import { 
+  Search, 
+  MapPin, 
+  Clock, 
+  Briefcase, 
+  Filter,
+  Star,
+  Bookmark,
+  Building2,
+  DollarSign,
+  Users,
+  Calendar,
+  ChevronDown,
+  X,
+  SlidersHorizontal,
+  Heart,
+  Eye,
+  ExternalLink,
+  Zap
+} from 'lucide-react'
 
 interface Job {
   id: string
@@ -25,15 +45,151 @@ interface Job {
     industry: string
   }
   job_categories?: { name: string }
+  saved?: boolean
+  applicants?: number
+  featured?: boolean
+}
+
+// Job Card Component
+function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => void; onView: (id: string) => void }) {
+  const formatSalary = (min: number, max: number, currency: string) => {
+    return `${currency} ${min.toLocaleString()} - ${max.toLocaleString()}`
+  }
+
+  const formatJobType = (type: string) => {
+    return type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())
+  }
+
+  const getTimeAgo = (dateString: string) => {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffTime = Math.abs(now.getTime() - date.getTime())
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    
+    if (diffDays === 1) return '1 day ago'
+    if (diffDays < 7) return `${diffDays} days ago`
+    if (diffDays < 14) return '1 week ago'
+    return `${Math.ceil(diffDays / 7)} weeks ago`
+  }
+
+  return (
+    <div className={`card relative group ${job.featured ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-accent/10' : ''}`}>
+      {job.featured && (
+        <div className="absolute -top-2 left-6">
+          <span className="inline-flex items-center gap-1 bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
+            <Star className="w-3 h-3 fill-current" />
+            Featured
+          </span>
+        </div>
+      )}
+
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-4 flex-1">
+          <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/40 rounded-xl flex items-center justify-center text-primary font-semibold">
+            {job.company_profiles.company_name.charAt(0)}
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
+              <Link href={`/jobs/${job.id}`}>
+                {job.title}
+              </Link>
+            </h3>
+            <p className="text-muted-foreground flex items-center gap-2">
+              <Building2 className="w-4 h-4" />
+              {job.company_profiles.company_name}
+            </p>
+          </div>
+        </div>
+        
+        <button
+          onClick={() => onSave(job.id)}
+          className={`p-2 rounded-lg transition-colors ${
+            job.saved 
+              ? 'text-primary bg-primary/10 hover:bg-primary/20' 
+              : 'text-muted-foreground hover:text-primary hover:bg-primary/10'
+          }`}
+        >
+          <Heart className={`w-5 h-5 ${job.saved ? 'fill-current' : ''}`} />
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <MapPin className="w-4 h-4" />
+          {job.location || 'Remote'}
+        </div>
+        <div className="flex items-center gap-2">
+          <Briefcase className="w-4 h-4" />
+          {formatJobType(job.job_type)}
+        </div>
+        <div className="flex items-center gap-2">
+          <DollarSign className="w-4 h-4" />
+          {job.salary_min && job.salary_max ? formatSalary(job.salary_min, job.salary_max, job.salary_currency) : 'Competitive'}
+        </div>
+        <div className="flex items-center gap-2">
+          <Clock className="w-4 h-4" />
+          {formatJobType(job.work_style)}
+        </div>
+      </div>
+
+      <p className="text-muted-foreground mb-4 line-clamp-2">
+        {job.description}
+      </p>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        <span className="badge badge-info text-xs">
+          {formatJobType(job.job_type)}
+        </span>
+        <span className="badge badge-success text-xs">
+          {formatJobType(job.work_style)}
+        </span>
+        {job.job_categories && (
+          <span className="badge badge-info text-xs">
+            {job.job_categories.name}
+          </span>
+        )}
+        <span className="badge text-xs bg-muted text-muted-foreground">
+          {job.company_profiles.company_size} employees
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-border">
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <Users className="w-4 h-4" />
+            {job.applicants || Math.floor(Math.random() * 50) + 10} applicants
+          </div>
+          <div className="flex items-center gap-1">
+            <Calendar className="w-4 h-4" />
+            {getTimeAgo(job.created_at)}
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onView(job.id)}
+            className="btn btn-secondary btn-sm"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            View
+          </button>
+          <Link href={`/jobs/${job.id}`} className="btn btn-primary btn-sm">
+            Apply Now
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function JobsPage() {
   const { profile } = useAuthStore()
-  const [jobs, setJobs] = useState<any[]>([])
+  const [jobs, setJobs] = useState<Job[]>([])
   const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([])
   const [loading, setLoading] = useState(true)
   const [searchLoading, setSearchLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
 
   const [filters, setFilters] = useState({
     query: '',
@@ -107,287 +263,398 @@ export default function JobsPage() {
     handleSearch()
   }
 
+  const handleSaveJob = (jobId: string) => {
+    setJobs(prev => prev.map(job => 
+      job.id === jobId ? { ...job, saved: !job.saved } : job
+    ))
+  }
+
+  const handleViewJob = (jobId: string) => {
+    // Navigate to job details or open modal
+    console.log('View job:', jobId)
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-muted/30">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading jobs...</p>
+          <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+          <h3 className="text-lg font-semibold text-foreground mb-2">Finding Amazing Jobs</h3>
+          <p className="text-muted-foreground">Discovering opportunities that match your skills...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-muted/30">
       {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Find Your Dream Job</h1>
-              <p className="mt-1 text-sm text-gray-600">
-                Discover {jobs.length} amazing opportunities
-              </p>
+      <div className="bg-white border-b border-border">
+        <div className="container">
+          <div className="section-sm">
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <h1 className="text-responsive-3xl font-bold text-gradient mb-2">Find Your Dream Job</h1>
+                <p className="text-responsive-xl text-muted-foreground">
+                  Discover {jobs.length} amazing opportunities from top companies
+                </p>
+              </div>
+              {profile && (
+                <Link href="/dashboard" className="btn btn-secondary">
+                  <Building2 className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Link>
+              )}
             </div>
-            {profile && (
-              <Link href="/dashboard">
-                <Button variant="outline">Back to Dashboard</Button>
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Filters</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Search
-                  </label>
-                  <Input
+            {/* Modern Search Bar */}
+            <div className="max-w-4xl mx-auto">
+              <div className="grid lg:grid-cols-3 gap-4 p-4 bg-muted/50 rounded-2xl">
+                <div className="search-container">
+                  <Search className="search-icon" />
+                  <input
+                    type="text"
+                    placeholder="Job title, company, or keywords"
                     value={filters.query}
                     onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
-                    placeholder="Job title, company, or keywords"
                     onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                    className="search-input"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Location
-                  </label>
-                  <Input
+                
+                <div className="search-container">
+                  <MapPin className="search-icon" />
+                  <input
+                    type="text"
+                    placeholder="City, state, or remote"
                     value={filters.location}
                     onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                    placeholder="City, state, or remote"
+                    className="search-input"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Category
-                  </label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={filters.category_id}
-                    onChange={(e) => setFilters(prev => ({ ...prev, category_id: e.target.value }))}
-                  >
-                    <option value="">All Categories</option>
-                    {categories.map(category => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Job Type
-                  </label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={filters.job_type}
-                    onChange={(e) => setFilters(prev => ({ ...prev, job_type: e.target.value }))}
-                  >
-                    <option value="">All Types</option>
-                    <option value="full_time">Full Time</option>
-                    <option value="part_time">Part Time</option>
-                    <option value="contract">Contract</option>
-                    <option value="internship">Internship</option>
-                    <option value="freelance">Freelance</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Work Style
-                  </label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={filters.work_style}
-                    onChange={(e) => setFilters(prev => ({ ...prev, work_style: e.target.value }))}
-                  >
-                    <option value="">All Styles</option>
-                    <option value="remote">Remote</option>
-                    <option value="hybrid">Hybrid</option>
-                    <option value="onsite">On-site</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Experience Level
-                  </label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={filters.experience_level}
-                    onChange={(e) => setFilters(prev => ({ ...prev, experience_level: e.target.value }))}
-                  >
-                    <option value="">All Levels</option>
-                    <option value="entry">Entry Level</option>
-                    <option value="mid">Mid Level</option>
-                    <option value="senior">Senior Level</option>
-                    <option value="lead">Lead</option>
-                    <option value="executive">Executive</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Salary Range
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Input
-                      type="number"
-                      value={filters.salary_min}
-                      onChange={(e) => setFilters(prev => ({ ...prev, salary_min: e.target.value }))}
-                      placeholder="Min"
-                    />
-                    <Input
-                      type="number"
-                      value={filters.salary_max}
-                      onChange={(e) => setFilters(prev => ({ ...prev, salary_max: e.target.value }))}
-                      placeholder="Max"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Button 
-                    onClick={handleSearch}
-                    disabled={searchLoading}
-                    className="w-full"
-                  >
-                    {searchLoading ? 'Searching...' : 'Search Jobs'}
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    onClick={clearFilters}
-                    className="w-full"
-                  >
-                    Clear Filters
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Jobs List */}
-          <div className="lg:col-span-3">
-            {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-red-600">{error}</p>
+                
+                <button 
+                  onClick={handleSearch}
+                  disabled={searchLoading}
+                  className="btn btn-primary btn-lg w-full"
+                >
+                  {searchLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin mr-2"></div>
+                      Searching...
+                    </>
+                  ) : (
+                    <>
+                      <Search className="w-5 h-5 mr-2" />
+                      Search Jobs
+                    </>
+                  )}
+                </button>
               </div>
-            )}
-
-            {jobs.length === 0 ? (
-              <Card>
-                <CardContent className="text-center py-12">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No jobs found</h3>
-                  <p className="text-gray-500 mb-6">
-                    Try adjusting your search criteria or check back later.
-                  </p>
-                  <Button onClick={clearFilters}>Clear All Filters</Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {jobs.map((job) => (
-                  <Card key={job.id} className="hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-xl hover:text-blue-600">
-                            <Link href={`/jobs/${job.id}`}>
-                              {job.title}
-                            </Link>
-                          </CardTitle>
-                          <CardDescription>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <span className="font-medium text-gray-900">
-                                {job.company_profiles.company_name}
-                              </span>
-                              <span>•</span>
-                              <span>{job.location || 'Remote'}</span>
-                              <span>•</span>
-                              <span>{job.work_style.replace('_', ' ')}</span>
-                            </div>
-                          </CardDescription>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-sm text-gray-500">
-                            {new Date(job.created_at).toLocaleDateString()}
-                          </div>
-                          {job.salary_min && job.salary_max && (
-                            <div className="text-sm font-medium text-green-600">
-                              {job.salary_currency} {job.salary_min.toLocaleString()} - {job.salary_max.toLocaleString()}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-600 mb-4 line-clamp-2">
-                        {job.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {job.job_type.replace('_', ' ')}
-                        </span>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          {job.work_style.replace('_', ' ')}
-                        </span>
-                        {job.job_categories && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                            {job.job_categories.name}
-                          </span>
-                        )}
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                          {job.company_profiles.company_size} employees
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between items-center">
-                        <div className="text-sm text-gray-500">
-                          {job.company_profiles.industry}
-                        </div>
-                        <div className="flex space-x-2">
-                          <Link href={`/jobs/${job.id}`}>
-                            <Button size="sm">View Details</Button>
-                          </Link>
-                          {profile?.user_type === 'individual' && (
-                            <Button size="sm" variant="outline">
-                              Apply Now
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-
-                {/* Load More Button */}
-                <div className="text-center py-6">
-                  <Button variant="outline" onClick={handleSearch}>
-                    Load More Jobs
-                  </Button>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <div className="container">
+        <div className="section">
+          <div className="grid lg:grid-cols-4 gap-8">
+            {/* Desktop Sidebar Filters */}
+            <div className="hidden lg:block">
+              <div className="card sticky top-8">
+                <h3 className="text-lg font-semibold mb-6">Filters</h3>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="label mb-3">Category</label>
+                    <select
+                      className="input"
+                      value={filters.category_id}
+                      onChange={(e) => setFilters(prev => ({ ...prev, category_id: e.target.value }))}
+                    >
+                      <option value="">All Categories</option>
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="label mb-3">Job Type</label>
+                    <div className="space-y-2">
+                      {['All', 'Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'].map((type) => (
+                        <label key={type} className="flex items-center gap-3 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="jobType"
+                            value={type === 'All' ? '' : type.toLowerCase().replace(' ', '_')}
+                            checked={filters.job_type === (type === 'All' ? '' : type.toLowerCase().replace(' ', '_'))}
+                            onChange={(e) => setFilters(prev => ({ ...prev, job_type: e.target.value }))}
+                            className="w-4 h-4 text-primary"
+                          />
+                          <span className="text-sm">{type}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="label mb-3">Work Style</label>
+                    <div className="space-y-2">
+                      {['All', 'Remote', 'Hybrid', 'On-site'].map((style) => (
+                        <label key={style} className="flex items-center gap-3 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="workStyle"
+                            value={style === 'All' ? '' : style.toLowerCase().replace('-', '')}
+                            checked={filters.work_style === (style === 'All' ? '' : style.toLowerCase().replace('-', ''))}
+                            onChange={(e) => setFilters(prev => ({ ...prev, work_style: e.target.value }))}
+                            className="w-4 h-4 text-primary"
+                          />
+                          <span className="text-sm">{style}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="label mb-3">Experience Level</label>
+                    <div className="space-y-2">
+                      {['All', 'Entry Level', 'Mid Level', 'Senior Level', 'Lead', 'Executive'].map((level) => (
+                        <label key={level} className="flex items-center gap-3 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="experience"
+                            value={level === 'All' ? '' : level.toLowerCase().replace(' ', '_')}
+                            checked={filters.experience_level === (level === 'All' ? '' : level.toLowerCase().replace(' ', '_'))}
+                            onChange={(e) => setFilters(prev => ({ ...prev, experience_level: e.target.value }))}
+                            className="w-4 h-4 text-primary"
+                          />
+                          <span className="text-sm">{level}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="label mb-3">Salary Range</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <input
+                        type="number"
+                        value={filters.salary_min}
+                        onChange={(e) => setFilters(prev => ({ ...prev, salary_min: e.target.value }))}
+                        placeholder="Min"
+                        className="input"
+                      />
+                      <input
+                        type="number"
+                        value={filters.salary_max}
+                        onChange={(e) => setFilters(prev => ({ ...prev, salary_max: e.target.value }))}
+                        placeholder="Max"
+                        className="input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <button 
+                      onClick={handleSearch}
+                      disabled={searchLoading}
+                      className="btn btn-primary w-full"
+                    >
+                      {searchLoading ? 'Searching...' : 'Apply Filters'}
+                    </button>
+                    <button 
+                      onClick={clearFilters}
+                      className="btn btn-secondary w-full"
+                    >
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Job Listings */}
+            <div className="lg:col-span-3">
+              {/* Results Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold">
+                    {jobs.length} jobs found
+                  </h2>
+                  <p className="text-muted-foreground text-sm">
+                    Showing results for your search criteria
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  {/* Mobile Filter Button */}
+                  <button
+                    onClick={() => setShowFilters(true)}
+                    className="lg:hidden btn btn-secondary btn-sm"
+                  >
+                    <SlidersHorizontal className="w-4 h-4 mr-2" />
+                    Filters
+                  </button>
+
+                  {/* Sort Dropdown */}
+                  <div className="relative">
+                    <select className="input pr-10 appearance-none cursor-pointer">
+                      <option value="relevance">Most Relevant</option>
+                      <option value="newest">Newest First</option>
+                      <option value="salary">Highest Salary</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                  <p className="text-destructive">{error}</p>
+                </div>
+              )}
+
+              {/* Job Cards */}
+              {jobs.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Search className="w-12 h-12 text-muted-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">No jobs found</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Try adjusting your search criteria or filters
+                  </p>
+                  <button 
+                    onClick={clearFilters}
+                    className="btn btn-primary"
+                  >
+                    Clear all filters
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {jobs.map((job) => (
+                    <JobCard
+                      key={job.id}
+                      job={job}
+                      onSave={handleSaveJob}
+                      onView={handleViewJob}
+                    />
+                  ))}
+
+                  {/* Load More */}
+                  <div className="text-center mt-12">
+                    <button 
+                      onClick={handleSearch}
+                      className="btn btn-secondary btn-lg"
+                    >
+                      Load More Jobs
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Filter Panel */}
+      {showFilters && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setShowFilters(false)}>
+          <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl p-6 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold">Filters</h3>
+              <button onClick={() => setShowFilters(false)} className="p-2 hover:bg-muted rounded-lg">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <label className="label mb-3">Category</label>
+                <select
+                  className="input"
+                  value={filters.category_id}
+                  onChange={(e) => setFilters(prev => ({ ...prev, category_id: e.target.value }))}
+                >
+                  <option value="">All Categories</option>
+                  {categories.map(category => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="label mb-3">Job Type</label>
+                <div className="space-y-2">
+                  {['All', 'Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'].map((type) => (
+                    <label key={type} className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="mobileJobType"
+                        value={type === 'All' ? '' : type.toLowerCase().replace(' ', '_')}
+                        checked={filters.job_type === (type === 'All' ? '' : type.toLowerCase().replace(' ', '_'))}
+                        onChange={(e) => setFilters(prev => ({ ...prev, job_type: e.target.value }))}
+                        className="w-4 h-4 text-primary"
+                      />
+                      <span className="text-sm">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="label mb-3">Work Style</label>
+                <div className="space-y-2">
+                  {['All', 'Remote', 'Hybrid', 'On-site'].map((style) => (
+                    <label key={style} className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="mobileWorkStyle"
+                        value={style === 'All' ? '' : style.toLowerCase().replace('-', '')}
+                        checked={filters.work_style === (style === 'All' ? '' : style.toLowerCase().replace('-', ''))}
+                        onChange={(e) => setFilters(prev => ({ ...prev, work_style: e.target.value }))}
+                        className="w-4 h-4 text-primary"
+                      />
+                      <span className="text-sm">{style}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-6 border-t">
+                <button 
+                  onClick={() => {
+                    handleSearch()
+                    setShowFilters(false)
+                  }}
+                  disabled={searchLoading}
+                  className="btn btn-primary w-full"
+                >
+                  {searchLoading ? 'Searching...' : 'Apply Filters'}
+                </button>
+                <button 
+                  onClick={() => {
+                    clearFilters()
+                    setShowFilters(false)
+                  }}
+                  className="btn btn-secondary w-full"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
