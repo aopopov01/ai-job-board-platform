@@ -29,12 +29,11 @@ function HeroSection() {
           </div>
           
           <h1 className="text-responsive-4xl font-bold text-gradient mb-6 animate-fade-in-up">
-            Where Great Careers Begin
+            Revolutionize Your Career with AI
           </h1>
           
           <p className="text-responsive-xl text-muted-foreground mb-8 max-w-2xl animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-            Connect with top companies and discover opportunities that match your skills, ambitions, and values. 
-            Our AI-powered platform makes job searching smarter and more effective.
+            Experience the future of job searching with TalentAIze. Our advanced AI algorithms analyze your skills, preferences, and career goals to match you with perfect opportunities and optimize your professional journey.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md animate-fade-in-up" style={{animationDelay: '0.4s'}}>
@@ -70,10 +69,10 @@ function HeroSection() {
 // Stats Section Component
 function StatsSection() {
   const stats = [
-    { number: '50K+', label: 'Active Jobs', icon: Briefcase },
-    { number: '25K+', label: 'Companies', icon: Users },
-    { number: '100K+', label: 'Job Seekers', icon: TrendingUp },
-    { number: '95%', label: 'Success Rate', icon: Star },
+    { number: '50K+', label: 'AI-Matched Jobs', icon: Briefcase },
+    { number: '25K+', label: 'AI-Powered Companies', icon: Users },
+    { number: '1M+', label: 'AI-Optimized Careers', icon: TrendingUp },
+    { number: '98%', label: 'AI Match Accuracy', icon: Star },
   ]
 
   return (
@@ -98,8 +97,8 @@ function FeaturesSection() {
   const features = [
     {
       icon: Target,
-      title: 'Smart Matching',
-      description: 'Our AI analyzes your skills, experience, and preferences to find the perfect job matches automatically.'
+      title: 'AI-Powered Matching',
+      description: 'Advanced machine learning algorithms analyze your skills, experience, and career goals to deliver hyper-personalized job recommendations.'
     },
     {
       icon: Shield,
@@ -113,13 +112,13 @@ function FeaturesSection() {
     },
     {
       icon: Zap,
-      title: 'Instant Alerts',
-      description: 'Get notified immediately when new jobs match your criteria. Never miss an opportunity.'
+      title: 'AI Instant Alerts',
+      description: 'Intelligent notifications powered by AI predict and alert you about opportunities before they become competitive.'
     },
     {
       icon: Users,
-      title: 'Company Insights',
-      description: 'Get detailed information about company culture, values, and employee reviews before applying.'
+      title: 'AI Company Intelligence',
+      description: 'AI-powered company analysis provides deep insights into culture, growth potential, and hiring patterns to help you make informed decisions.'
     },
     {
       icon: Award,
@@ -184,7 +183,7 @@ function HowItWorksSection() {
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-responsive-3xl font-bold text-gradient mb-6">
-            How TalentFlow Works
+            How TalentAIze Works
           </h2>
           <p className="text-responsive-xl text-muted-foreground max-w-2xl mx-auto">
             Get started in minutes and let our AI do the heavy lifting to find your next opportunity.
@@ -217,7 +216,7 @@ function TestimonialsSection() {
       company: "TechCorp"
     },
     {
-      quote: "As a hiring manager, TalentFlow has transformed how we find candidates. The quality of matches is outstanding.",
+      quote: "As a hiring manager, TalentAIze has revolutionized how we find candidates. The AI-powered matches are extraordinarily accurate.",
       author: "Michael Rodriguez",
       role: "Head of Talent",
       company: "Innovation Labs"
@@ -238,7 +237,7 @@ function TestimonialsSection() {
             Loved by Professionals Worldwide
           </h2>
           <p className="text-responsive-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of professionals who have found their dream jobs through TalentFlow.
+            Join thousands of professionals who have found their dream jobs through TalentAIze.
           </p>
         </div>
         
@@ -278,7 +277,7 @@ function CTASection() {
             Ready to Transform Your Career?
           </h2>
           <p className="text-responsive-xl opacity-90 mb-8">
-            Join thousands of professionals who have already discovered their dream jobs through TalentFlow. 
+            Join thousands of professionals who have already discovered their dream jobs through TalentAIze. 
             Your next opportunity is just a click away.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -306,7 +305,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-8">
               <Link href="/" className="text-2xl font-bold text-gradient">
-                TalentFlow
+                TalentAIze
               </Link>
               <div className="hidden md:flex items-center gap-6">
                 <Link href="/jobs" className="nav-link">Jobs</Link>
@@ -381,7 +380,7 @@ export default function LandingPage() {
             
             <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-gray-400">
-                © 2025 TalentFlow. All rights reserved.
+                © 2025 TalentAIze. All rights reserved.
               </div>
               <div className="flex items-center gap-6 text-gray-400 text-sm">
                 <span>Made with ❤️ for job seekers worldwide</span>
