@@ -1,5 +1,6 @@
 // Comprehensive error handling and logging system
 import React from 'react'
+import { logger, toError } from './logger'
 
 export enum ErrorType {
   VALIDATION = 'VALIDATION',
@@ -75,21 +76,21 @@ export class ErrorLogger {
       this.logs = this.logs.slice(-this.maxLogs)
     }
 
-    // Console logging with different levels
+    // Use proper logging with different levels
     switch (error.type) {
       case ErrorType.VALIDATION:
-        console.warn('Validation Error:', error.message, error.context)
+        logger.warn('Validation Error', error.context)
         break
       case ErrorType.AUTHENTICATION:
       case ErrorType.AUTHORIZATION:
-        console.error('Auth Error:', error.message, error.context)
+        logger.error('Auth Error', error.context, error)
         break
       case ErrorType.DATABASE:
       case ErrorType.API:
-        console.error('System Error:', error.message, error.context)
+        logger.error('System Error', error.context, error)
         break
       default:
-        console.error('Unknown Error:', error.message, error.context)
+        logger.error('Unknown Error', error.context, error)
     }
 
     // In production, send to monitoring service
@@ -114,7 +115,7 @@ export class ErrorLogger {
         })
       })
     } catch (monitoringError) {
-      console.error('Failed to send error to monitoring:', monitoringError)
+      logger.error('Failed to send error to monitoring', {}, toError(monitoringError))
     }
   }
 

@@ -6,6 +6,7 @@ import { Button } from '@job-board/ui'
 import { messageService } from '@job-board/database'
 import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
 import { Input } from '@job-board/ui'
+import { logComponentError, toError } from '@/lib/logger'
 
 interface MessageCandidateButtonProps {
   candidateId: string
@@ -188,7 +189,7 @@ export function QuickMessageButton({
       setSuccess(true)
       setTimeout(() => setSuccess(false), 2000)
     } catch (error) {
-      console.error('Failed to send quick message:', error)
+      logComponentError('MessageCandidateButton', toError(error), { action: 'sendQuickMessage' })
     } finally {
       setSending(false)
     }

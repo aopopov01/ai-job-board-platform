@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { logger, toError } from './logger'
 
 // Server-side client with service role key
 export const supabase = createClient(
@@ -13,7 +14,8 @@ export function createSupabaseRouteHandlerClient() {
   try {
     return createRouteHandlerClient({ cookies })
   } catch (error) {
-    console.warn('Failed to create route handler client, using fallback:', error)
+    const err = toError(error)
+    logger.warn('Failed to create route handler client, using fallback', { error: err.message })
     // Fallback to regular client if route handler client fails
     return createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mock-project.supabase.co',

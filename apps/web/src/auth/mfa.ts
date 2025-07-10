@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { authenticator } from 'otplib'
 import { randomBytes } from 'crypto'
+import { logger, toError } from '@/lib/logger'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mock-project.supabase.co',
@@ -18,7 +19,7 @@ export class MFAService {
       
       return data?.enabled || false
     } catch (error) {
-      console.error('Error checking MFA status:', error)
+      logger.error('Error checking MFA status', {}, toError(error))
       return false
     }
   }
@@ -65,7 +66,7 @@ export class MFAService {
       
       return { secret, qrCode, backupCodes }
     } catch (error) {
-      console.error('Error setting up MFA:', error)
+      logger.error('Error setting up MFA', {}, toError(error))
       throw error
     }
   }
@@ -101,7 +102,7 @@ export class MFAService {
       
       return isValid
     } catch (error) {
-      console.error('Error verifying MFA token:', error)
+      logger.error('Error verifying MFA token', {}, toError(error))
       return false
     }
   }
@@ -128,7 +129,7 @@ export class MFAService {
       
       return true
     } catch (error) {
-      console.error('Error disabling MFA:', error)
+      logger.error('Error disabling MFA', {}, toError(error))
       return false
     }
   }
@@ -164,7 +165,7 @@ export class MFAService {
       
       return backupCodes
     } catch (error) {
-      console.error('Error regenerating backup codes:', error)
+      logger.error('Error regenerating backup codes', {}, toError(error))
       throw error
     }
   }

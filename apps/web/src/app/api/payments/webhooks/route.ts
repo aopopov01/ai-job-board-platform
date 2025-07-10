@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
+import { logger, toError } from '@/lib/logger'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock-stripe-key', {
   apiVersion: '2024-06-20'
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
     try {
       event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     } catch (err: any) {
-      console.error('Webhook signature verification failed:', err.message)
+      logger.error('Webhook signature verification failed', { error: err.message })
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
@@ -49,12 +50,12 @@ export async function POST(req: NextRequest) {
         await handleSubscriptionDeleted(event.data.object as Stripe.Subscription)
         break
       default:
-        console.log(`Unhandled event type ${event.type}`)
+        logger.info('Unhandled webhook event type', { eventType: event.type })
     }
 
     return NextResponse.json({ received: true })
   } catch (error) {
-    console.error('Webhook error:', error)
+    logger.error('Webhook error', {}, toError(error))
     return NextResponse.json({ error: 'Webhook error' }, { status: 500 })
   }
 }
@@ -63,7 +64,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const { user_id, plan_id, billing_cycle } = session.metadata || {}
   
   if (!user_id || !plan_id || !billing_cycle) {
-    console.error('Missing metadata in checkout session')
+    logger.error('Missing metadata in checkout session', { metadata: session.metadata })
     return
   }
 

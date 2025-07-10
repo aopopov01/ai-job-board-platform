@@ -6,6 +6,7 @@ import { messageService } from '@job-board/database'
 import { Card, CardContent } from '@job-board/ui'
 import { Button } from '@job-board/ui'
 import Link from 'next/link'
+import { logComponentError, toError } from '@/lib/logger'
 
 interface NotificationMessage {
   id: string
@@ -48,7 +49,7 @@ export default function MessageNotifications() {
           recipient: msg.recipient || { first_name: 'Unknown', last_name: 'User' }
         })))
       } catch (error) {
-        console.error('Error loading unread messages:', error)
+        logComponentError('MessageNotifications', toError(error), { action: 'loadUnreadMessages' })
       }
     }
 
@@ -190,7 +191,7 @@ export function useMessageNotifications() {
         const count = await messageService.getUnreadCount(user.id)
         setUnreadCount(count)
       } catch (error) {
-        console.error('Error loading unread count:', error)
+        logComponentError('MessageNotifications', toError(error), { action: 'loadUnreadCount' })
       }
     }
 

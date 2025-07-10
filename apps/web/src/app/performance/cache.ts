@@ -1,4 +1,5 @@
 // Performance optimization utilities
+import { logger } from '@/lib/logger'
 export class PerformanceCache {
   private cache = new Map<string, { data: any; timestamp: number; ttl: number }>()
   
@@ -97,7 +98,7 @@ export class PerformanceMonitor {
         this.metrics[label] = this.metrics[label].slice(-100)
       }
       
-      console.log(`${label}: ${duration.toFixed(2)}ms`)
+      logger.debug('Performance measurement', { label, duration: `${duration.toFixed(2)}ms` })
     }
   }
   

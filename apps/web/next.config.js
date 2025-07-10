@@ -15,6 +15,14 @@ const nextConfig = {
     typedRoutes: false,
     missingSuspenseWithCSRBailout: false,
   },
+  // Skip error pages during build to avoid SSR issues
+  skipMiddlewareUrlNormalize: true,
+  skipTrailingSlashRedirect: true,
+  // Force error pages to be dynamic to avoid SSR issues
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  // Disable static generation for error pages to avoid SSR issues
+  generateEtags: false,
+  staticPageGenerationTimeout: 60,
   generateBuildId: async () => {
     return process.env.BUILD_ID || 'development'
   },

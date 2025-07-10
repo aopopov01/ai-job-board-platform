@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { logger, toError } from '@/lib/logger'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mock-project.supabase.co',
@@ -9,7 +10,7 @@ export class IntegrationUtils {
   static async handleOAuthCallback(provider: string, code: string, state: string) {
     try {
       // Mock implementation for OAuth callback handling
-      console.log(`Handling ${provider} OAuth callback with code: ${code}, state: ${state}`)
+      logger.info('Handling OAuth callback', { provider, code, state })
       
       // In a real implementation, you would:
       // 1. Validate the state parameter
@@ -29,14 +30,14 @@ export class IntegrationUtils {
       
       return { success: true }
     } catch (error) {
-      console.error('OAuth callback error:', error)
+      logger.error('OAuth callback error', {}, toError(error))
       throw error
     }
   }
 
   static async getOAuthUrl(integrationType: string, userId: string) {
     // Mock implementation for getting OAuth URL
-    console.log(`Getting OAuth URL for ${integrationType} and user ${userId}`)
+    logger.info('Getting OAuth URL', { integrationType, userId })
     
     const baseUrls = {
       github: 'https://github.com/login/oauth/authorize',
@@ -63,7 +64,7 @@ export class IntegrationUtils {
 
   static async disconnectIntegration(userId: string, integrationType: string) {
     // Mock implementation for disconnecting integration
-    console.log(`Disconnecting ${integrationType} integration for user ${userId}`)
+    logger.info('Disconnecting integration', { integrationType, userId })
     
     await supabase
       .from('integrations')
@@ -76,7 +77,7 @@ export class IntegrationUtils {
 
   static async syncIntegration(userId: string, integrationType: string) {
     // Mock implementation for syncing integration
-    console.log(`Syncing ${integrationType} integration for user ${userId}`)
+    logger.info('Syncing integration', { integrationType, userId })
     
     // In a real implementation, you would:
     // 1. Get the stored access token
@@ -89,7 +90,7 @@ export class IntegrationUtils {
 
   static async getIntegrationStatus(userId: string) {
     // Mock implementation for getting integration status
-    console.log(`Getting integration status for user ${userId}`)
+    logger.info('Getting integration status', { userId })
     
     const { data: integrations } = await supabase
       .from('integrations')
@@ -101,13 +102,13 @@ export class IntegrationUtils {
 
   static async refreshToken(provider: string, refreshToken: string) {
     // Mock implementation for token refresh
-    console.log(`Refreshing ${provider} token`)
+    logger.info('Refreshing token', { provider })
     return { access_token: 'new-mock-access-token' }
   }
 
   static async revokeIntegration(provider: string, userId: string) {
     // Mock implementation for revoking integration
-    console.log(`Revoking ${provider} integration for user ${userId}`)
+    logger.info('Revoking integration', { provider, userId })
     
     await supabase
       .from('integrations')

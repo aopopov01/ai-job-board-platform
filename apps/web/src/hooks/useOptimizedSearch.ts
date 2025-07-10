@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { debounce, globalCache, performanceMonitor } from '../app/performance/cache'
 import { jobService } from '@job-board/database'
+import { logger } from '@/lib/logger'
 
 interface SearchFilters {
   query?: string
@@ -32,7 +33,7 @@ export function useOptimizedSearch() {
       if (cached) {
         setResults(cached)
         setLoading(false)
-        console.log('Search results served from cache')
+        logger.debug('Search results served from cache', { cacheKey, resultCount: cached.length })
         return
       }
       

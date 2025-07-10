@@ -1,12 +1,9 @@
 'use client'
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
+// Force dynamic rendering for error pages
+export const dynamic = 'force-dynamic'
+
+export default function GlobalError() {
   return (
     <html>
       <body>
@@ -19,19 +16,19 @@ export default function GlobalError({
         }}>
           <div style={{ textAlign: 'center' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>Something went wrong!</h2>
-            <button
-              onClick={() => reset()}
+            <a
+              href="/"
               style={{
+                display: 'inline-block',
                 padding: '0.5rem 1rem',
                 backgroundColor: '#3b82f6',
                 color: 'white',
-                border: 'none',
-                borderRadius: '0.25rem',
-                cursor: 'pointer'
+                textDecoration: 'none',
+                borderRadius: '0.25rem'
               }}
             >
-              Try again
-            </button>
+              Go Home
+            </a>
           </div>
         </div>
       </body>

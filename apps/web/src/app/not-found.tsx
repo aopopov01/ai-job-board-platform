@@ -1,3 +1,6 @@
+// Force dynamic rendering for not-found page to avoid SSR issues
+export const dynamic = 'force-dynamic'
+
 export default function NotFound() {
   return (
     <html>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, StyleSheet } from 'react-native'
 import { router } from 'expo-router'
-import { useSignUp } from '@job-board/shared'
+import { useSignUp } from '@job-board/shared/client'
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('')

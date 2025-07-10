@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { logComponentError, toError } from '@/lib/logger'
 import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
 import { Badge } from '@job-board/ui'
 import { Button } from '@job-board/ui'
@@ -82,7 +83,7 @@ export default function SecurityDashboard() {
         setMetrics(data)
       }
     } catch (error) {
-      console.error('Failed to fetch security metrics:', error)
+      logComponentError('SecurityDashboard', toError(error), { action: 'fetchSecurityMetrics' })
     }
   }
 
@@ -95,7 +96,7 @@ export default function SecurityDashboard() {
         setThreatAnalysis(data)
       }
     } catch (error) {
-      console.error('Failed to fetch threat analysis:', error)
+      logComponentError('SecurityDashboard', toError(error), { action: 'fetchThreatAnalysis' })
     }
   }
 
@@ -133,7 +134,7 @@ export default function SecurityDashboard() {
         await refreshData()
       }
     } catch (error) {
-      console.error('Failed to resolve alert:', error)
+      logComponentError('SecurityDashboard', toError(error), { action: 'resolveAlert' })
     }
   }
 

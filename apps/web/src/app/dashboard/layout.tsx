@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useAuthStore } from '@job-board/shared/client'
 import { Button } from '@job-board/ui'
 import { useSignOut } from '@job-board/shared/client'
+import { logComponentError, toError } from '@/lib/logger'
 
 export default function DashboardLayout({
   children,
@@ -33,7 +34,7 @@ export default function DashboardLayout({
       await signOut()
       router.push('/')
     } catch (error) {
-      console.error('Error signing out:', error)
+      logComponentError('DashboardLayout', toError(error), { action: 'signOut' })
     }
   }
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Stack } from 'expo-router'
-import { useAuthListener } from '@job-board/shared'
+import { useAuthListener } from '@job-board/shared/client'
 
 export default function RootLayout() {
   // Initialize auth listener

@@ -1,51 +1,55 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    /* TalentFlow Design System Variables */
+    --primary: 214 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 9% 22%;
+    --muted: 220 14% 97%;
+    --muted-foreground: 220 8% 42%;
+    --accent: 214 100% 97%;
+    --accent-foreground: 214 100% 27%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 0 0% 100%;
+    --ring: 214 100% 60%;
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --foreground: 220 13% 9%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    --primary: 214 100% 60%;
+    --primary-foreground: 220 13% 9%;
+    --secondary: 220 13% 17%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 13% 17%;
+    --muted-foreground: 220 8% 65%;
+    --accent: 220 13% 17%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 98%;
+    --border: 220 13% 17%;
+    --input: 220 13% 17%;
+    --ring: 214 100% 60%;
+    --background: 220 13% 9%;
+    --foreground: 0 0% 98%;
   }
 }
 
@@ -53,7 +57,345 @@
   * {
     @apply border-border;
   }
+
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Typography Improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl lg:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl lg:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg lg:text-xl;
+  }
+
+  h6 {
+    @apply text-base lg:text-lg;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground;
+  }
+
+  /* Selection styles */
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+
+  /* Smooth transitions for theme switching */
+  * {
+    @apply transition-colors duration-150;
+  }
+}
+
+@layer components {
+  /* Layout Components */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .section {
+    @apply py-12 lg:py-20;
+  }
+
+  .section-sm {
+    @apply py-8 lg:py-12;
+  }
+
+  /* Loading States */
+  .skeleton {
+    @apply animate-pulse bg-muted rounded;
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer::after {
+    @apply absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    content: '';
+  }
+
+  /* Status Badges */
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success/10 text-success;
+  }
+
+  .badge-warning {
+    @apply bg-warning/10 text-warning;
+  }
+
+  .badge-error {
+    @apply bg-destructive/10 text-destructive;
+  }
+
+  .badge-info {
+    @apply bg-primary/10 text-primary;
+  }
+
+  /* Job Card Specific Styles */
+  .job-card {
+    @apply card card-job relative overflow-hidden;
+  }
+
+  .job-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary-400 to-primary-600;
+  }
+
+  /* Form Improvements */
+  .form-group {
+    @apply space-y-2;
+  }
+
+  .label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .form-error {
+    @apply text-sm text-destructive;
+  }
+
+  .form-help {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground;
+  }
+
+  .nav-link.active {
+    @apply text-foreground;
+  }
+
+  .nav-link.active::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full;
+  }
+
+  /* Feature Cards */
+  .feature-card {
+    @apply card p-8 text-center group;
+  }
+
+  .feature-card:hover {
+    @apply border-primary/20 shadow-xl;
+  }
+
+  .feature-icon {
+    @apply w-12 h-12 mx-auto mb-4 p-2 bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-all duration-300;
+  }
+
+  /* Stat Cards */
+  .stat-card {
+    @apply card p-6 text-center bg-gradient-to-br from-primary/5 to-accent/50;
+  }
+
+  .stat-number {
+    @apply text-3xl font-bold text-primary mb-2;
+  }
+
+  .stat-label {
+    @apply text-sm text-muted-foreground uppercase tracking-wider;
+  }
+
+  /* CTA Sections */
+  .cta-section {
+    @apply relative overflow-hidden bg-gradient-to-br from-primary to-primary-600 text-white;
+  }
+
+  .cta-section::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform skew-y-1;
+  }
+
+  /* Testimonial Cards */
+  .testimonial-card {
+    @apply card p-8 bg-gradient-to-br from-white to-primary/5;
+  }
+
+  .testimonial-quote {
+    @apply text-lg italic text-muted-foreground mb-6;
+  }
+
+  .testimonial-author {
+    @apply flex items-center gap-4;
+  }
+
+  .testimonial-avatar {
+    @apply w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-600;
+  }
+
+  /* Dashboard Widgets */
+  .widget {
+    @apply card p-6 bg-gradient-to-br from-white to-muted/50;
+  }
+
+  .widget-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .widget-title {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .widget-action {
+    @apply text-sm text-primary hover:text-primary-600 transition-colors;
+  }
+
+  /* Search Components */
+  .search-container {
+    @apply relative;
+  }
+
+  .search-input {
+    @apply input pl-10 pr-4;
+  }
+
+  .search-icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground;
+  }
+
+  .search-results {
+    @apply absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow-lg max-h-64 overflow-auto z-50;
+  }
+
+  .search-result-item {
+    @apply px-4 py-3 hover:bg-muted cursor-pointer transition-colors;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      @apply p-4;
+    }
+
+    .section {
+      @apply py-8;
+    }
+
+    .container {
+      @apply px-4;
+    }
+  }
+}
+
+@layer utilities {
+  /* Custom utilities */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent;
+  }
+
+  .border-gradient {
+    @apply relative;
+  }
+
+  .border-gradient::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg p-px bg-gradient-to-r from-primary/20 to-primary/60;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in-up {
+    @apply animate-slide-up;
+  }
+
+  .animate-fade-in-down {
+    @apply animate-slide-down;
+  }
+
+  .animate-scale-in {
+    @apply animate-scale-in;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-xl {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  .text-responsive-4xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+
+  /* Spacing utilities */
+  .space-y-responsive {
+    @apply space-y-4 lg:space-y-6;
+  }
+
+  .gap-responsive {
+    @apply gap-4 lg:gap-6;
+  }
+
+  .p-responsive {
+    @apply p-4 lg:p-6;
+  }
+
+  /* Grid utilities */
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }

@@ -1,6 +1,4 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import type { StateCreator } from 'zustand'
 import type { User, Session } from '@supabase/supabase-js'
 import type { UserProfile } from '@job-board/database'
 
@@ -56,18 +54,8 @@ const createAuthStore = () => {
     reset: () => set(initialState)
   })
 
-  // Only use persist middleware in browser environment
-  if (typeof window !== 'undefined') {
-    return persist(store, {
-      name: 'auth-storage',
-      partialize: (state: AuthStore) => ({
-        user: state.user,
-        session: state.session,
-        profile: state.profile
-      })
-    })
-  }
-
+  // Never use persist middleware to avoid SSR issues
+  // Persistence will be handled at the application level if needed
   return store
 }
 

@@ -21,6 +21,7 @@ import {
   EyeOff
 } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
+import { logComponentError, toError } from '@/lib/logger'
 
 interface MFAStatus {
   enabled: boolean
@@ -58,7 +59,7 @@ export default function MFASetup() {
         setStatus(data)
       }
     } catch (error) {
-      console.error('Failed to fetch MFA status:', error)
+      logComponentError('MFASetup', toError(error), { action: 'fetchStatus' })
     } finally {
       setLoading(false)
     }
@@ -181,7 +182,7 @@ export default function MFASetup() {
       setCopiedCodes(true)
       setTimeout(() => setCopiedCodes(false), 2000)
     } catch (error) {
-      console.error('Failed to copy backup codes:', error)
+      logComponentError('MFASetup', toError(error), { action: 'copyBackupCodes' })
     }
   }
 

@@ -9,9 +9,7 @@ export { subscriptionPlans, getSubscriptionPlan, getSubscriptionPlansByUserType 
 // Export services
 export * from './src/services/paymentService'
 
-// Export hooks
-export { useAuthListener, useSignIn, useSignUp, useSignOut } from './hooks/useAuth'
-export { useAuth, useAuthActions } from './stores/auth'
+// Client-side hooks and stores are exported separately in ./client.ts to avoid SSR issues
 
 // Export constants
 export const APP_NAME = 'Job Board Platform'
