@@ -1,102 +1,101 @@
-import React, { useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { useRouter } from 'expo-router'
-import { useAuthStore } from '@job-board/shared'
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
 
-export default function App() {
-  const { user, profile, initialized, loading } = useAuthStore()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (initialized && !loading) {
-      if (user && profile) {
-        router.replace('/dashboard')
-      }
-    }
-  }, [user, profile, initialized, loading])
-
-  if (loading || !initialized) {
-    return (
-      <View className="flex-1 justify-center items-center bg-white">
-        <View className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></View>
-        <Text className="mt-4 text-gray-600">Loading...</Text>
-        <StatusBar style="auto" />
-      </View>
-    )
-  }
-
+export default function WelcomeScreen() {
   return (
-    <View className="flex-1 bg-gradient-to-br from-blue-50 to-white">
-      <View className="flex-1 justify-center items-center px-8">
-        {/* Logo/Icon */}
-        <View className="mb-8">
-          <View className="w-24 h-24 bg-blue-600 rounded-full items-center justify-center mb-4">
-            <Text className="text-white text-3xl font-bold">JB</Text>
-          </View>
-          <Text className="text-3xl font-bold text-gray-900 text-center">
-            Job Board Platform
-          </Text>
-          <Text className="text-gray-600 text-center mt-2">
-            AI-powered job matching for the modern workforce
-          </Text>
-        </View>
-
-        {/* Features */}
-        <View className="mb-12 space-y-4">
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 bg-blue-600 rounded-full mr-3"></View>
-            <Text className="text-gray-700">Find jobs with AI-powered matching</Text>
-          </View>
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 bg-blue-600 rounded-full mr-3"></View>
-            <Text className="text-gray-700">Connect with top employers</Text>
-          </View>
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 bg-blue-600 rounded-full mr-3"></View>
-            <Text className="text-gray-700">Track your applications</Text>
-          </View>
-        </View>
-
-        {/* Action Buttons */}
-        <View className="w-full space-y-4">
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Welcome to Job Board</Text>
+        <Text style={styles.subtitle}>Find your next opportunity or discover top talent</Text>
+        
+        <View style={styles.buttons}>
           <TouchableOpacity
-            className="w-full bg-blue-600 py-4 rounded-lg"
-            onPress={() => router.push('/auth/register')}
-          >
-            <Text className="text-white text-center font-semibold text-lg">
-              Get Started
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            className="w-full border border-blue-600 py-4 rounded-lg"
+            style={styles.primaryButton}
             onPress={() => router.push('/auth/login')}
           >
-            <Text className="text-blue-600 text-center font-semibold text-lg">
-              Sign In
-            </Text>
+            <Text style={styles.primaryButtonText}>Sign In</Text>
           </TouchableOpacity>
-
+          
           <TouchableOpacity
-            className="w-full py-4"
-            onPress={() => router.push('/jobs')}
+            style={styles.secondaryButton}
+            onPress={() => router.push('/auth/register')}
           >
-            <Text className="text-gray-600 text-center">
-              Browse jobs without account
-            </Text>
+            <Text style={styles.secondaryButtonText}>Create Account</Text>
           </TouchableOpacity>
         </View>
+        
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            By continuing, you agree to our Terms of Service and Privacy Policy
+          </Text>
+        </View>
       </View>
-
-      {/* Footer */}
-      <View className="pb-8 px-8">
-        <Text className="text-center text-xs text-gray-500">
-          By using this app, you agree to our Terms of Service and Privacy Policy
-        </Text>
-      </View>
-      
-      <StatusBar style="auto" />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 48,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#111827',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginBottom: 48,
+    lineHeight: 24,
+  },
+  buttons: {
+    width: '100%',
+    gap: 16,
+  },
+  primaryButton: {
+    backgroundColor: '#3b82f6',
+    borderRadius: 8,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    borderWidth: 2,
+    borderColor: '#3b82f6',
+    borderRadius: 8,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  secondaryButtonText: {
+    color: '#3b82f6',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  footer: {
+    marginTop: 48,
+    paddingHorizontal: 24,
+  },
+  footerText: {
+    fontSize: 14,
+    color: '#9ca3af',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+})

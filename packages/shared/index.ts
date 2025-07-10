@@ -9,6 +9,10 @@ export { subscriptionPlans, getSubscriptionPlan, getSubscriptionPlansByUserType 
 // Export services
 export * from './src/services/paymentService'
 
+// Export hooks
+export { useAuthListener, useSignIn, useSignUp, useSignOut } from './hooks/useAuth'
+export { useAuth, useAuthActions } from './stores/auth'
+
 // Export constants
 export const APP_NAME = 'Job Board Platform'
 export const APP_DESCRIPTION = 'AI-powered job board with intelligent matching'

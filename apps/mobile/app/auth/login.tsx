@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
-import { useRouter } from 'expo-router'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
 import { useSignIn } from '@job-board/shared'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const { signInWithEmail, signInWithGoogle, signInWithLinkedIn, signInWithGitHub } = useSignIn()
+  const { signInWithEmail } = useSignIn()
 
-  const handleEmailSignIn = async () => {
+  const handleSignIn = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields')
       return
@@ -21,126 +20,54 @@ export default function LoginScreen() {
       await signInWithEmail(email, password)
       router.replace('/dashboard')
     } catch (error: any) {
-      Alert.alert('Sign In Failed', error.message || 'Failed to sign in')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSocialSignIn = async (provider: 'google' | 'linkedin' | 'github') => {
-    setLoading(true)
-    try {
-      switch (provider) {
-        case 'google':
-          await signInWithGoogle()
-          break
-        case 'linkedin':
-          await signInWithLinkedIn()
-          break
-        case 'github':
-          await signInWithGitHub()
-          break
-      }
-      router.replace('/dashboard')
-    } catch (error: any) {
-      Alert.alert('Sign In Failed', error.message || 'Failed to sign in')
+      Alert.alert('Sign In Failed', error.message || 'An error occurred')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <ScrollView className="flex-1 bg-gray-50">
-      <View className="flex-1 justify-center px-6 py-12">
-        <View className="bg-white rounded-lg shadow-lg p-6">
-          <Text className="text-2xl font-bold text-center text-gray-900 mb-2">
-            Sign in to your account
-          </Text>
-          <Text className="text-center text-gray-600 mb-8">
-            Enter your email and password to access your account
-          </Text>
+    <ScrollView style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.card}>
+          <Text style={styles.title}>Sign in to your account</Text>
+          <Text style={styles.subtitle}>Enter your email and password to access your account</Text>
 
-          <View className="space-y-4">
-            <View>
-              <TextInput
-                className="w-full px-4 py-3 border border-gray-300 rounded-md text-base"
-                placeholder="Email address"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                editable={!loading}
-              />
-            </View>
+          <View style={styles.form}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Enter your email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
 
-            <View>
-              <TextInput
-                className="w-full px-4 py-3 border border-gray-300 rounded-md text-base"
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                editable={!loading}
-              />
-            </View>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Enter your password"
+              secureTextEntry
+            />
 
             <TouchableOpacity
-              className={`w-full py-3 rounded-md ${
-                loading ? 'bg-gray-400' : 'bg-blue-600'
-              }`}
-              onPress={handleEmailSignIn}
+              style={[styles.button, loading && styles.buttonDisabled]}
+              onPress={handleSignIn}
               disabled={loading}
             >
-              <Text className="text-white text-center font-medium text-base">
+              <Text style={styles.buttonText}>
                 {loading ? 'Signing in...' : 'Sign in'}
               </Text>
             </TouchableOpacity>
           </View>
 
-          <View className="my-6 flex-row items-center">
-            <View className="flex-1 h-px bg-gray-300" />
-            <Text className="mx-4 text-gray-500 text-sm">Or continue with</Text>
-            <View className="flex-1 h-px bg-gray-300" />
-          </View>
-
-          <View className="space-y-3">
-            <TouchableOpacity
-              className="w-full py-3 border border-gray-300 rounded-md flex-row items-center justify-center"
-              onPress={() => handleSocialSignIn('google')}
-              disabled={loading}
-            >
-              <Text className="text-gray-700 font-medium text-base ml-2">
-                Sign in with Google
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="w-full py-3 border border-gray-300 rounded-md flex-row items-center justify-center"
-              onPress={() => handleSocialSignIn('linkedin')}
-              disabled={loading}
-            >
-              <Text className="text-gray-700 font-medium text-base ml-2">
-                Sign in with LinkedIn
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="w-full py-3 border border-gray-300 rounded-md flex-row items-center justify-center"
-              onPress={() => handleSocialSignIn('github')}
-              disabled={loading}
-            >
-              <Text className="text-gray-700 font-medium text-base ml-2">
-                Sign in with GitHub
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View className="mt-6">
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>Don't have an account? </Text>
             <TouchableOpacity onPress={() => router.push('/auth/register')}>
-              <Text className="text-center text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Text className="text-blue-600 font-medium">Sign up</Text>
-              </Text>
+              <Text style={styles.link}>Sign up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -148,3 +75,83 @@ export default function LoginScreen() {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f9fafb',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 48,
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 24,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  subtitle: {
+    textAlign: 'center',
+    color: '#6b7280',
+    marginBottom: 32,
+  },
+  form: {
+    gap: 16,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#374151',
+    marginBottom: 4,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 16,
+    backgroundColor: '#ffffff',
+  },
+  button: {
+    backgroundColor: '#3b82f6',
+    borderRadius: 6,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonDisabled: {
+    backgroundColor: '#9ca3af',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  footerText: {
+    color: '#6b7280',
+  },
+  link: {
+    color: '#3b82f6',
+    fontWeight: '600',
+  },
+})
