@@ -7,8 +7,12 @@
 
 @layer base {
   :root {
-    /* TalentAIze Enhanced Design System - Figma Inspired */
-    /* Primary Brand Colors */
+    /* TalentAIze Figma Design System - Extracted from Stitch Design */
+    /* Base Layout System */
+    --container-width: 1280px;
+    --page-background: #FFFFFF;
+    
+    /* Primary Brand Colors - Professional Blue System */
     --primary: 214 100% 60%;
     --primary-50: 214 100% 97%;
     --primary-100: 214 100% 94%;
@@ -201,9 +205,18 @@
 }
 
 @layer components {
-  /* Enhanced Layout Components */
+  /* Figma Layout Components - Based on Stitch Design */
   .container {
-    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: var(--container-width);
+  }
+  
+  .figma-page {
+    @apply flex flex-col items-start;
+    width: 100%;
+    max-width: var(--container-width);
+    background: var(--page-background);
+    margin: 0 auto;
   }
 
   .section {
