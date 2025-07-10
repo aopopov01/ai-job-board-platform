@@ -6,8 +6,6 @@ export * from './utils/helpers'
 export type { SubscriptionPlan } from './config/subscription-plans'
 export { subscriptionPlans, getSubscriptionPlan, getSubscriptionPlansByUserType } from './config/subscription-plans'
 
-// Export services
-export * from './src/services/paymentService'
 
 // Client-side hooks and stores are exported separately in ./client.ts to avoid SSR issues
 

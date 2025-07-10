@@ -1,7 +1,26 @@
 'use client'
 
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { throttle } from '../app/performance/cache'
+
+// Simple throttle function
+function throttle<T extends (...args: any[]) => any>(func: T, delay: number): T {
+  let timeoutId: NodeJS.Timeout | null = null
+  let lastExecTime = 0
+  return ((...args: any[]) => {
+    const currentTime = Date.now()
+    
+    if (currentTime - lastExecTime > delay) {
+      func(...args)
+      lastExecTime = currentTime
+    } else {
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        func(...args)
+        lastExecTime = Date.now()
+      }, delay - (currentTime - lastExecTime))
+    }
+  }) as T
+}
 
 interface VirtualizedListProps<T> {
   items: T[]

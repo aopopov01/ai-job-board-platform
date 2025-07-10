@@ -1,7 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
-import { debounce, globalCache, performanceMonitor } from '../app/performance/cache'
-import { jobService } from '@job-board/database'
-import { logger } from '@/lib/logger'
+import { useState, useCallback } from 'react'
 
 interface SearchFilters {
   query?: string
@@ -13,47 +10,43 @@ interface SearchFilters {
   salaryMax?: number
 }
 
+// Simple debounce function
+function debounce<T extends (...args: any[]) => any>(func: T, delay: number): T {
+  let timeoutId: NodeJS.Timeout | null = null
+  return ((...args: any[]) => {
+    if (timeoutId) clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => func(...args), delay)
+  }) as T
+}
+
 export function useOptimizedSearch() {
   const [results, setResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   
   const performSearch = useCallback(async (filters: SearchFilters) => {
-    const endTimer = performanceMonitor.startTimer('job-search')
-    
     try {
       setLoading(true)
       setError('')
       
-      // Create cache key from filters
-      const cacheKey = `search-${JSON.stringify(filters)}`
+      // Simulate API call - replace with actual job service
+      await new Promise(resolve => setTimeout(resolve, 500))
       
-      // Check cache first
-      const cached = globalCache.get(cacheKey)
-      if (cached) {
-        setResults(cached)
-        setLoading(false)
-        logger.debug('Search results served from cache', { cacheKey, resultCount: cached.length })
-        return
-      }
+      // Mock search results
+      const mockResults = [
+        { id: 1, title: 'Software Engineer', company: 'Tech Corp', location: 'Remote' },
+        { id: 2, title: 'Product Manager', company: 'Startup Inc', location: 'San Francisco' },
+        { id: 3, title: 'Designer', company: 'Design Studio', location: 'New York' }
+      ].filter(job => 
+        !filters.query || job.title.toLowerCase().includes(filters.query.toLowerCase())
+      )
       
-      // Perform search
-      const { data, error } = await jobService.search(filters)
-      
-      if (error) throw new Error(error.message || 'Search failed')
-      
-      const searchResults = data || []
-      
-      // Cache results for 5 minutes
-      globalCache.set(cacheKey, searchResults, 300)
-      
-      setResults(searchResults)
+      setResults(mockResults)
     } catch (err: any) {
       setError(err.message || 'Search failed')
       setResults([])
     } finally {
       setLoading(false)
-      endTimer()
     }
   }, [])
   
@@ -69,18 +62,11 @@ export function useOptimizedSearch() {
     [performSearch]
   )
   
-  // Clear cache when component unmounts or results change significantly
-  const invalidateCache = useCallback(() => {
-    // Clear search-related cache entries
-    globalCache.clear()
-  }, [])
-  
   return {
     results,
     loading,
     error,
     search: debouncedSearch,
-    immediateSearch,
-    invalidateCache
+    immediateSearch
   }
 }
