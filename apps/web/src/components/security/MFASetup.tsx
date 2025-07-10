@@ -178,6 +178,10 @@ export default function MFASetup() {
   // Copy backup codes to clipboard
   const copyBackupCodes = async () => {
     try {
+      // Add SSR check
+      if (typeof navigator === 'undefined' || !navigator.clipboard) {
+        throw new Error('Clipboard API not available')
+      }
       await navigator.clipboard.writeText(backupCodes.join('\n'))
       setCopiedCodes(true)
       setTimeout(() => setCopiedCodes(false), 2000)
@@ -188,6 +192,11 @@ export default function MFASetup() {
 
   // Download backup codes
   const downloadBackupCodes = () => {
+    // Add SSR check
+    if (typeof document === 'undefined' || typeof URL === 'undefined') {
+      return
+    }
+    
     const content = `JobBoard Pro - MFA Backup Codes\n\nGenerated: ${new Date().toLocaleString()}\n\n${backupCodes.join('\n')}\n\nIMPORTANT: Store these codes in a secure location. Each code can only be used once.`
     const blob = new Blob([content], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)

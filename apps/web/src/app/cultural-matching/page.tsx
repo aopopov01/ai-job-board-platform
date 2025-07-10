@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-
 import { Badge } from '@job-board/ui'
 import { Progress } from '@job-board/ui'
 import { Input } from '@job-board/ui'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@job-board/ui'
 import { 
   Brain, 
   Heart, 
@@ -742,28 +741,45 @@ export default function CulturalMatchingPage() {
           </p>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab as any} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="assessment" className="flex items-center">
+        <div className="space-y-6">
+          <div className="grid w-full grid-cols-4 gap-2">
+            <Button 
+              variant={activeTab === 'assessment' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('assessment')}
+              className="flex items-center"
+            >
               <Brain className="mr-2 h-4 w-4" />
               Assessment
-            </TabsTrigger>
-            <TabsTrigger value="profile" className="flex items-center">
+            </Button>
+            <Button 
+              variant={activeTab === 'profile' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('profile')}
+              className="flex items-center"
+            >
               <Users className="mr-2 h-4 w-4" />
               Profile
-            </TabsTrigger>
-            <TabsTrigger value="matching" className="flex items-center">
+            </Button>
+            <Button 
+              variant={activeTab === 'matching' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('matching')}
+              className="flex items-center"
+            >
               <Target className="mr-2 h-4 w-4" />
               Matching
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center">
+            </Button>
+            <Button 
+              variant={activeTab === 'analytics' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('analytics')}
+              className="flex items-center"
+            >
               <BarChart3 className="mr-2 h-4 w-4" />
               Analytics
-            </TabsTrigger>
-          </TabsList>
+            </Button>
+          </div>
 
           {/* Assessment Tab */}
-          <TabsContent value="assessment" className="space-y-6">
+          {activeTab === 'assessment' && (
+            <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Assessment Progress */}
               <Card>
@@ -887,10 +903,11 @@ export default function CulturalMatchingPage() {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
+          )}
 
           {/* Profile Tab */}
-          <TabsContent value="profile" className="space-y-6">
+          {activeTab === 'profile' && (
+            <div className="space-y-6">
             {userProfile ? (
               <>
                 {/* Profile Overview */}
@@ -1152,10 +1169,11 @@ export default function CulturalMatchingPage() {
                 </CardContent>
               </Card>
             )}
-          </TabsContent>
+          )}
 
           {/* Matching Tab */}
-          <TabsContent value="matching" className="space-y-6">
+          {activeTab === 'matching' && (
+            <div className="space-y-6">
             {matchAnalyses.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Match Results */}
@@ -1319,10 +1337,11 @@ export default function CulturalMatchingPage() {
                 </CardContent>
               </Card>
             )}
-          </TabsContent>
+          )}
 
           {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
+          {activeTab === 'analytics' && (
+            <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Market Insights */}
               <Card>
@@ -1493,8 +1512,8 @@ export default function CulturalMatchingPage() {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
     </div>
   )

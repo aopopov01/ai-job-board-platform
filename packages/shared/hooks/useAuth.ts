@@ -99,7 +99,7 @@ export const useSignIn = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/auth/callback`
       }
     })
 
@@ -111,7 +111,7 @@ export const useSignIn = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'linkedin_oidc',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/auth/callback`
       }
     })
 
@@ -123,7 +123,7 @@ export const useSignIn = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/auth/callback`
       }
     })
 

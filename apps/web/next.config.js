@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    typedRoutes: false,
-  },
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,
@@ -11,21 +8,24 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   staticPageGenerationTimeout: 60,
-  experimental: {
-    typedRoutes: false,
-    missingSuspenseWithCSRBailout: false,
-  },
   // Skip error pages during build to avoid SSR issues
   skipMiddlewareUrlNormalize: true,
   skipTrailingSlashRedirect: true,
   // Force error pages to be dynamic to avoid SSR issues
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  
   // Disable static generation for error pages to avoid SSR issues
-  generateEtags: false,
-  staticPageGenerationTimeout: 60,
   generateBuildId: async () => {
     return process.env.BUILD_ID || 'development'
   },
+  
+  // Disable static optimization to avoid SSR issues
+  experimental: {
+    typedRoutes: false,
+    missingSuspenseWithCSRBailout: true,
+    forceSwcTransforms: true,
+  },
+  
   trailingSlash: false,
   images: {
     domains: ['localhost', 'supabase.co'],
@@ -38,7 +38,7 @@ const nextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
-  generateEtags: true,
+  generateEtags: false,
   
   // Security headers
   async headers() {
@@ -115,6 +115,12 @@ const nextConfig = {
   
   // Output for Docker
   output: 'standalone',
+  
+  // Disable static generation temporarily to fix build
+  distDir: '.next',
+  
+  // Disable static generation to avoid SSR issues
+  trailingSlash: false,
 }
 
 module.exports = nextConfig

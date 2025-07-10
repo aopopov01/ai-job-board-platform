@@ -66,6 +66,9 @@ export function useVirtualizedItemHeight(sampleText: string) {
   const [itemHeight, setItemHeight] = useState(120) // Default height
   
   useEffect(() => {
+    // Add SSR check - only run on client side
+    if (typeof document === 'undefined') return
+    
     // Create a temporary element to measure text height
     const temp = document.createElement('div')
     temp.style.visibility = 'hidden'

@@ -29,6 +29,12 @@ export function LazyImage({
   useEffect(() => {
     if (priority) return
     
+    // Add SSR check for IntersectionObserver
+    if (typeof window === 'undefined' || !window.IntersectionObserver) {
+      setIsInView(true) // Fallback for SSR - show image immediately
+      return
+    }
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
