@@ -34,17 +34,17 @@ interface Job {
   description: string
   job_type: string
   work_style: string
-  location: string
-  salary_min: number
-  salary_max: number
-  salary_currency: string
+  location: string | null
+  salary_min: number | null
+  salary_max: number | null
+  salary_currency: string | null
   created_at: string
-  company_profiles: {
-    company_name: string
-    company_size: string
-    industry: string
-  }
-  job_categories?: { name: string }
+  company_profiles?: {
+    company_name?: string
+    company_size?: string
+    industry?: string
+  } | any
+  job_categories?: { name: string } | any
   saved?: boolean
   applicants?: number
   featured?: boolean
@@ -52,7 +52,8 @@ interface Job {
 
 // Job Card Component
 function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => void; onView: (id: string) => void }) {
-  const formatSalary = (min: number, max: number, currency: string) => {
+  const formatSalary = (min: number | null, max: number | null, currency: string | null) => {
+    if (!min || !max || !currency) return 'Salary not disclosed'
     return `${currency} ${min.toLocaleString()} - ${max.toLocaleString()}`
   }
 
@@ -86,7 +87,7 @@ function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => vo
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-4 flex-1">
           <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/40 rounded-xl flex items-center justify-center text-primary font-semibold">
-            {job.company_profiles.company_name.charAt(0)}
+            {job.company_profiles?.company_name?.charAt(0) || 'C'}
           </div>
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
@@ -96,7 +97,7 @@ function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => vo
             </h3>
             <p className="text-muted-foreground flex items-center gap-2">
               <Building2 className="w-4 h-4" />
-              {job.company_profiles.company_name}
+              {job.company_profiles?.company_name || 'Company'}
             </p>
           </div>
         </div>
@@ -143,13 +144,13 @@ function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => vo
         <span className="badge badge-success text-xs">
           {formatJobType(job.work_style)}
         </span>
-        {job.job_categories && (
+        {job.job_categories?.name && (
           <span className="badge badge-info text-xs">
             {job.job_categories.name}
           </span>
         )}
         <span className="badge text-xs bg-muted text-muted-foreground">
-          {job.company_profiles.company_size} employees
+          {job.company_profiles?.company_size || 'Unknown'} employees
         </span>
       </div>
 
@@ -213,7 +214,7 @@ export default function JobsPage() {
         if (jobsResponse.error) throw jobsResponse.error
         if (categoriesResponse.error) throw categoriesResponse.error
 
-        setJobs(jobsResponse.data || [])
+        setJobs((jobsResponse.data || []) as Job[])
         setCategories(categoriesResponse.data || [])
       } catch (error: any) {
         setError(error.message || 'Failed to load jobs')
@@ -240,7 +241,7 @@ export default function JobsPage() {
       const { data, error } = await jobService.search(searchFilters)
       if (error) throw error
 
-      setJobs(data || [])
+      setJobs((data || []) as Job[])
     } catch (error: any) {
       setError(error.message || 'Failed to search jobs')
     } finally {
