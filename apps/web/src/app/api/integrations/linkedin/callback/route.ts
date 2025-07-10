@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { IntegrationUtils } from '@/integrations/index'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)

@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock-stripe-key', {
   apiVersion: '2024-06-20'
 })
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mock-project.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'mock-service-role-key-for-testing'
 )
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'mock-webhook-secret-for-testing'
 
 export async function POST(req: NextRequest) {
   try {

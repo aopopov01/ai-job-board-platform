@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock-stripe-key', {
   apiVersion: '2024-06-20'
 })
 

@@ -3,9 +3,22 @@ const nextConfig = {
   experimental: {
     typedRoutes: false,
   },
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
   typescript: {
     ignoreBuildErrors: false,
   },
+  staticPageGenerationTimeout: 60,
+  experimental: {
+    typedRoutes: false,
+    missingSuspenseWithCSRBailout: false,
+  },
+  generateBuildId: async () => {
+    return process.env.BUILD_ID || 'development'
+  },
+  trailingSlash: false,
   images: {
     domains: ['localhost', 'supabase.co'],
     formats: ['image/webp', 'image/avif'],

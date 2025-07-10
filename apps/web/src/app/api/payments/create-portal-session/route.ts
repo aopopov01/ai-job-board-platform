@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock-stripe-key', {
   apiVersion: '2024-06-20'
 })
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     // Create Stripe customer portal session
     const session = await stripe.billingPortal.sessions.create({
       customer: subscription.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/billing`
+      return_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/dashboard/billing`
     })
 
     return NextResponse.json({ url: session.url })

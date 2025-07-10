@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createSupabaseRouteHandlerClient } from '@/lib/supabase'
 import { IntegrationUtils } from '@/integrations/index'
 
 export async function POST(req: NextRequest) {
@@ -8,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { integrationType } = await req.json()
     
     // Get the authenticated user
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = createSupabaseRouteHandlerClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
     if (authError || !user) {
@@ -38,7 +37,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     // Get the authenticated user
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = createSupabaseRouteHandlerClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
     if (authError || !user) {

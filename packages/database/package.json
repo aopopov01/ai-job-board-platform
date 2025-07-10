@@ -4,6 +4,7 @@
   "description": "Supabase database utilities and types",
   "main": "index.ts",
   "scripts": {
+    "build": "echo 'Database package does not need building'",
     "generate": "supabase gen types typescript --project-id rzwumwbmjvbkaedrgmbo > types/database.types.ts",
     "migrate": "echo 'Use Supabase dashboard or MCP for migrations'",
     "seed": "tsx seed.ts"

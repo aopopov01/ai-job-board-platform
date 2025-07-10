@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { StateCreator } from 'zustand'
 import type { User, Session } from '@supabase/supabase-js'
 import type { UserProfile } from '@job-board/database'
 
@@ -31,40 +32,46 @@ const initialState: AuthState = {
   isInitialized: false
 }
 
-export const useAuthStore = create<AuthStore>()(
-  persist(
-    (set, get) => ({
-      ...initialState,
+const createAuthStore = () => {
+  const store = (set: any, get: any) => ({
+    ...initialState,
 
-      setUser: (user) => set({ user }),
-      
-      setSession: (session) => set({ session }),
-      
-      setProfile: (profile) => set({ profile }),
-      
-      setLoading: (isLoading) => set({ isLoading }),
-      
-      setInitialized: (isInitialized) => set({ isInitialized }),
-      
-      signOut: () => set({
-        user: null,
-        session: null,
-        profile: null,
-        isLoading: false
-      }),
-      
-      reset: () => set(initialState)
+    setUser: (user: User | null) => set({ user }),
+    
+    setSession: (session: Session | null) => set({ session }),
+    
+    setProfile: (profile: UserProfile | null) => set({ profile }),
+    
+    setLoading: (isLoading: boolean) => set({ isLoading }),
+    
+    setInitialized: (isInitialized: boolean) => set({ isInitialized }),
+    
+    signOut: () => set({
+      user: null,
+      session: null,
+      profile: null,
+      isLoading: false
     }),
-    {
+    
+    reset: () => set(initialState)
+  })
+
+  // Only use persist middleware in browser environment
+  if (typeof window !== 'undefined') {
+    return persist(store, {
       name: 'auth-storage',
-      partialize: (state) => ({
+      partialize: (state: AuthStore) => ({
         user: state.user,
         session: state.session,
         profile: state.profile
       })
-    }
-  )
-)
+    })
+  }
+
+  return store
+}
+
+export const useAuthStore = create<AuthStore>()(createAuthStore())
 
 // Selectors for easier component usage
 export const useAuth = () => useAuthStore((state) => ({
