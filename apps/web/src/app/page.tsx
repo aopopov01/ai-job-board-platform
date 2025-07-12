@@ -15,42 +15,61 @@ import {
   Heart,
   Award
 } from 'lucide-react'
+import NeuronicLayout from '../components/layout/NeuronicLayout'
 
-// Figma-Inspired Hero Section Component
+// Neuronic Hero Section Component
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden min-h-[480px] flex items-center justify-center bg-cover bg-center bg-no-repeat" 
-             style={{
-               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkA8_T3e5WWhkjy0GsTN8R_qXwXSbhLEAMqsR1h5egfNA3EdQvbbKVMLzWmM09wa6yM8GttI4McI3ZzlkURWz1P-CVmXmHP-mw-7SLm8FkGIqm0brkibLrzj_QigMuX87z_ug5B3whJ6TMtFkLsHm6huO596KQk313qOrrdqY52Dr6KbBBXWqQdAox9KkQZ2TT8PU-cQpSbYAO96o9kahfZViyxNALKqUS-vb8p6suvxtW6LTkgjq-tKjI7pPnzGhadNyQpaGlEA")`
-             }}>
+    <section className="relative overflow-hidden min-h-[480px] flex items-center justify-center">
+      {/* High contrast glass morphism background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/40 via-slate-900/40 to-emerald-900/40 backdrop-blur-sm"></div>
+      
       <div className="container relative z-10">
         <div className="flex flex-col gap-6 items-center text-center max-w-4xl mx-auto px-4">
-          {/* Figma Hero Title */}
-          <h1 className="text-white text-4xl font-black leading-tight tracking-tight @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-tight">
-            Unlock Your Career Potential with AI
+          {/* Enhanced Hero Title with Glow Effect */}
+          <h1 className="text-white text-4xl font-black leading-tight tracking-tight @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-tight drop-shadow-2xl">
+            <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">
+              Unlock Your Career Potential
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
+              with AI Intelligence
+            </span>
           </h1>
           
-          {/* Figma Hero Subtitle */}
-          <h2 className="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-            Find your dream job and gain insights with our AI-powered platform.
+          {/* Enhanced Hero Subtitle */}
+          <h2 className="text-white/90 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal drop-shadow-lg">
+            Experience the future of job searching with our AI-powered neuronic platform that learns, adapts, and connects you to your ideal career path.
           </h2>
           
-          {/* Figma Search Bar */}
+          {/* Enhanced Search Bar with High Contrast Glass Effect */}
           <div className="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
-            <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-              <div className="text-[#4e6e97] flex border border-[#d0dae7] bg-slate-50 items-center justify-center pl-[15px] rounded-l-lg border-r-0">
+            <div className="flex w-full flex-1 items-stretch rounded-lg h-full backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl">
+              <div className="text-white/80 flex items-center justify-center pl-[15px] rounded-l-lg border-r-0">
                 <Search className="w-5 h-5" />
               </div>
               <input
                 placeholder="Job title or keywords"
-                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141b] focus:outline-0 focus:ring-0 border border-[#d0dae7] bg-slate-50 focus:border-[#d0dae7] h-full placeholder:text-[#4e6e97] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
+                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-white/80 px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
               />
-              <div className="flex items-center justify-center rounded-r-lg border-l-0 border border-[#d0dae7] bg-slate-50 pr-[7px]">
-                <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#186ddc] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+              <div className="flex items-center justify-center rounded-r-lg border-l-0 pr-[7px]">
+                <Link href="/jobs" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] transition-all duration-300 shadow-lg hover:shadow-xl">
                   <span className="truncate">Search</span>
-                </button>
+                </Link>
               </div>
             </div>
+          </div>
+
+          {/* Additional CTA buttons with higher contrast */}
+          <div className="flex gap-4 mt-4">
+            <Link href="/ai-advisor" className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md text-white rounded-lg hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg">
+              <Zap className="w-4 h-4" />
+              AI Career Advisor
+            </Link>
+            <Link href="/company" className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600/30 to-slate-600/30 backdrop-blur-md text-white rounded-lg hover:from-gray-600/40 hover:to-slate-600/40 transition-all duration-300 border border-white/30 shadow-lg">
+              <Briefcase className="w-4 h-4" />
+              For Companies
+            </Link>
           </div>
         </div>
       </div>
@@ -58,7 +77,7 @@ function HeroSection() {
   )
 }
 
-// Featured Jobs Section (Figma Design)
+// Featured Jobs Section (Neuronic Design)
 function FeaturedJobsSection() {
   const featuredJobs = [
     {
@@ -81,18 +100,18 @@ function FeaturedJobsSection() {
   return (
     <section className="px-40 py-5">
       <div className="max-w-[960px] mx-auto">
-        <h2 className="text-[#0e141b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Featured Jobs</h2>
+        <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 drop-shadow-lg">Featured Jobs</h2>
         <div className="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex items-stretch p-4 gap-3">
             {featuredJobs.map((job, index) => (
-              <div key={index} className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+              <div key={index} className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40 backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/20 transition-all duration-300 cursor-pointer group">
                 <div
-                  className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
+                  className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col group-hover:scale-105 transition-transform duration-300"
                   style={{backgroundImage: `url("${job.image}")`}}
                 ></div>
-                <div>
-                  <p className="text-[#0e141b] text-base font-medium leading-normal">{job.title}</p>
-                  <p className="text-[#4e6e97] text-sm font-normal leading-normal">{job.company}</p>
+                <div className="p-4">
+                  <p className="text-white text-base font-medium leading-normal">{job.title}</p>
+                  <p className="text-white/80 text-sm font-normal leading-normal">{job.company}</p>
                 </div>
               </div>
             ))}
@@ -103,7 +122,7 @@ function FeaturedJobsSection() {
   )
 }
 
-// AI-Driven Career Insights Section (Figma Design)
+// AI-Driven Career Insights Section (Neuronic Design)
 function CareerInsightsSection() {
   const insights = [
     {
@@ -129,13 +148,13 @@ function CareerInsightsSection() {
   return (
     <section className="px-40 py-5">
       <div className="max-w-[960px] mx-auto">
-        <h2 className="text-[#0e141b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">AI-Driven Career Insights</h2>
+        <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 drop-shadow-lg">AI-Driven Career Insights</h2>
         <div className="flex flex-wrap gap-4 p-4">
           {insights.map((insight, index) => (
-            <div key={index} className="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 bg-[#e7ecf3]">
-              <p className="text-[#0e141b] text-base font-medium leading-normal">{insight.title}</p>
-              <p className="text-[#0e141b] tracking-light text-2xl font-bold leading-tight">{insight.value}</p>
-              <p className="text-[#07883b] text-base font-medium leading-normal">{insight.change}</p>
+            <div key={index} className="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/20 transition-all duration-300">
+              <p className="text-white text-base font-medium leading-normal">{insight.title}</p>
+              <p className="text-white tracking-light text-2xl font-bold leading-tight">{insight.value}</p>
+              <p className="text-green-400 text-base font-medium leading-normal">{insight.change}</p>
             </div>
           ))}
         </div>
@@ -144,95 +163,87 @@ function CareerInsightsSection() {
   )
 }
 
-// Enhanced Features Section Component
+// Enhanced Features Section Component (Neuronic Design)
 function FeaturesSection() {
   const features = [
     {
       icon: Target,
       title: 'AI-Powered Matching',
       description: 'Advanced machine learning algorithms analyze your skills, experience, and career goals to deliver hyper-personalized job recommendations.',
-      color: 'from-blue-500 to-indigo-600',
-      bgColor: 'bg-blue-50'
+      color: 'from-blue-500 to-indigo-600'
     },
     {
       icon: Shield,
       title: 'Privacy First',
       description: 'Your data is secure and private. Control what information you share and with whom.',
-      color: 'from-green-500 to-emerald-600',
-      bgColor: 'bg-green-50'
+      color: 'from-green-500 to-emerald-600'
     },
     {
       icon: Globe,
       title: 'Global Opportunities',
       description: 'Access jobs from companies worldwide, including remote positions and international opportunities.',
-      color: 'from-purple-500 to-violet-600',
-      bgColor: 'bg-purple-50'
+      color: 'from-purple-500 to-violet-600'
     },
     {
       icon: Zap,
       title: 'AI Instant Alerts',
       description: 'Intelligent notifications powered by AI predict and alert you about opportunities before they become competitive.',
-      color: 'from-yellow-500 to-orange-600',
-      bgColor: 'bg-yellow-50'
+      color: 'from-yellow-500 to-orange-600'
     },
     {
       icon: Users,
       title: 'AI Company Intelligence',
       description: 'AI-powered company analysis provides deep insights into culture, growth potential, and hiring patterns to help you make informed decisions.',
-      color: 'from-pink-500 to-rose-600',
-      bgColor: 'bg-pink-50'
+      color: 'from-pink-500 to-rose-600'
     },
     {
       icon: Award,
       title: 'Career Growth',
       description: 'Track your career progression and get personalized advice to advance your professional journey.',
-      color: 'from-indigo-500 to-blue-600',
-      bgColor: 'bg-indigo-50'
+      color: 'from-indigo-500 to-blue-600'
     },
   ]
 
   return (
-    <section className="section bg-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
-      <div className="absolute top-10 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
-      
-      <div className="container relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+    <section className="px-40 py-16">
+      <div className="max-w-[960px] mx-auto">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-emerald-600/20 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-emerald-400/30">
             <Zap className="w-4 h-4" />
             Powerful Features
           </div>
-          <h2 className="text-responsive-3xl lg:text-5xl font-bold text-gradient mb-6">
+          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
             Everything You Need to Find
-            <br />Your Dream Job
+            <br />
+            <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
+              Your Dream Job
+            </span>
           </h2>
-          <p className="text-responsive-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-white/90 text-lg max-w-3xl mx-auto leading-relaxed">
             Our platform combines cutting-edge AI technology with human insight to make job searching more effective, efficient, and enjoyable than ever before.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={feature.title} className="group animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <div className={`card-interactive p-8 h-full ${feature.bgColor} border-0 shadow-lg hover:shadow-2xl bg-white/80 backdrop-blur-sm`}>
+            <div key={feature.title} className="group">
+              <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 h-full hover:bg-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl">
                 {/* Icon */}
                 <div className={`w-14 h-14 mb-6 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <feature.icon className="w-7 h-7 text-white" />
                 </div>
                 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-neutral-800 mb-4 group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-400 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   {feature.description}
                 </p>
                 
                 {/* Hover Arrow */}
                 <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ArrowRight className="w-5 h-5 text-primary" />
+                  <ArrowRight className="w-5 h-5 text-emerald-400" />
                 </div>
               </div>
             </div>
@@ -241,10 +252,10 @@ function FeaturesSection() {
         
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <Link href="/jobs" className="btn btn-primary btn-lg px-8 py-4 text-base font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-            <Target className="w-5 h-5 mr-2" />
+          <Link href="/jobs" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 font-semibold">
+            <Target className="w-5 h-5" />
             Explore All Features
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
@@ -252,7 +263,7 @@ function FeaturesSection() {
   )
 }
 
-// How It Works Section
+// How It Works Section (Neuronic Design)
 function HowItWorksSection() {
   const steps = [
     {
@@ -278,25 +289,27 @@ function HowItWorksSection() {
   ]
 
   return (
-    <section className="section bg-gradient-to-br from-muted/30 to-primary/5">
-      <div className="container">
+    <section className="px-40 py-16">
+      <div className="max-w-[960px] mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-responsive-3xl font-bold text-gradient mb-6">
-            How TalentAIze Works
+          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
+            <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
+              How TalentAIze Works
+            </span>
           </h2>
-          <p className="text-responsive-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-white/90 text-lg max-w-2xl mx-auto">
             Get started in minutes and let our AI do the heavy lifting to find your next opportunity.
           </p>
         </div>
         
         <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={step.step} className="card bg-white p-8 text-center animate-fade-in-up" style={{animationDelay: `${index * 0.2}s`}}>
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white rounded-2xl text-xl font-bold mb-6">
+            <div key={step.step} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 text-center hover:bg-white/30 transition-all duration-300 shadow-xl">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl text-xl font-bold mb-6 shadow-lg">
                 {step.step}
               </div>
-              <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-              <p className="text-muted-foreground">{step.description}</p>
+              <h3 className="text-xl font-semibold text-white mb-4">{step.title}</h3>
+              <p className="text-white/80">{step.description}</p>
             </div>
           ))}
         </div>
@@ -305,11 +318,11 @@ function HowItWorksSection() {
   )
 }
 
-// Testimonials Section
+// Testimonials Section (Neuronic Design)
 function TestimonialsSection() {
   const testimonials = [
     {
-      quote: "TalentFlow found me the perfect role in just 2 weeks. The AI matching is incredibly accurate and saved me hours of searching.",
+      quote: "TalentAIze found me the perfect role in just 2 weeks. The AI matching is incredibly accurate and saved me hours of searching.",
       author: "Sarah Chen",
       role: "Software Engineer",
       company: "TechCorp"
@@ -329,33 +342,35 @@ function TestimonialsSection() {
   ]
 
   return (
-    <section className="section">
-      <div className="container">
+    <section className="px-40 py-16">
+      <div className="max-w-[960px] mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-responsive-3xl font-bold text-gradient mb-6">
-            Loved by Professionals Worldwide
+          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
+            <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
+              Loved by Professionals Worldwide
+            </span>
           </h2>
-          <p className="text-responsive-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-white/90 text-lg max-w-2xl mx-auto">
             Join thousands of professionals who have found their dream jobs through TalentAIze.
           </p>
         </div>
         
         <div className="grid lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={testimonial.author} className="testimonial-card animate-fade-in-up" style={{animationDelay: `${index * 0.2}s`}}>
-              <div className="flex mb-4">
+            <div key={testimonial.author} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 hover:bg-white/30 transition-all duration-300 shadow-xl">
+              <div className="flex mb-6">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                 ))}
               </div>
-              <p className="testimonial-quote">"{testimonial.quote}"</p>
-              <div className="testimonial-author">
-                <div className="testimonial-avatar flex items-center justify-center text-white font-semibold">
+              <p className="text-white/90 text-lg leading-relaxed mb-6 italic">"{testimonial.quote}"</p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold">
                   {testimonial.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="font-semibold">{testimonial.author}</div>
-                  <div className="text-sm text-muted-foreground">{testimonial.role} at {testimonial.company}</div>
+                  <div className="font-semibold text-white">{testimonial.author}</div>
+                  <div className="text-sm text-white/70">{testimonial.role} at {testimonial.company}</div>
                 </div>
               </div>
             </div>
@@ -427,15 +442,15 @@ function FigmaFooter() {
   )
 }
 
-// Main Landing Page Component - Figma Design
+// Main Landing Page Component - Neuronic Design
 export default function LandingPage() {
   return (
-    <div className="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden" style={{fontFamily: 'Inter, "Noto Sans", sans-serif'}}>
+    <NeuronicLayout variant="intense" className="overflow-x-hidden" style={{fontFamily: 'Inter, "Noto Sans", sans-serif'}}>
       <div className="layout-container flex h-full grow flex-col">
-        {/* Figma Navigation */}
-        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7ecf3] px-10 py-3">
+        {/* Enhanced Navigation with High Contrast Glass Effect */}
+        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-white/20 px-10 py-3 backdrop-blur-md bg-white/10">
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-4 text-[#0e141b]">
+            <div className="flex items-center gap-4 text-white">
               <div className="size-4">
                 <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -444,33 +459,33 @@ export default function LandingPage() {
                   />
                 </svg>
               </div>
-              <h2 className="text-[#0e141b] text-lg font-bold leading-tight tracking-[-0.015em]">TalentAIze</h2>
+              <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">TalentAIze</h2>
             </div>
             <div className="flex items-center gap-9">
-              <Link className="text-[#0e141b] text-sm font-medium leading-normal" href="/jobs">Jobs</Link>
-              <Link className="text-[#0e141b] text-sm font-medium leading-normal" href="/ai-advisor">AI Advisor</Link>
-              <Link className="text-[#0e141b] text-sm font-medium leading-normal" href="/company">Company</Link>
+              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/jobs">Jobs</Link>
+              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/ai-advisor">AI Advisor</Link>
+              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/company">Company</Link>
             </div>
           </div>
           <div className="flex flex-1 justify-end gap-8">
             <label className="flex flex-col min-w-40 !h-10 max-w-64">
               <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-                <div className="text-[#4e6e97] flex border-none bg-[#e7ecf3] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                <div className="text-white/80 flex border-none bg-white/20 backdrop-blur-sm items-center justify-center pl-4 rounded-l-lg border-r-0">
                   <Search className="w-6 h-6" />
                 </div>
                 <input
                   placeholder="Search"
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141b] focus:outline-0 focus:ring-0 border-none bg-[#e7ecf3] focus:border-none h-full placeholder:text-[#4e6e97] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-white/20 backdrop-blur-sm focus:border-none h-full placeholder:text-white/80 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                 />
               </div>
             </label>
             <div className="flex gap-2">
-              <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#186ddc] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em]">
+              <Link href="/auth/register" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
                 <span className="truncate">Sign Up</span>
-              </button>
-              <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e7ecf3] text-[#0e141b] text-sm font-bold leading-normal tracking-[0.015em]">
+              </Link>
+              <Link href="/auth/login" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors border border-white/20">
                 <span className="truncate">Login</span>
-              </button>
+              </Link>
             </div>
           </div>
         </header>
@@ -481,6 +496,9 @@ export default function LandingPage() {
             <HeroSection />
             <FeaturedJobsSection />
             <CareerInsightsSection />
+            <FeaturesSection />
+            <HowItWorksSection />
+            <TestimonialsSection />
             <FinalCTASection />
           </div>
         </div>
@@ -488,6 +506,6 @@ export default function LandingPage() {
         {/* Footer */}
         <FigmaFooter />
       </div>
-    </div>
+    </NeuronicLayout>
   )
 }

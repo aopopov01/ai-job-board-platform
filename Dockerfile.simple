@@ -1,4 +1,4 @@
-# Multi-stage build for optimized production image
+# Multi-stage build for Next.js application
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
@@ -6,20 +6,23 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
+# Copy package files
 COPY package.json package-lock.json* ./
 COPY apps/web/package.json ./apps/web/
 COPY packages/ ./packages/
-RUN npm install && npm install -g turbo
+
+# Install dependencies
+RUN npm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-RUN npm install -g turbo
+
+# Copy dependencies
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the application
+# Build only the web application
 WORKDIR /app/apps/web
 RUN npm run build
 
@@ -27,8 +30,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -44,11 +47,11 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
 
 CMD ["node", "apps/web/server.js"]

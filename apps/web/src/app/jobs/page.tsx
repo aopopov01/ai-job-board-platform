@@ -7,6 +7,7 @@ import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { jobService, jobCategoryService } from '@job-board/database'
 import { useAuthStore } from '@job-board/shared/client'
+import NeuronicLayout from '../../components/layout/NeuronicLayout'
 import { 
   Search, 
   MapPin, 
@@ -288,7 +289,8 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary/5">
+    <NeuronicLayout variant="subtle">
+      <div className="min-h-screen">
       {/* Enhanced Header with Hero Design */}
       <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-white to-accent/10 border-b border-border/50">
         {/* Background Elements */}
@@ -331,7 +333,7 @@ export default function JobsPage() {
 
             {/* Enhanced Search Bar */}
             <div className="max-w-5xl mx-auto">
-              <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-2xl shadow-xl p-6">
+              <div className="bg-white/95 backdrop-blur-sm border border-white/60 rounded-2xl shadow-xl p-6">
                 <div className="grid lg:grid-cols-3 gap-4">
                   <div className="search-container">
                     <Search className="search-icon text-primary" />
@@ -341,7 +343,7 @@ export default function JobsPage() {
                       value={filters.query}
                       onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
                       onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                      className="input input-lg bg-white/80 border-neutral-200 focus:border-primary focus:ring-primary/20"
+                      className="input input-lg bg-white/90 border-neutral-200 focus:border-primary focus:ring-primary/20"
                     />
                   </div>
                   
@@ -352,7 +354,7 @@ export default function JobsPage() {
                       placeholder="City, state, or remote"
                       value={filters.location}
                       onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                      className="input input-lg bg-white/80 border-neutral-200 focus:border-primary focus:ring-primary/20"
+                      className="input input-lg bg-white/90 border-neutral-200 focus:border-primary focus:ring-primary/20"
                     />
                   </div>
                   
@@ -693,6 +695,7 @@ export default function JobsPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </NeuronicLayout>
   )
 }
