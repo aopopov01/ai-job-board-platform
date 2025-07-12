@@ -1,0 +1,88 @@
+{
+  "mcpServers": {
+    "desktop-commander": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@wonderwhy-er/desktop-commander",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21"
+      ]
+    },
+    "supabase-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@supabase-community/supabase-mcp",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21",
+        "--profile",
+        "forward-porcupine-ukGp9V"
+      ]
+    },
+    "github": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/github",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21",
+        "--profile",
+        "forward-porcupine-ukGp9V"
+      ]
+    },
+    "mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@magicuidesign/mcp",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21"
+      ]
+    },
+    "figma-context-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@adexdsamson/figma-context-mcp",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21",
+        "--profile",
+        "forward-porcupine-ukGp9V"
+      ]
+    },
+    "puppeteer": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/puppeteer",
+        "--key",
+        "5bd9c4b4-ec7f-4886-8caf-19dade22dc21"
+      ]
+    }
+  }
+}

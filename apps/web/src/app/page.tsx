@@ -16,6 +16,11 @@ import {
   Award
 } from 'lucide-react'
 import NeuronicLayout from '../components/layout/NeuronicLayout'
+import { ShimmerButton } from '../components/magicui/shimmer-button'
+import { MagicCard } from '../components/magicui/magic-card'
+import { AnimatedList } from '../components/magicui/animated-list'
+import { TextReveal } from '../components/magicui/text-reveal'
+import { Ripple } from '../components/magicui/ripple'
 
 // Neuronic Hero Section Component
 function HeroSection() {
@@ -60,12 +65,12 @@ function HeroSection() {
             </div>
           </div>
 
-          {/* Additional CTA buttons with higher contrast */}
+          {/* Enhanced CTA buttons with Magic UI */}
           <div className="flex gap-4 mt-4">
-            <Link href="/ai-advisor" className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md text-white rounded-lg hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg">
-              <Zap className="w-4 h-4" />
+            <ShimmerButton className="px-6 py-3">
+              <Zap className="w-4 h-4 mr-2" />
               AI Career Advisor
-            </Link>
+            </ShimmerButton>
             <Link href="/company" className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600/30 to-slate-600/30 backdrop-blur-md text-white rounded-lg hover:from-gray-600/40 hover:to-slate-600/40 transition-all duration-300 border border-white/30 shadow-lg">
               <Briefcase className="w-4 h-4" />
               For Companies
@@ -104,7 +109,7 @@ function FeaturedJobsSection() {
         <div className="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex items-stretch p-4 gap-3">
             {featuredJobs.map((job, index) => (
-              <div key={index} className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40 backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/20 transition-all duration-300 cursor-pointer group">
+              <MagicCard key={index} className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40 cursor-pointer group">
                 <div
                   className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col group-hover:scale-105 transition-transform duration-300"
                   style={{backgroundImage: `url("${job.image}")`}}
@@ -113,7 +118,7 @@ function FeaturedJobsSection() {
                   <p className="text-white text-base font-medium leading-normal">{job.title}</p>
                   <p className="text-white/80 text-sm font-normal leading-normal">{job.company}</p>
                 </div>
-              </div>
+              </MagicCard>
             ))}
           </div>
         </div>
@@ -151,11 +156,11 @@ function CareerInsightsSection() {
         <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 drop-shadow-lg">AI-Driven Career Insights</h2>
         <div className="flex flex-wrap gap-4 p-4">
           {insights.map((insight, index) => (
-            <div key={index} className="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:bg-white/20 transition-all duration-300">
+            <MagicCard key={index} className="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6">
               <p className="text-white text-base font-medium leading-normal">{insight.title}</p>
               <p className="text-white tracking-light text-2xl font-bold leading-tight">{insight.value}</p>
               <p className="text-green-400 text-base font-medium leading-normal">{insight.change}</p>
-            </div>
+            </MagicCard>
           ))}
         </div>
       </div>
@@ -227,7 +232,7 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div key={feature.title} className="group">
-              <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 h-full hover:bg-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl">
+              <MagicCard className="p-8 h-full">
                 {/* Icon */}
                 <div className={`w-14 h-14 mb-6 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <feature.icon className="w-7 h-7 text-white" />
@@ -245,18 +250,18 @@ function FeaturesSection() {
                 <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <ArrowRight className="w-5 h-5 text-emerald-400" />
                 </div>
-              </div>
+              </MagicCard>
             </div>
           ))}
         </div>
         
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <Link href="/jobs" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 font-semibold">
-            <Target className="w-5 h-5" />
+          <ShimmerButton className="px-8 py-4 font-semibold">
+            <Target className="w-5 h-5 mr-2" />
             Explore All Features
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </ShimmerButton>
         </div>
       </div>
     </section>
@@ -304,13 +309,14 @@ function HowItWorksSection() {
         
         <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={step.step} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 text-center hover:bg-white/30 transition-all duration-300 shadow-xl">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl text-xl font-bold mb-6 shadow-lg">
+            <MagicCard key={step.step} className="p-8 text-center relative overflow-hidden">
+              <Ripple />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl text-xl font-bold mb-6 shadow-lg relative z-10">
                 {step.step}
               </div>
-              <h3 className="text-xl font-semibold text-white mb-4">{step.title}</h3>
-              <p className="text-white/80">{step.description}</p>
-            </div>
+              <h3 className="text-xl font-semibold text-white mb-4 relative z-10">{step.title}</h3>
+              <p className="text-white/80 relative z-10">{step.description}</p>
+            </MagicCard>
           ))}
         </div>
       </div>
@@ -357,7 +363,7 @@ function TestimonialsSection() {
         
         <div className="grid lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={testimonial.author} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-8 hover:bg-white/30 transition-all duration-300 shadow-xl">
+            <MagicCard key={testimonial.author} className="p-8">
               <div className="flex mb-6">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -373,7 +379,7 @@ function TestimonialsSection() {
                   <div className="text-sm text-white/70">{testimonial.role} at {testimonial.company}</div>
                 </div>
               </div>
-            </div>
+            </MagicCard>
           ))}
         </div>
       </div>
