@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const indeedConfig: ScrapingConfig = {
+export const indeedConfig: ScrapingConfig = {
   source: 'Indeed',
   baseUrl: 'https://www.indeed.com',
   searchPaths: ['/jobs?q='],

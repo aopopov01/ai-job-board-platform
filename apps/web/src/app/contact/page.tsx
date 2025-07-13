@@ -1,239 +1,388 @@
-'use client'
-
-import { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Clock, 
+  Mail,
+  Phone,
+  MapPin,
   Send,
   MessageSquare,
-  HelpCircle,
-  Users,
-  Building2,
-  CheckCircle,
-  ArrowLeft,
-  ExternalLink,
-  Globe,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Instagram,
-  Zap,
+  Brain,
+  Zap as Lightning,
+  Clock,
   Shield,
-  Heart,
-  Star
+  ArrowRight,
+  CheckCircle,
+  Users,
+  Briefcase,
+  HelpCircle
 } from 'lucide-react'
 import NeuronicLayout from '../../components/layout/NeuronicLayout'
 
-interface ContactForm {
-  name: string
-  email: string
-  company: string
-  subject: string
-  message: string
-  category: string
+// Contact Hero Section
+function ContactHero() {
+  return (
+    <section className="relative min-h-screen flex items-center pt-24">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80"></div>
+      
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center py-20">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-600/20 border-2 border-blue-400/40 rounded-full mb-10 backdrop-blur-sm shadow-lg">
+            <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse shadow-lg shadow-blue-400/50"></div>
+            <span className="text-sm text-blue-100 font-bold tracking-wide">⚡ GET IN TOUCH</span>
+          </div>
+          
+          <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight mb-8">
+            <span className="text-white block leading-none drop-shadow-2xl">Lightning-fast</span>
+            <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-none drop-shadow-2xl">
+              support & sales
+            </span>
+          </h1>
+          
+          <p className="text-2xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-16 font-medium">
+            ⚡ Have questions? Need enterprise solutions? Our team is here to help you electrify 
+            your career or hiring process. Get lightning-fast responses from our experts.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-const contactCategories = [
-  { id: 'general', label: 'General Inquiry', icon: MessageSquare },
-  { id: 'support', label: 'Technical Support', icon: HelpCircle },
-  { id: 'sales', label: 'Sales & Partnerships', icon: Building2 },
-  { id: 'careers', label: 'Careers at TalentAIze', icon: Users },
-  { id: 'press', label: 'Press & Media', icon: Globe },
-  { id: 'feedback', label: 'Product Feedback', icon: Star }
-]
+// Contact Form Section
+function ContactForm() {
+  const [inquiryType, setInquiryType] = React.useState('general')
 
-const contactMethods = [
-  {
-    icon: Mail,
-    title: 'Email Support',
-    description: 'Get help via email within 24 hours',
-    contact: 'support@talentaize.com',
-    availability: '24/7',
-    color: 'from-blue-500 to-indigo-600'
-  },
-  {
-    icon: Phone,
-    title: 'Phone Support',
-    description: 'Speak directly with our support team',
-    contact: '+1 (555) 123-4567',
-    availability: 'Mon-Fri, 9AM-6PM PST',
-    color: 'from-green-500 to-emerald-600'
-  },
-  {
-    icon: MessageSquare,
-    title: 'Live Chat',
-    description: 'Instant help through our chat widget',
-    contact: 'Available on our website',
-    availability: 'Mon-Fri, 9AM-6PM PST',
-    color: 'from-purple-500 to-violet-600'
-  },
-  {
-    icon: HelpCircle,
-    title: 'Help Center',
-    description: 'Self-service resources and guides',
-    contact: 'help.talentaize.com',
-    availability: '24/7',
-    color: 'from-orange-500 to-red-600'
-  }
-]
+  return (
+    <section className="py-32 bg-black/20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16">
+          
+          {/* Contact Form */}
+          <div>
+            <div className="bg-black/70 backdrop-blur-md border-2 border-white/30 rounded-3xl p-8 shadow-2xl">
+              <div className="mb-8">
+                <h2 className="text-3xl font-black text-white mb-4">Send us a message</h2>
+                <p className="text-white/80 font-medium">We'll get back to you within 24 hours</p>
+              </div>
 
-const officeLocations = [
-  {
-    city: 'San Francisco',
-    address: '123 Market Street, Suite 500\nSan Francisco, CA 94105',
-    phone: '+1 (555) 123-4567',
-    email: 'sf@talentaize.com',
-    timezone: 'PST'
-  },
-  {
-    city: 'New York',
-    address: '456 Broadway, Floor 12\nNew York, NY 10013',
-    phone: '+1 (555) 234-5678',
-    email: 'ny@talentaize.com',
-    timezone: 'EST'
-  },
-  {
-    city: 'London',
-    address: '789 Shoreditch High Street\nLondon, E1 6JQ, UK',
-    phone: '+44 20 7123 4567',
-    email: 'london@talentaize.com',
-    timezone: 'GMT'
-  }
-]
+              <form className="space-y-6">
+                {/* Inquiry Type */}
+                <div>
+                  <label className="block text-sm font-bold text-white mb-3">What can we help you with?</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setInquiryType('general')}
+                      className={`h-12 px-4 rounded-xl font-bold text-sm transition-all border-2 flex items-center justify-center gap-2 ${
+                        inquiryType === 'general'
+                          ? 'bg-blue-600 text-white border-blue-500'
+                          : 'bg-black/40 text-white/80 border-white/30 hover:border-white/50'
+                      }`}
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                      General
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setInquiryType('sales')}
+                      className={`h-12 px-4 rounded-xl font-bold text-sm transition-all border-2 flex items-center justify-center gap-2 ${
+                        inquiryType === 'sales'
+                          ? 'bg-purple-600 text-white border-purple-500'
+                          : 'bg-black/40 text-white/80 border-white/30 hover:border-white/50'
+                      }`}
+                    >
+                      <Briefcase className="w-4 h-4" />
+                      Sales
+                    </button>
+                  </div>
+                </div>
 
-const faqs = [
-  {
-    question: 'How does AI matching work?',
-    answer: 'Our AI analyzes job requirements, candidate profiles, skills, and experience to create highly accurate matches. The system learns from successful placements to continuously improve matching quality.'
-  },
-  {
-    question: 'What are the pricing plans?',
-    answer: 'We offer three plans: Starter ($99/month), Professional ($299/month), and Enterprise (custom pricing). Each plan includes different features and job posting limits.'
-  },
-  {
-    question: 'How do I post a job?',
-    answer: 'Simply sign up for a company account, complete your profile, and use our job posting wizard. Jobs are typically live within 15 minutes of submission.'
-  },
-  {
-    question: 'Can I integrate with my existing ATS?',
-    answer: 'Yes, we offer integrations with popular ATS platforms including Greenhouse, Lever, Workday, and more. Contact our sales team for custom integrations.'
-  },
-  {
-    question: 'What support do you provide?',
-    answer: 'We provide email support, live chat, phone support, and a comprehensive help center. Enterprise customers get dedicated account management.'
-  }
-]
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">First Name</label>
+                    <input
+                      type="text"
+                      placeholder="Enter your first name"
+                      className="w-full h-14 px-4 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">Last Name</label>
+                    <input
+                      type="text"
+                      placeholder="Enter your last name"
+                      className="w-full h-14 px-4 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                    />
+                  </div>
+                </div>
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState<ContactForm>({
-    name: '',
-    email: '',
-    company: '',
-    subject: '',
-    message: '',
-    category: 'general'
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [activeTab, setActiveTab] = useState('contact')
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+                <div>
+                  <label className="block text-sm font-bold text-white mb-2">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/60" />
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="w-full h-14 pl-12 pr-4 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                    />
+                  </div>
+                </div>
 
-  const handleInputChange = (field: keyof ContactForm, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+                <div>
+                  <label className="block text-sm font-bold text-white mb-2">Company</label>
+                  <input
+                    type="text"
+                    placeholder="Enter your company name"
+                    className="w-full h-14 px-4 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                  />
+                </div>
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
-    }, 2000)
-  }
+                <div>
+                  <label className="block text-sm font-bold text-white mb-2">Message</label>
+                  <textarea
+                    rows={5}
+                    placeholder="Tell us how we can help you..."
+                    className="w-full px-4 py-4 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium resize-none"
+                  />
+                </div>
 
-  if (isSubmitted) {
-    return (
-      <NeuronicLayout variant="subtle">
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center max-w-md mx-auto">
-            <div className="w-16 h-16 bg-emerald-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-8 h-8 text-emerald-400" />
+                <button
+                  type="submit"
+                  className={`w-full h-14 rounded-xl font-black text-lg transition-all shadow-xl flex items-center justify-center gap-3 ${
+                    inquiryType === 'sales'
+                      ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
+                >
+                  Send Message
+                  <Send className="w-5 h-5" />
+                </button>
+              </form>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3">Message Sent!</h2>
-            <p className="text-white/80 mb-6">
-              Thank you for contacting us. We'll get back to you within 24 hours.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <button 
-                onClick={() => setIsSubmitted(false)}
-                className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-colors"
-              >
-                Send Another Message
-              </button>
-              <Link href="/" className="px-6 py-3 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors">
-                Back to Home
-              </Link>
+          </div>
+          
+          {/* Contact Information */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl font-black text-white mb-6">Get in touch instantly</h2>
+              <p className="text-white/80 text-lg font-medium leading-relaxed mb-8">
+                Whether you're a candidate looking for your dream role or a company seeking top talent, 
+                our team is here to help you succeed.
+              </p>
+            </div>
+
+            {/* Contact Methods */}
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 p-6 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/30">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold mb-2">Email Support</h3>
+                  <p className="text-white/70 text-sm mb-2">Get help within 24 hours</p>
+                  <a href="mailto:support@talentaize.com" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
+                    support@talentaize.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/30">
+                  <Phone className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold mb-2">Sales Team</h3>
+                  <p className="text-white/70 text-sm mb-2">Speak with our enterprise specialists</p>
+                  <a href="tel:+1-555-TALENT" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
+                    +1 (555) TALENT-1
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/30">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold mb-2">Global Headquarters</h3>
+                  <p className="text-white/70 text-sm">
+                    123 Innovation Drive<br />
+                    San Francisco, CA 94107<br />
+                    United States
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Response Time */}
+            <div className="p-6 bg-black/50 backdrop-blur-md border-2 border-green-400/40 rounded-2xl">
+              <div className="flex items-center gap-3 mb-4">
+                <Clock className="w-6 h-6 text-green-400" />
+                <h3 className="text-white font-bold">Lightning-Fast Response</h3>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-400" />
+                  <span className="text-white/80 text-sm font-medium">General inquiries: < 24 hours</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-400" />
+                  <span className="text-white/80 text-sm font-medium">Sales inquiries: < 4 hours</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-400" />
+                  <span className="text-white/80 text-sm font-medium">Technical support: < 2 hours</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </NeuronicLayout>
-    )
-  }
+      </div>
+    </section>
+  )
+}// FAQ Section
+function ContactFAQ() {
+  const faqs = [
+    {
+      question: "How quickly can I get started with TalentAIze?",
+      answer: "You can sign up and start using TalentAIze immediately. Our AI begins matching you with opportunities within minutes of profile completion."
+    },
+    {
+      question: "Do you offer enterprise solutions?",
+      answer: "Yes! We provide comprehensive enterprise solutions with custom integrations, dedicated support, and advanced analytics. Contact our sales team for details."
+    },
+    {
+      question: "Is my data secure?",
+      answer: "Absolutely. We use bank-grade encryption, are SOC 2 compliant, and follow strict GDPR guidelines. Your privacy and security are our top priorities."
+    },
+    {
+      question: "Can I integrate TalentAIze with my existing systems?",
+      answer: "Yes, we offer APIs and integrations with popular ATS systems, HRIS platforms, and other HR tools. Our team can help with custom integrations."
+    }
+  ]
 
   return (
-    <NeuronicLayout variant="subtle">
-      <div className="min-h-screen">
-        {/* Header */}
-        <header className="border-b border-white/20 backdrop-blur-md bg-white/10 sticky top-0 z-50">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between h-16">
-              <Link href="/" className="flex items-center gap-2">
-                <Building2 className="w-8 h-8 text-white" />
-                <span className="text-xl font-bold text-white">TalentAIze</span>
+    <section className="py-32">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl lg:text-6xl font-black text-white mb-8 tracking-tight leading-tight drop-shadow-2xl">
+            Quick answers
+          </h2>
+          
+          <p className="text-2xl text-white/80 leading-relaxed font-medium">
+            Common questions about TalentAIze and our lightning-powered platform
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="p-8 bg-black/50 backdrop-blur-md border-2 border-white/20 rounded-2xl shadow-xl">
+              <h3 className="text-xl font-black text-white mb-4">{faq.question}</h3>
+              <p className="text-white/80 leading-relaxed font-medium">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="text-white/80 font-medium mb-6">
+            Still have questions? Our team is here to help.
+          </p>
+          <Link href="/help">
+            <button className="h-14 px-8 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-black text-lg transition-all backdrop-blur-md">
+              Visit Help Center
+            </button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Contact CTA Section
+function ContactCTA() {
+  return (
+    <section className="py-32 bg-black/30">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <div className="bg-black/70 backdrop-blur-md border-2 border-white/30 rounded-3xl p-20 shadow-2xl">
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-600/30 border-2 border-blue-400/50 rounded-full mb-10 backdrop-blur-sm shadow-lg">
+              <Lightning className="w-5 h-5 text-blue-300" />
+              <span className="text-sm text-blue-100 font-bold tracking-wide">START TODAY</span>
+            </div>
+            
+            <h2 className="text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight leading-tight drop-shadow-2xl">
+              Ready to get
+              <span className="bg-gradient-to-r from-blue-300 to-cyan-200 bg-clip-text text-transparent block">
+                lightning fast?
+              </span>
+            </h2>
+            
+            <p className="text-2xl text-white/85 leading-relaxed max-w-3xl mx-auto mb-16 font-medium">
+              Don't wait for opportunity to find you. Join TalentAIze today and 
+              experience the future of career matching.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link href="/auth/signup">
+              <button className="h-16 px-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xl transition-all shadow-2xl flex items-center gap-3">
+                Get Started Free
+                <ArrowRight className="w-6 h-6" />
+              </button>
+            </Link>
+            <Link href="/solutions">
+              <button className="h-16 px-12 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-black text-xl transition-all backdrop-blur-md">
+                Explore Solutions
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function ContactPage() {
+  return (
+    <NeuronicLayout variant="intense" className="overflow-x-hidden">
+      <div className="layout-container flex h-full grow flex-col">
+        {/* Navigation */}
+        <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b-2 border-white/20 shadow-2xl">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex items-center justify-between h-24">
+              <Link href="/" className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-3xl font-black text-white tracking-tight">TalentAIze</span>
               </Link>
               
-              <nav className="hidden md:flex items-center gap-6">
-                <button
-                  onClick={() => setActiveTab('contact')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === 'contact' 
-                      ? 'bg-white/20 text-white' 
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Contact Us
-                </button>
-                <button
-                  onClick={() => setActiveTab('support')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === 'support' 
-                      ? 'bg-white/20 text-white' 
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Support
-                </button>
-                <button
-                  onClick={() => setActiveTab('locations')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === 'locations' 
-                      ? 'bg-white/20 text-white' 
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Locations
-                </button>
+              <nav className="hidden lg:flex items-center gap-16">
+                <Link href="/platform" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Platform
+                </Link>
+                <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Solutions
+                </Link>
+                <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Pricing
+                </Link>
+                <Link href="/about" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  About
+                </Link>
+                <Link href="/contact" className="text-white transition-colors font-bold text-[16px] border-b-2 border-blue-400">
+                  Contact
+                </Link>
               </nav>
-
+              
               <div className="flex items-center gap-4">
-                <Link href="/jobs" className="text-white/80 hover:text-white">Browse Jobs</Link>
-                <Link href="/auth/login" className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-colors">
-                  Sign In
+                <Link href="/auth/login" className="h-12 px-6 flex items-center text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Sign in
+                </Link>
+                <Link href="/auth/signup">
+                  <button className="h-12 px-8 bg-white text-black rounded-xl font-black text-[16px] hover:bg-gray-100 transition-all shadow-lg">
+                    Get started
+                  </button>
                 </Link>
               </div>
             </div>
@@ -241,371 +390,11 @@ export default function ContactPage() {
         </header>
 
         {/* Main Content */}
-        <main className="container mx-auto px-4 py-12 max-w-6xl">
-          {/* Contact Tab */}
-          {activeTab === 'contact' && (
-            <div className="space-y-12">
-              {/* Hero Section */}
-              <div className="text-center">
-                <Link href="/" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-8">
-                  <ArrowLeft className="w-4 h-4" />
-                  Back to Home
-                </Link>
-                <h1 className="text-4xl font-bold text-white mb-4">
-                  <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
-                    Get in Touch
-                  </span>
-                </h1>
-                <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                  Have questions about TalentAIze? We're here to help. Reach out to our team and we'll get back to you as soon as possible.
-                </p>
-              </div>
-
-              {/* Contact Methods */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                {contactMethods.map((method, index) => (
-                  <div key={index} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6 hover:bg-white/30 transition-colors">
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${method.color} flex items-center justify-center mb-4`}>
-                      <method.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{method.title}</h3>
-                    <p className="text-white/80 text-sm mb-3">{method.description}</p>
-                    <div className="text-emerald-400 font-medium text-sm mb-1">{method.contact}</div>
-                    <div className="text-white/60 text-xs">{method.availability}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Contact Form */}
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2">
-                  <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl p-8">
-                    <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
-                    
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* Category Selection */}
-                      <div>
-                        <label className="block text-white/90 text-sm font-medium mb-3">What can we help you with?</label>
-                        <div className="grid md:grid-cols-2 gap-3">
-                          {contactCategories.map(category => (
-                            <label key={category.id} className="flex items-center gap-3 p-3 bg-white/10 rounded-lg border border-white/20 hover:bg-white/20 cursor-pointer">
-                              <input
-                                type="radio"
-                                name="category"
-                                value={category.id}
-                                checked={formData.category === category.id}
-                                onChange={(e) => handleInputChange('category', e.target.value)}
-                                className="w-4 h-4 text-emerald-600"
-                              />
-                              <category.icon className="w-4 h-4 text-white/70" />
-                              <span className="text-white/90 text-sm">{category.label}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Personal Information */}
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-white/90 text-sm font-medium mb-2">Name *</label>
-                          <input
-                            type="text"
-                            value={formData.name}
-                            onChange={(e) => handleInputChange('name', e.target.value)}
-                            required
-                            className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            placeholder="Your full name"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-white/90 text-sm font-medium mb-2">Email *</label>
-                          <input
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => handleInputChange('email', e.target.value)}
-                            required
-                            className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            placeholder="your@email.com"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-white/90 text-sm font-medium mb-2">Company</label>
-                          <input
-                            type="text"
-                            value={formData.company}
-                            onChange={(e) => handleInputChange('company', e.target.value)}
-                            className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            placeholder="Your company name"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-white/90 text-sm font-medium mb-2">Subject *</label>
-                          <input
-                            type="text"
-                            value={formData.subject}
-                            onChange={(e) => handleInputChange('subject', e.target.value)}
-                            required
-                            className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            placeholder="Brief subject line"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-white/90 text-sm font-medium mb-2">Message *</label>
-                        <textarea
-                          value={formData.message}
-                          onChange={(e) => handleInputChange('message', e.target.value)}
-                          required
-                          rows={6}
-                          className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
-                          placeholder="Tell us more about how we can help you..."
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-colors disabled:opacity-50"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                            Sending...
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-4 h-4" />
-                            Send Message
-                          </>
-                        )}
-                      </button>
-                    </form>
-                  </div>
-                </div>
-
-                {/* Sidebar */}
-                <div className="space-y-6">
-                  {/* Quick Response Times */}
-                  <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">Response Times</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span className="text-white/90 text-sm">General inquiries: &lt; 24 hours</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                        <span className="text-white/90 text-sm">Technical support: &lt; 4 hours</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span className="text-white/90 text-sm">Sales inquiries: &lt; 2 hours</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Social Links */}
-                  <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
-                    <div className="flex gap-3">
-                      <a href="#" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                        <Linkedin className="w-5 h-5 text-white" />
-                      </a>
-                      <a href="#" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                        <Twitter className="w-5 h-5 text-white" />
-                      </a>
-                      <a href="#" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                        <Facebook className="w-5 h-5 text-white" />
-                      </a>
-                      <a href="#" className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                        <Instagram className="w-5 h-5 text-white" />
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Trust Indicators */}
-                  <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">Why Choose Us</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <Shield className="w-5 h-5 text-emerald-400" />
-                        <span className="text-white/90 text-sm">SOC 2 Compliant</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Zap className="w-5 h-5 text-blue-400" />
-                        <span className="text-white/90 text-sm">99.9% Uptime</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Heart className="w-5 h-5 text-red-400" />
-                        <span className="text-white/90 text-sm">Customer-First Approach</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Support Tab */}
-          {activeTab === 'support' && (
-            <div className="space-y-12">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold text-white mb-4">
-                  <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
-                    Support Center
-                  </span>
-                </h1>
-                <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                  Find answers to common questions or get help from our support team.
-                </p>
-              </div>
-
-              {/* FAQ Section */}
-              <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
-                <div className="space-y-4">
-                  {faqs.map((faq, index) => (
-                    <div key={index} className="border border-white/20 rounded-lg overflow-hidden">
-                      <button
-                        onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                        className="w-full flex items-center justify-between p-4 bg-white/10 hover:bg-white/20 transition-colors text-left"
-                      >
-                        <span className="font-medium text-white">{faq.question}</span>
-                        <HelpCircle className={`w-5 h-5 text-white/60 transition-transform ${expandedFaq === index ? 'rotate-180' : ''}`} />
-                      </button>
-                      {expandedFaq === index && (
-                        <div className="p-4 bg-white/5">
-                          <p className="text-white/80">{faq.answer}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Help Resources */}
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6 hover:bg-white/30 transition-colors">
-                  <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
-                    <HelpCircle className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Help Center</h3>
-                  <p className="text-white/80 text-sm mb-4">Browse our comprehensive knowledge base and tutorials.</p>
-                  <a href="#" className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium">
-                    Visit Help Center
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-
-                <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6 hover:bg-white/30 transition-colors">
-                  <div className="w-12 h-12 bg-purple-600/20 rounded-lg flex items-center justify-center mb-4">
-                    <MessageSquare className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Live Chat</h3>
-                  <p className="text-white/80 text-sm mb-4">Get instant help from our support team during business hours.</p>
-                  <button className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium">
-                    Start Chat
-                    <MessageSquare className="w-3 h-3" />
-                  </button>
-                </div>
-
-                <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6 hover:bg-white/30 transition-colors">
-                  <div className="w-12 h-12 bg-green-600/20 rounded-lg flex items-center justify-center mb-4">
-                    <Users className="w-6 h-6 text-green-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Community</h3>
-                  <p className="text-white/80 text-sm mb-4">Connect with other users and share best practices.</p>
-                  <a href="#" className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium">
-                    Join Community
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Locations Tab */}
-          {activeTab === 'locations' && (
-            <div className="space-y-12">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold text-white mb-4">
-                  <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
-                    Our Locations
-                  </span>
-                </h1>
-                <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                  Find us around the world. We have offices in major cities to serve you better.
-                </p>
-              </div>
-
-              {/* Office Locations */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {officeLocations.map((location, index) => (
-                  <div key={index} className="backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-emerald-600/20 rounded-lg flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-emerald-400" />
-                      </div>
-                      <h3 className="text-xl font-semibold text-white">{location.city}</h3>
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <MapPin className="w-4 h-4 text-white/60 mt-1" />
-                        <div>
-                          <p className="text-white/90 text-sm whitespace-pre-line">{location.address}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-3">
-                        <Phone className="w-4 h-4 text-white/60" />
-                        <span className="text-white/90 text-sm">{location.phone}</span>
-                      </div>
-                      
-                      <div className="flex items-center gap-3">
-                        <Mail className="w-4 h-4 text-white/60" />
-                        <span className="text-white/90 text-sm">{location.email}</span>
-                      </div>
-                      
-                      <div className="flex items-center gap-3">
-                        <Clock className="w-4 h-4 text-white/60" />
-                        <span className="text-white/90 text-sm">Timezone: {location.timezone}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Global Presence */}
-              <div className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl p-8 text-center">
-                <h2 className="text-2xl font-bold text-white mb-6">Global Presence</h2>
-                <div className="grid md:grid-cols-4 gap-6">
-                  <div>
-                    <div className="text-3xl font-bold text-white mb-2">50+</div>
-                    <div className="text-white/80 text-sm">Countries Served</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-white mb-2">1M+</div>
-                    <div className="text-white/80 text-sm">Active Users</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-white mb-2">10K+</div>
-                    <div className="text-white/80 text-sm">Partner Companies</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-white mb-2">24/7</div>
-                    <div className="text-white/80 text-sm">Global Support</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+        <main>
+          <ContactHero />
+          <ContactForm />
+          <ContactFAQ />
+          <ContactCTA />
         </main>
       </div>
     </NeuronicLayout>

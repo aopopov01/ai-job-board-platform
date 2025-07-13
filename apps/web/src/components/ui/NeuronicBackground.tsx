@@ -10,6 +10,8 @@ interface Node {
   pulse: number
   pulseDirection: number
   connections: number[]
+  energy: number
+  lightningCharge: number
 }
 
 interface NeuronicBackgroundProps {
@@ -45,11 +47,13 @@ export default function NeuronicBackground({
         nodesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
           pulse: Math.random() * Math.PI * 2,
           pulseDirection: Math.random() > 0.5 ? 1 : -1,
-          connections: []
+          connections: [],
+          energy: Math.random(),
+          lightningCharge: Math.random() * Math.PI * 2
         })
       }
     }
@@ -96,10 +100,14 @@ export default function NeuronicBackground({
         node.x = Math.max(0, Math.min(canvas.width, node.x))
         node.y = Math.max(0, Math.min(canvas.height, node.y))
 
-        // Update pulse
+        // Update pulse and lightning energy
         node.pulse += pulseSpeed * node.pulseDirection
         if (node.pulse > Math.PI * 2) node.pulse = 0
         if (node.pulse < 0) node.pulse = Math.PI * 2
+        
+        // Update lightning charge for electric effects (reduced intensity)
+        node.lightningCharge += pulseSpeed * 1.5
+        node.energy = Math.sin(node.lightningCharge) * 0.3 + 0.4
       })
 
       // Recalculate connections
@@ -115,42 +123,101 @@ export default function NeuronicBackground({
             const distance = Math.sqrt(dx * dx + dy * dy)
             const alpha = (1 - distance / connectionDistance) * opacity * 0.5
 
-            // Pulsing effect on connections with higher contrast
+            // Lightning-inspired electric connections (reduced sparkling)
             const pulseIntensity = (Math.sin(node.pulse) + Math.sin(otherNode.pulse)) / 2
-            const connectionAlpha = alpha * (0.6 + pulseIntensity * 0.4)
+            const lightningEnergy = (node.energy + otherNode.energy) / 2
+            const electricIntensity = Math.sin(Date.now() * 0.005 + distance * 0.05) * 0.2 + 0.8
+            const connectionAlpha = alpha * (0.7 + pulseIntensity * 0.3 + lightningEnergy * 0.2)
 
-            ctx.strokeStyle = `rgba(64, 224, 208, ${connectionAlpha})`
-            ctx.lineWidth = 1.5
+            // Electric lightning colors - more controlled brightness
+            const electricColor = lightningEnergy > 0.8 
+              ? `rgba(200, 230, 255, ${connectionAlpha * electricIntensity})` 
+              : `rgba(120, 180, 255, ${connectionAlpha})`
+            
+            ctx.strokeStyle = electricColor
+            ctx.lineWidth = 1.5 + lightningEnergy * 1.5
+            
+            // Add subtle electric glow to connections
+            ctx.shadowColor = electricColor
+            ctx.shadowBlur = 4 + lightningEnergy * 6
+            
             ctx.beginPath()
             ctx.moveTo(node.x, node.y)
-            ctx.lineTo(otherNode.x, otherNode.y)
+            
+            // Add subtle lightning-style jagged connections for very high energy only
+            if (lightningEnergy > 0.9) {
+              const midX = (node.x + otherNode.x) / 2 + (Math.random() - 0.5) * 10
+              const midY = (node.y + otherNode.y) / 2 + (Math.random() - 0.5) * 10
+              ctx.lineTo(midX, midY)
+              ctx.lineTo(otherNode.x, otherNode.y)
+            } else {
+              ctx.lineTo(otherNode.x, otherNode.y)
+            }
+            
             ctx.stroke()
+            ctx.shadowBlur = 0
           }
         })
       })
 
-      // Draw nodes with higher contrast
+      // Draw lightning-charged nodes with electric energy
       nodesRef.current.forEach(node => {
         const pulseIntensity = Math.sin(node.pulse) * 0.5 + 0.5
-        const nodeOpacity = opacity * (0.7 + pulseIntensity * 0.3)
-        const nodeSize = 3 + pulseIntensity * 3
+        const electricCharge = node.energy
+        const nodeOpacity = opacity * (0.8 + pulseIntensity * 0.3 + electricCharge * 0.2)
+        const nodeSize = 4 + pulseIntensity * 4 + electricCharge * 2
+        const isHighEnergy = electricCharge > 0.8
 
-        // Main node with higher contrast
-        ctx.fillStyle = `rgba(64, 224, 208, ${nodeOpacity})`
+        // Lightning-charged node with controlled electric colors
+        const nodeColor = isHighEnergy 
+          ? `rgba(220, 240, 255, ${nodeOpacity})` // Bright but not pure white
+          : `rgba(120, 180, 255, ${nodeOpacity})` // Electric blue
+          
+        // Add subtle electric glow to high energy nodes
+        if (isHighEnergy) {
+          ctx.shadowColor = 'rgba(200, 230, 255, 0.6)'
+          ctx.shadowBlur = 8 + electricCharge * 6
+        }
+        
+        ctx.fillStyle = nodeColor
         ctx.beginPath()
         ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2)
         ctx.fill()
+        
+        // Electric core - bright but controlled for lightning nodes
+        const coreColor = isHighEnergy 
+          ? `rgba(240, 250, 255, ${nodeOpacity})` 
+          : `rgba(180, 220, 255, ${nodeOpacity * 0.9})`
+          
+        ctx.fillStyle = coreColor
+        ctx.beginPath()
+        ctx.arc(node.x, node.y, nodeSize * 0.5, 0, Math.PI * 2)
+        ctx.fill()
+        
+        ctx.shadowBlur = 0
 
-        // Pulsing glow with enhanced visibility
-        const glowRadius = nodeSize + pulseIntensity * 12
+        // Electric lightning glow with controlled inspirational energy
+        const glowRadius = nodeSize + pulseIntensity * 15 + electricCharge * 8
         const gradient = ctx.createRadialGradient(
           node.x, node.y, 0,
           node.x, node.y, glowRadius
         )
-        gradient.addColorStop(0, `rgba(64, 224, 208, ${nodeOpacity * 0.9})`)
-        gradient.addColorStop(0.3, `rgba(32, 178, 170, ${nodeOpacity * 0.5})`)
-        gradient.addColorStop(0.7, `rgba(45, 212, 191, ${nodeOpacity * 0.3})`)
-        gradient.addColorStop(1, 'rgba(45, 212, 191, 0)')
+        
+        if (isHighEnergy) {
+          // Bright but controlled glow for high energy nodes
+          gradient.addColorStop(0, `rgba(220, 240, 255, ${nodeOpacity * 1.2})`)
+          gradient.addColorStop(0.1, `rgba(180, 220, 255, ${nodeOpacity * 1.0})`)
+          gradient.addColorStop(0.3, `rgba(140, 190, 255, ${nodeOpacity * 0.7})`)
+          gradient.addColorStop(0.6, `rgba(100, 150, 255, ${nodeOpacity * 0.4})`)
+          gradient.addColorStop(1, 'rgba(60, 120, 200, 0)')
+        } else {
+          // Electric blue glow for regular nodes
+          gradient.addColorStop(0, `rgba(180, 220, 255, ${nodeOpacity * 1.1})`)
+          gradient.addColorStop(0.2, `rgba(140, 190, 255, ${nodeOpacity * 0.8})`)
+          gradient.addColorStop(0.5, `rgba(100, 160, 255, ${nodeOpacity * 0.5})`)
+          gradient.addColorStop(0.8, `rgba(80, 130, 220, ${nodeOpacity * 0.3})`)
+          gradient.addColorStop(1, 'rgba(60, 110, 200, 0)')
+        }
         
         ctx.fillStyle = gradient
         ctx.beginPath()

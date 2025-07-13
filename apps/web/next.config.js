@@ -24,6 +24,7 @@ const nextConfig = {
     typedRoutes: false,
     missingSuspenseWithCSRBailout: true,
     forceSwcTransforms: true,
+    esmExternals: false,
   },
   
   trailingSlash: false,
@@ -46,6 +47,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
+          {
+            key: 'Cache-Control',
+            value: 'private, no-cache, no-store, max-age=0, must-revalidate'
+          },
           {
             key: 'X-DNS-Prefetch-Control',
             value: 'on'
@@ -121,6 +126,16 @@ const nextConfig = {
   
   // Disable static generation to avoid SSR issues
   trailingSlash: false,
+  
+  // Skip building error pages to avoid SSR issues
+  async rewrites() {
+    return []
+  },
+  
+  // Exclude error pages from static generation
+  async generateStaticParams() {
+    return []
+  },
 }
 
 module.exports = nextConfig

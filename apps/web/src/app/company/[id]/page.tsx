@@ -7,6 +7,7 @@ import {
   Building2, 
   MapPin, 
   Users, 
+  User,
   Globe, 
   Mail, 
   Phone,

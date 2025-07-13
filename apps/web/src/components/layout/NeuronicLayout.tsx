@@ -21,10 +21,10 @@ export default function NeuronicLayout({
     switch (variant) {
       case 'intense':
         return {
-          opacity: backgroundOpacity || 0.6,
-          nodeCount: 80,
-          connectionDistance: 180,
-          pulseSpeed: 0.03
+          opacity: backgroundOpacity || 1.0,
+          nodeCount: 100,
+          connectionDistance: 200,
+          pulseSpeed: 0.04
         }
       case 'subtle':
         return {
@@ -35,10 +35,10 @@ export default function NeuronicLayout({
         }
       default:
         return {
-          opacity: backgroundOpacity || 0.5,
-          nodeCount: 50,
-          connectionDistance: 150,
-          pulseSpeed: 0.02
+          opacity: backgroundOpacity || 0.9,
+          nodeCount: 60,
+          connectionDistance: 160,
+          pulseSpeed: 0.03
         }
     }
   }
@@ -50,8 +50,8 @@ export default function NeuronicLayout({
       {/* Neuronic Background */}
       <NeuronicBackground {...config} />
       
-      {/* Background gradient overlay with higher contrast */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-900/40 via-gray-900/30 to-emerald-900/40 pointer-events-none z-0" />
+      {/* Dark lightning-inspired background for maximum contrast */}
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-950/90 via-gray-950/80 to-blue-950/70 pointer-events-none z-0" />
       
       {/* Content */}
       <div className="relative z-10">

@@ -1,27 +1,28 @@
-# Development Dockerfile for Next.js application
+# Simple Development Server - No Build Required
 FROM node:20-alpine
-
-# Install dependencies
-RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json* ./
-COPY apps/web/package.json ./apps/web/
-COPY packages/ ./packages/
+# Install system dependencies
+RUN apk add --no-cache libc6-compat curl
 
-# Install all dependencies (including dev dependencies)
-RUN npm install
-
-# Copy source code
+# Copy all files
 COPY . .
 
-WORKDIR /app/apps/web
+# Install dependencies
+RUN npm install
 
-EXPOSE 3000
-
+# Set environment variables
 ENV NODE_ENV=development
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
 
-CMD ["npm", "run", "dev"]
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000 || exit 1
+
+# Start Next.js development server
+CMD ["sh", "-c", "cd apps/web && npm run dev"]

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Animation Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #neuralCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #10b981, #06d6a0, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .control-group {
+            margin-bottom: 0.5rem;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        input[type="range"] {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="neuralCanvas"></canvas>
+    
+    <div class="controls">
+        <h3>Neural Network Controls</h3>
+        <div class="control-group">
+            <label for="nodeCount">Nodes: <span id="nodeCountValue">50</span></label>
+            <input type="range" id="nodeCount" min="20" max="100" value="50">
+        </div>
+        <div class="control-group">
+            <label for="connectionDistance">Connection Distance: <span id="connectionDistanceValue">150</span></label>
+            <input type="range" id="connectionDistance" min="50" max="300" value="150">
+        </div>
+        <div class="control-group">
+            <label for="pulseSpeed">Pulse Speed: <span id="pulseSpeedValue">0.02</span></label>
+            <input type="range" id="pulseSpeed" min="0.01" max="0.1" step="0.01" value="0.02">
+        </div>
+        <div class="control-group">
+            <label for="opacity">Opacity: <span id="opacityValue">0.6</span></label>
+            <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.6">
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="content">
+            <h1>Neural Network Animation</h1>
+            <p>This is the moving neural network background from your job board platform! Watch the nodes connect and pulse as they move around the screen.</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="nodeCountStat">50</div>
+                    <div>Active Nodes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="connectionsStat">0</div>
+                    <div>Connections</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="fpsStat">60</div>
+                    <div>FPS</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 1rem;">
+                Use the controls in the top-right to adjust the animation parameters in real-time!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        class NeuronicBackground {
+            constructor(canvas, options = {}) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.nodes = [];
+                this.animationId = null;
+                this.lastFrame = 0;
+                this.fps = 0;
+                
+                // Default options
+                this.options = {
+                    nodeCount: 50,
+                    connectionDistance: 150,
+                    pulseSpeed: 0.02,
+                    opacity: 0.6,
+                    ...options
+                };
+                
+                this.resizeCanvas();
+                this.initializeNodes();
+                this.setupEventListeners();
+                this.animate();
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            initializeNodes() {
+                this.nodes = [];
+                for (let i = 0; i < this.options.nodeCount; i++) {
+                    this.nodes.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        pulse: Math.random() * Math.PI * 2,
+                        pulseDirection: 1,
+                        connections: []
+                    });
+                }
+            }
+            
+            setupEventListeners() {
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.initializeNodes();
+                });
+            }
+            
+            updateNodes() {
+                this.nodes.forEach(node => {
+                    // Update position
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    
+                    // Bounce off edges
+                    if (node.x <= 0 || node.x >= this.canvas.width) node.vx *= -1;
+                    if (node.y <= 0 || node.y >= this.canvas.height) node.vy *= -1;
+                    
+                    // Keep nodes in bounds
+                    node.x = Math.max(0, Math.min(this.canvas.width, node.x));
+                    node.y = Math.max(0, Math.min(this.canvas.height, node.y));
+                    
+                    // Update pulse
+                    node.pulse += this.options.pulseSpeed * node.pulseDirection;
+                    if (node.pulse >= Math.PI * 2) {
+                        node.pulse = Math.PI * 2;
+                        node.pulseDirection = -1;
+                    } else if (node.pulse <= 0) {
+                        node.pulse = 0;
+                        node.pulseDirection = 1;
+                    }
+                });
+            }
+            
+            findConnections() {
+                let totalConnections = 0;
+                this.nodes.forEach((node, i) => {
+                    node.connections = [];
+                    this.nodes.forEach((otherNode, j) => {
+                        if (i !== j) {
+                            const distance = Math.sqrt(
+                                Math.pow(node.x - otherNode.x, 2) + 
+                                Math.pow(node.y - otherNode.y, 2)
+                            );
+                            if (distance < this.options.connectionDistance) {
+                                node.connections.push(j);
+                                totalConnections++;
+                            }
+                        }
+                    });
+                });
+                return totalConnections / 2; // Divide by 2 since each connection is counted twice
+            }
+            
+            draw() {
+                // Clear canvas
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Find connections
+                const connectionCount = this.findConnections();
+                
+                // Draw connections
+                this.ctx.strokeStyle = `rgba(16, 185, 129, ${this.options.opacity * 0.3})`;
+                this.ctx.lineWidth = 1;
+                
+                this.nodes.forEach((node, i) => {
+                    node.connections.forEach(connectionIndex => {
+                        if (connectionIndex > i) { // Avoid drawing the same line twice
+                            const connectedNode = this.nodes[connectionIndex];
+                            const distance = Math.sqrt(
+                                Math.pow(node.x - connectedNode.x, 2) + 
+                                Math.pow(node.y - connectedNode.y, 2)
+                            );
+                            const alpha = 1 - (distance / this.options.connectionDistance);
+                            
+                            this.ctx.strokeStyle = `rgba(16, 185, 129, ${alpha * this.options.opacity * 0.5})`;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(node.x, node.y);
+                            this.ctx.lineTo(connectedNode.x, connectedNode.y);
+                            this.ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw nodes
+                this.nodes.forEach(node => {
+                    const pulseSize = 2 + Math.sin(node.pulse) * 2;
+                    const alpha = 0.5 + Math.sin(node.pulse) * 0.3;
+                    
+                    // Outer glow
+                    const gradient = this.ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, pulseSize * 3);
+                    gradient.addColorStop(0, `rgba(16, 185, 129, ${alpha * this.options.opacity})`);
+                    gradient.addColorStop(0.5, `rgba(16, 185, 129, ${alpha * this.options.opacity * 0.3})`);
+                    gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, pulseSize * 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Core node
+                    this.ctx.fillStyle = `rgba(16, 185, 129, ${this.options.opacity})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, pulseSize, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+                
+                // Update stats
+                document.getElementById('nodeCountStat').textContent = this.nodes.length;
+                document.getElementById('connectionsStat').textContent = Math.round(connectionCount);
+            }
+            
+            animate(currentTime = 0) {
+                // Calculate FPS
+                if (currentTime - this.lastFrame >= 1000) {
+                    this.fps = Math.round(1000 / (currentTime - this.lastFrame));
+                    document.getElementById('fpsStat').textContent = this.fps;
+                    this.lastFrame = currentTime;
+                }
+                
+                this.updateNodes();
+                this.draw();
+                this.animationId = requestAnimationFrame((time) => this.animate(time));
+            }
+            
+            updateOptions(newOptions) {
+                const oldNodeCount = this.options.nodeCount;
+                this.options = { ...this.options, ...newOptions };
+                
+                if (this.options.nodeCount !== oldNodeCount) {
+                    this.initializeNodes();
+                }
+            }
+            
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+        }
+        
+        // Initialize the neural network
+        const canvas = document.getElementById('neuralCanvas');
+        const neuralNetwork = new NeuronicBackground(canvas);
+        
+        // Setup controls
+        const controls = {
+            nodeCount: document.getElementById('nodeCount'),
+            connectionDistance: document.getElementById('connectionDistance'),
+            pulseSpeed: document.getElementById('pulseSpeed'),
+            opacity: document.getElementById('opacity')
+        };
+        
+        const controlValues = {
+            nodeCount: document.getElementById('nodeCountValue'),
+            connectionDistance: document.getElementById('connectionDistanceValue'),
+            pulseSpeed: document.getElementById('pulseSpeedValue'),
+            opacity: document.getElementById('opacityValue')
+        };
+        
+        Object.keys(controls).forEach(key => {
+            controls[key].addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value);
+                controlValues[key].textContent = value;
+                neuralNetwork.updateOptions({ [key]: value });
+            });
+        });
+    </script>
+</body>
+</html>

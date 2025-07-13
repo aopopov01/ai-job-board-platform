@@ -1,0 +1,73 @@
+# Dockerfile for Scraper Service
+FROM node:20-alpine AS base
+
+# Install dependencies for Puppeteer
+FROM base AS deps
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    libc6-compat
+
+# Tell Puppeteer to skip installing Chromium. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+COPY packages/scraper/package.json ./packages/scraper/
+COPY packages/shared/package.json ./packages/shared/
+COPY packages/database/package.json ./packages/database/
+
+# Install dependencies
+RUN npm install && npm install -g turbo
+
+# Build stage
+FROM deps AS builder
+COPY . .
+WORKDIR /app/packages/scraper
+RUN npm run build
+
+# Production stage
+FROM base AS runner
+WORKDIR /app
+
+# Install Chromium for production
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    NODE_ENV=production
+
+# Create user for security
+RUN addgroup --system --gid 1001 scraper
+RUN adduser --system --uid 1001 scraper
+
+# Copy built application
+COPY --from=builder /app/packages/scraper/dist ./dist
+COPY --from=builder /app/packages/scraper/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
+
+# Set permissions
+RUN chown -R scraper:scraper /app
+USER scraper
+
+# Health check
+HEALTHCHECK --interval=60s --timeout=10s --start-period=30s --retries=3 \
+  CMD node -e "console.log('Scraper service healthy')" || exit 1
+
+# Default command (can be overridden)
+CMD ["node", "dist/index.js"]

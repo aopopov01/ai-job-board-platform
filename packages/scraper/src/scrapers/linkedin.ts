@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const linkedinConfig: ScrapingConfig = {
+export const linkedinConfig: ScrapingConfig = {
   source: 'LinkedIn',
   baseUrl: 'https://www.linkedin.com',
   searchPaths: ['/jobs/search?keywords='],

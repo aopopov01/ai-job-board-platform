@@ -4,16 +4,34 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.simple
+      dockerfile: apps/web/Dockerfile
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL:-https://your-project.supabase.co}
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY:-your-anon-key}
+      - NEXT_TELEMETRY_DISABLED=1
+      - SUPABASE_URL=${SUPABASE_URL:-https://your-project.supabase.co}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:-your-anon-key}
     restart: unless-stopped
     networks:
       - app-network
+    depends_on:
+      - redis
+
+  # Scraper Service
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.scraper
+    environment:
+      - NODE_ENV=production
+      - SUPABASE_URL=${SUPABASE_URL:-https://your-project.supabase.co}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:-your-anon-key}
+    restart: unless-stopped
+    networks:
+      - app-network
+    # Run demo scraper on startup, then sleep
+    command: sh -c "node dist/demo-scraper.js && tail -f /dev/null"
 
   # Redis for session management
   redis:

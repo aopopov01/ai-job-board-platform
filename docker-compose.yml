@@ -22,6 +22,21 @@ services:
     networks:
       - app-network
 
+  # Scraper Service
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.scraper
+    environment:
+      - NODE_ENV=production
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+    volumes:
+      - scraper_data:/app/data
+    restart: unless-stopped
+    networks:
+      - app-network
+
   # Mobile App (Expo)
   mobile:
     build:
@@ -118,6 +133,7 @@ volumes:
   postgres_data:
   grafana_data:
   prometheus_data:
+  scraper_data:
 
 networks:
   app-network:

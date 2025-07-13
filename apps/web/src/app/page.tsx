@@ -13,7 +13,17 @@ import {
   Target,
   Globe,
   Heart,
-  Award
+  Award,
+  Sparkles,
+  Brain,
+  Rocket,
+  BarChart3,
+  MessageSquare,
+  Filter,
+  Bot,
+  Zap as Lightning,
+  Clock,
+  Eye
 } from 'lucide-react'
 import NeuronicLayout from '../components/layout/NeuronicLayout'
 import { ShimmerButton } from '../components/magicui/shimmer-button'
@@ -22,59 +32,109 @@ import { AnimatedList } from '../components/magicui/animated-list'
 import { TextReveal } from '../components/magicui/text-reveal'
 import { Ripple } from '../components/magicui/ripple'
 
-// Neuronic Hero Section Component
+// Extraordinary Professional Hero Section
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden min-h-[480px] flex items-center justify-center">
-      {/* High contrast glass morphism background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/40 via-slate-900/40 to-emerald-900/40 backdrop-blur-sm"></div>
+    <section className="relative min-h-screen flex items-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80"></div>
       
-      <div className="container relative z-10">
-        <div className="flex flex-col gap-6 items-center text-center max-w-4xl mx-auto px-4">
-          {/* Enhanced Hero Title with Glow Effect */}
-          <h1 className="text-white text-4xl font-black leading-tight tracking-tight @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-tight drop-shadow-2xl">
-            <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">
-              Unlock Your Career Potential
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-              with AI Intelligence
-            </span>
-          </h1>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-20 items-center min-h-screen py-20">
           
-          {/* Enhanced Hero Subtitle */}
-          <h2 className="text-white/90 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal drop-shadow-lg">
-            Experience the future of job searching with our AI-powered neuronic platform that learns, adapts, and connects you to your ideal career path.
-          </h2>
-          
-          {/* Enhanced Search Bar with High Contrast Glass Effect */}
-          <div className="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
-            <div className="flex w-full flex-1 items-stretch rounded-lg h-full backdrop-blur-md bg-white/20 border border-white/30 shadow-2xl">
-              <div className="text-white/80 flex items-center justify-center pl-[15px] rounded-l-lg border-r-0">
-                <Search className="w-5 h-5" />
+          {/* Left Column - Content */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 border-2 border-white/30 rounded-full backdrop-blur-sm shadow-lg shadow-white/20">
+                <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg shadow-white/80"></div>
+                <span className="text-sm text-white font-bold tracking-wide">⚡ LIGHTNING-FAST MATCHING</span>
               </div>
-              <input
-                placeholder="Job title or keywords"
-                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-white/80 px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
-              />
-              <div className="flex items-center justify-center rounded-r-lg border-l-0 pr-[7px]">
-                <Link href="/jobs" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] transition-all duration-300 shadow-lg hover:shadow-xl">
-                  <span className="truncate">Search</span>
-                </Link>
+              
+              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight">
+                <span className="text-white block leading-none drop-shadow-2xl">Ignite your</span>
+                <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-none drop-shadow-2xl animate-pulse">
+                  career lightning
+                </span>
+              </h1>
+              
+              <p className="text-2xl text-white/90 leading-relaxed max-w-lg font-medium">
+                ⚡ Electrify your career with AI-powered lightning-speed matching. 
+                Unleash your potential and spark extraordinary opportunities that ignite your professional journey.
+              </p>
+            </div>
+            
+            {/* Search Interface */}
+            <div className="space-y-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search for roles, companies, or skills..."
+                  className="w-full h-16 pl-6 pr-32 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all shadow-2xl font-medium text-lg"
+                />
+                <button className="absolute right-2 top-2 h-12 px-8 bg-white text-black rounded-xl font-bold hover:bg-gray-100 transition-all shadow-lg text-lg">
+                  Search
+                </button>
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
+                {['Software Engineer', 'Product Manager', 'Data Scientist', 'UX Designer'].map((role) => (
+                  <button key={role} className="px-4 py-2 text-sm text-white/80 border-2 border-white/30 rounded-lg hover:border-white/60 hover:text-white transition-all font-semibold backdrop-blur-sm bg-white/5">
+                    {role}
+                  </button>
+                ))}
               </div>
             </div>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button className="h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-2xl text-lg">
+                Get Started
+              </button>
+              <button className="h-14 px-10 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md text-lg">
+                Watch Demo
+              </button>
+            </div>
           </div>
-
-          {/* Enhanced CTA buttons with Magic UI */}
-          <div className="flex gap-4 mt-4">
-            <ShimmerButton className="px-6 py-3">
-              <Zap className="w-4 h-4 mr-2" />
-              AI Career Advisor
-            </ShimmerButton>
-            <Link href="/company" className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600/30 to-slate-600/30 backdrop-blur-md text-white rounded-lg hover:from-gray-600/40 hover:to-slate-600/40 transition-all duration-300 border border-white/30 shadow-lg">
-              <Briefcase className="w-4 h-4" />
-              For Companies
-            </Link>
+          
+          {/* Right Column - Visual */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 rounded-3xl blur-3xl"></div>
+            <div className="relative bg-black/50 backdrop-blur-md border-2 border-white/20 rounded-3xl p-8 shadow-2xl">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-lg">AI Match Score</div>
+                    <div className="text-white/70 text-base font-medium">98% compatibility</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  {[
+                    { role: 'Senior Frontend Engineer', company: 'Stripe', match: '96%' },
+                    { role: 'Product Designer', company: 'Linear', match: '94%' },
+                    { role: 'Full Stack Developer', company: 'Vercel', match: '92%' }
+                  ].map((job, idx) => (
+                    <div key={idx} className="p-4 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm shadow-lg">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <div className="text-white font-medium">{job.role}</div>
+                          <div className="text-white/60 text-sm">{job.company}</div>
+                        </div>
+                        <div className="text-green-400 text-sm font-semibold">{job.match}</div>
+                      </div>
+                      <div className="w-full bg-white/20 rounded-full h-2 shadow-inner">
+                        <div 
+                          className="bg-gradient-to-r from-blue-400 to-cyan-300 h-2 rounded-full shadow-lg" 
+                          style={{ width: job.match }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -168,100 +228,117 @@ function CareerInsightsSection() {
   )
 }
 
-// Enhanced Features Section Component (Neuronic Design)
+// Extraordinary Professional Features Section
 function FeaturesSection() {
-  const features = [
-    {
-      icon: Target,
-      title: 'AI-Powered Matching',
-      description: 'Advanced machine learning algorithms analyze your skills, experience, and career goals to deliver hyper-personalized job recommendations.',
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      icon: Shield,
-      title: 'Privacy First',
-      description: 'Your data is secure and private. Control what information you share and with whom.',
-      color: 'from-green-500 to-emerald-600'
-    },
-    {
-      icon: Globe,
-      title: 'Global Opportunities',
-      description: 'Access jobs from companies worldwide, including remote positions and international opportunities.',
-      color: 'from-purple-500 to-violet-600'
-    },
-    {
-      icon: Zap,
-      title: 'AI Instant Alerts',
-      description: 'Intelligent notifications powered by AI predict and alert you about opportunities before they become competitive.',
-      color: 'from-yellow-500 to-orange-600'
-    },
-    {
-      icon: Users,
-      title: 'AI Company Intelligence',
-      description: 'AI-powered company analysis provides deep insights into culture, growth potential, and hiring patterns to help you make informed decisions.',
-      color: 'from-pink-500 to-rose-600'
-    },
-    {
-      icon: Award,
-      title: 'Career Growth',
-      description: 'Track your career progression and get personalized advice to advance your professional journey.',
-      color: 'from-indigo-500 to-blue-600'
-    },
-  ]
-
   return (
-    <section className="px-40 py-16">
-      <div className="max-w-[960px] mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-emerald-600/20 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-emerald-400/30">
-            <Zap className="w-4 h-4" />
-            Powerful Features
+    <section className="py-32">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="max-w-4xl mb-24">
+          <div className="inline-flex items-center gap-3 px-5 py-3 bg-blue-600/20 border-2 border-blue-400/40 rounded-full mb-8 backdrop-blur-sm">
+            <div className="w-3 h-3 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></div>
+            <span className="text-sm text-blue-100 font-bold tracking-wide">PLATFORM CAPABILITIES</span>
           </div>
-          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
-            Everything You Need to Find
-            <br />
-            <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-              Your Dream Job
-            </span>
+          
+          <h2 className="text-5xl lg:text-6xl font-black text-white mb-8 tracking-tight leading-tight drop-shadow-2xl">
+            Precision matching powered by advanced AI
           </h2>
-          <p className="text-white/90 text-lg max-w-3xl mx-auto leading-relaxed">
-            Our platform combines cutting-edge AI technology with human insight to make job searching more effective, efficient, and enjoyable than ever before.
+          
+          <p className="text-2xl text-white/80 leading-relaxed font-medium">
+            Our platform combines machine learning, natural language processing, and behavioral analysis 
+            to deliver matches that understand the nuances of career compatibility.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div key={feature.title} className="group">
-              <MagicCard className="p-8 h-full">
-                {/* Icon */}
-                <div className={`w-14 h-14 mb-6 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-7 h-7 text-white" />
+
+        {/* Features Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-20">
+          
+          {/* Feature 1 - AI Matching */}
+          <div className="lg:col-span-2">
+            <div className="h-full bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl p-10 shadow-2xl">
+              <div className="mb-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-500/30">
+                  <Brain className="w-8 h-8 text-white" />
                 </div>
-                
-                {/* Content */}
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-400 transition-colors duration-300">
-                  {feature.title}
-                </h3>
-                <p className="text-white/80 leading-relaxed">
-                  {feature.description}
+                <h3 className="text-3xl font-black text-white mb-6">AI-Powered Precision Matching</h3>
+                <p className="text-white/80 text-xl leading-relaxed mb-10 font-medium">
+                  Our neural networks analyze your skills, experience, and career aspirations to find opportunities 
+                  that align with your professional trajectory and personal values.
                 </p>
-                
-                {/* Hover Arrow */}
-                <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ArrowRight className="w-5 h-5 text-emerald-400" />
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-6 p-6 bg-black/50 border-2 border-white/20 rounded-xl backdrop-blur-sm shadow-lg">
+                  <div className="w-12 h-12 bg-blue-500/30 rounded-lg flex items-center justify-center border border-blue-400/30">
+                    <Target className="w-6 h-6 text-blue-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-white font-bold text-lg">Skill Compatibility Analysis</div>
+                    <div className="text-white/70 text-base font-medium">Deep learning algorithms assess technical and soft skills</div>
+                  </div>
+                  <div className="text-green-400 font-black text-xl">99.2%</div>
                 </div>
-              </MagicCard>
+                
+                <div className="flex items-center gap-6 p-6 bg-black/50 border-2 border-white/20 rounded-xl backdrop-blur-sm shadow-lg">
+                  <div className="w-12 h-12 bg-blue-500/30 rounded-lg flex items-center justify-center border border-blue-400/30">
+                    <BarChart3 className="w-6 h-6 text-blue-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-white font-bold text-lg">Career Trajectory Prediction</div>
+                    <div className="text-white/70 text-base font-medium">AI models predict optimal career paths</div>
+                  </div>
+                  <div className="text-green-400 font-black text-xl">96.8%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Feature 2 - Real-time Alerts */}
+          <div>
+            <div className="h-full bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl p-10 shadow-2xl">
+              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-emerald-500/30">
+                <Lightning className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-black text-white mb-6">Real-time Intelligence</h3>
+              <p className="text-white/80 leading-relaxed mb-10 text-lg font-medium">
+                Instant notifications when opportunities matching your criteria become available.
+              </p>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-4 p-4 bg-emerald-500/20 border-2 border-emerald-400/40 rounded-lg backdrop-blur-sm shadow-lg">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50"></div>
+                  <span className="text-emerald-300 text-base font-bold">New match found</span>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-blue-500/20 border-2 border-blue-400/40 rounded-lg backdrop-blur-sm shadow-lg">
+                  <div className="w-3 h-3 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></div>
+                  <span className="text-blue-300 text-base font-bold">Profile viewed</span>
+                </div>
+                <div className="flex items-center gap-4 p-4 bg-yellow-500/20 border-2 border-yellow-400/40 rounded-lg backdrop-blur-sm shadow-lg">
+                  <div className="w-3 h-3 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50"></div>
+                  <span className="text-yellow-300 text-base font-bold">Application update</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Secondary Features Row */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { icon: Shield, title: 'Privacy-First Architecture', desc: 'Enterprise-grade security with granular privacy controls' },
+            { icon: Globe, title: 'Global Network', desc: 'Access to opportunities across 50+ countries worldwide' },
+            { icon: Bot, title: 'AI Interview Coach', desc: 'Personalized interview preparation with real-time feedback' },
+            { icon: BarChart3, title: 'Career Analytics', desc: 'Comprehensive insights into your professional trajectory' }
+          ].map((feature, idx) => (
+            <div key={idx} className="p-8 bg-black/50 backdrop-blur-md border-2 border-white/20 rounded-2xl shadow-xl">
+              <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center mb-6 border border-white/30">
+                <feature.icon className="w-7 h-7 text-white" />
+              </div>
+              <h4 className="text-white font-bold mb-4 text-lg">{feature.title}</h4>
+              <p className="text-white/80 text-base leading-relaxed font-medium">{feature.desc}</p>
             </div>
           ))}
-        </div>
-        
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <ShimmerButton className="px-8 py-4 font-semibold">
-            <Target className="w-5 h-5 mr-2" />
-            Explore All Features
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </ShimmerButton>
         </div>
       </div>
     </section>
@@ -324,86 +401,184 @@ function HowItWorksSection() {
   )
 }
 
-// Testimonials Section (Neuronic Design)
+// World-Class Testimonials Section
 function TestimonialsSection() {
   const testimonials = [
     {
-      quote: "TalentAIze found me the perfect role in just 2 weeks. The AI matching is incredibly accurate and saved me hours of searching.",
+      quote: "TalentAIze transformed my job search completely. The AI matching is phenomenally accurate - I landed my dream role at a unicorn startup in just 3 weeks.",
       author: "Sarah Chen",
-      role: "Software Engineer",
-      company: "TechCorp"
+      role: "Senior Software Engineer",
+      company: "Stripe",
+      avatar: "SC",
+      rating: 5
     },
     {
-      quote: "As a hiring manager, TalentAIze has revolutionized how we find candidates. The AI-powered matches are extraordinarily accurate.",
-      author: "Michael Rodriguez",
-      role: "Head of Talent",
-      company: "Innovation Labs"
+      quote: "As Head of Talent, I've tried every platform. TalentAIze's quality of candidates and matching precision is unmatched. It's revolutionized our hiring process.",
+      author: "Marcus Rodriguez",
+      role: "VP of Talent",
+      company: "Vercel",
+      avatar: "MR",
+      rating: 5
     },
     {
-      quote: "The career insights and company information helped me make the best decision for my future. Highly recommended!",
+      quote: "TalentAIze's career analytics and salary insights gave me the confidence to negotiate a 40% salary increase. This platform pays for itself.",
       author: "Emily Johnson",
       role: "Product Designer",
-      company: "Creative Studio"
+      company: "Linear",
+      avatar: "EJ",
+      rating: 5
     },
+    {
+      quote: "I was skeptical about AI-powered job matching, but TalentAIze proved me wrong. Found 3 perfect opportunities that perfectly matched my skills and goals.",
+      author: "David Kim",
+      role: "Data Scientist",
+      company: "OpenAI",
+      avatar: "DK",
+      rating: 5
+    },
+    {
+      quote: "The AI interview prep feature was a game-changer. Practiced with their AI coach and aced my interviews at FAANG companies.",
+      author: "Priya Patel",
+      role: "ML Engineer",
+      company: "Google",
+      avatar: "PP",
+      rating: 5
+    },
+    {
+      quote: "Finally, a platform that understands the nuances of senior engineering roles. The quality of opportunities is exceptional.",
+      author: "Alex Thompson",
+      role: "Engineering Manager",
+      company: "Figma",
+      avatar: "AT",
+      rating: 5
+    }
   ]
 
   return (
-    <section className="px-40 py-16">
-      <div className="max-w-[960px] mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
-            <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
-              Loved by Professionals Worldwide
-            </span>
+    <section className="py-32 px-6 md:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-24">
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-yellow-500/20 border-2 border-yellow-400/40 text-yellow-300 text-sm font-bold mb-10 backdrop-blur-sm shadow-lg">
+            <Star className="w-5 h-5 fill-current" />
+            TRUSTED BY PROFESSIONALS
+          </div>
+          
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-10 drop-shadow-2xl">
+            Success
+            <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> stories</span>
           </h2>
-          <p className="text-white/90 text-lg max-w-2xl mx-auto">
-            Join thousands of professionals who have found their dream jobs through TalentAIze.
+          
+          <p className="text-2xl text-white/80 max-w-4xl mx-auto font-medium">
+            Join thousands of professionals who have accelerated their careers with TalentAIze.
           </p>
         </div>
-        
-        <div className="grid lg:grid-cols-3 gap-8">
+
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
           {testimonials.map((testimonial, index) => (
-            <MagicCard key={testimonial.author} className="p-8">
-              <div className="flex mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+            <div key={testimonial.author} className="p-10 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl">
+              
+              {/* Stars */}
+              <div className="flex mb-8">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
                 ))}
               </div>
-              <p className="text-white/90 text-lg leading-relaxed mb-6 italic">"{testimonial.quote}"</p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold">
-                  {testimonial.author.split(' ').map(n => n[0]).join('')}
+              
+              {/* Quote */}
+              <blockquote className="text-white/90 text-xl leading-relaxed mb-10 italic font-medium">
+                "{testimonial.quote}"
+              </blockquote>
+              
+              {/* Author */}
+              <div className="flex items-center gap-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-gray-600 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-white/20">
+                  {testimonial.avatar}
                 </div>
                 <div>
-                  <div className="font-semibold text-white">{testimonial.author}</div>
-                  <div className="text-sm text-white/70">{testimonial.role} at {testimonial.company}</div>
+                  <div className="font-black text-white text-xl">{testimonial.author}</div>
+                  <div className="text-white/70 font-medium text-base">{testimonial.role}</div>
+                  <div className="text-blue-300 text-base font-bold">{testimonial.company}</div>
                 </div>
               </div>
-            </MagicCard>
+            </div>
           ))}
         </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-5xl mx-auto">
+          {[
+            { number: "200K+", label: "Success Stories" },
+            { number: "4.9/5", label: "Average Rating" },
+            { number: "95%", label: "Job Match Rate" },
+            { number: "3 weeks", label: "Average Time to Hire" }
+          ].map((stat, index) => (
+            <div key={index} className="text-center p-6 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-2xl shadow-xl">
+              <div className="text-5xl font-black text-white mb-4 drop-shadow-lg">{stat.number}</div>
+              <div className="text-white/80 font-bold text-lg">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-20">
+          <button className="px-12 py-5 text-lg font-black bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white rounded-xl transition-all duration-300 shadow-2xl hover:shadow-3xl">
+            <Eye className="w-6 h-6 mr-3" />
+            Join Success Stories
+          </button>
+        </div>
       </div>
     </section>
   )
 }
 
-// Final CTA Section (Figma Design)
-function FinalCTASection() {
+// Extraordinary Professional CTA Section
+function CTASection() {
   return (
-    <section className="px-40 py-5">
-      <div className="max-w-[960px] mx-auto">
-        <div className="@container">
-          <div className="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
-            <div className="flex flex-col gap-2 text-center">
-              <h1 className="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]">
-                Ready to Elevate Your Career?
-              </h1>
+    <section className="py-32">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <div className="bg-black/70 backdrop-blur-md border-2 border-white/30 rounded-3xl p-20 shadow-2xl">
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-600/30 border-2 border-blue-400/50 rounded-full mb-10 backdrop-blur-sm shadow-lg">
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse shadow-lg shadow-blue-400/50"></div>
+              <span className="text-sm text-blue-100 font-bold tracking-wide">JOIN THE FUTURE</span>
             </div>
-            <div className="flex flex-1 justify-center">
-              <div className="flex justify-center">
-                <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#186ddc] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow">
-                  <span className="truncate">Get Started</span>
-                </button>
+            
+            <h2 className="text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight leading-tight drop-shadow-2xl">
+              Ready to transform
+              <span className="bg-gradient-to-r from-blue-300 to-cyan-200 bg-clip-text text-transparent block">
+                your career?
+              </span>
+            </h2>
+            
+            <p className="text-2xl text-white/85 leading-relaxed max-w-3xl mx-auto mb-16 font-medium">
+              Join thousands of professionals who have accelerated their careers with precision AI matching.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button className="h-16 px-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-black text-xl transition-all shadow-2xl hover:shadow-3xl">
+              Start Your Journey
+            </button>
+            <button className="h-16 px-12 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-black text-xl transition-all backdrop-blur-md shadow-xl">
+              Schedule Demo
+            </button>
+          </div>
+          
+          <div className="mt-16 pt-10 border-t-2 border-white/20">
+            <div className="flex flex-wrap justify-center gap-12 text-white/80">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-green-400" />
+                <span className="font-bold text-lg">Free forever plan</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-green-400" />
+                <span className="font-bold text-lg">Setup in 2 minutes</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-green-400" />
+                <span className="font-bold text-lg">No credit card required</span>
               </div>
             </div>
           </div>
@@ -413,36 +588,82 @@ function FinalCTASection() {
   )
 }
 
-// Figma Footer Section
-function FigmaFooter() {
+// Extraordinary Professional Footer
+function ProfessionalFooter() {
   return (
-    <footer className="flex justify-center">
-      <div className="flex max-w-[960px] flex-1 flex-col">
-        <footer className="flex flex-col gap-6 px-5 py-10 text-center @container">
-          <div className="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
-            <Link className="text-[#4e6e97] text-base font-normal leading-normal min-w-40" href="/about">About Us</Link>
-            <Link className="text-[#4e6e97] text-base font-normal leading-normal min-w-40" href="/contact">Contact</Link>
-            <Link className="text-[#4e6e97] text-base font-normal leading-normal min-w-40" href="/privacy">Privacy Policy</Link>
-            <Link className="text-[#4e6e97] text-base font-normal leading-normal min-w-40" href="/terms">Terms of Service</Link>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="#">
-              <div className="text-[#4e6e97] w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M247.39,68.94A8,8,0,0,0,240,64H209.57A48.66,48.66,0,0,0,168.1,40a46.91,46.91,0,0,0-33.75,13.7A47.9,47.9,0,0,0,120,88v6.09C79.74,83.47,46.81,50.72,46.46,50.37a8,8,0,0,0-13.65,4.92c-4.31,47.79,9.57,79.77,22,98.18a110.93,110.93,0,0,0,21.88,24.2c-15.23,17.53-39.21,26.74-39.47,26.84a8,8,0,0,0-3.85,11.93c.75,1.12,3.75,5.05,11.08,8.72C53.51,229.7,65.48,232,80,232c70.67,0,129.72-54.42,135.75-124.44l29.91-29.9A8,8,0,0,0,247.39,68.94Zm-45,29.41a8,8,0,0,0-2.32,5.14C196,166.58,143.28,216,80,216c-10.56,0-18-1.4-23.22-3.08,11.51-6.25,27.56-17,37.88-32.48A8,8,0,0,0,92,169.08c-.47-.27-43.91-26.34-44-96,16,13,45.25,33.17,78.67,38.79A8,8,0,0,0,136,104V88a32,32,0,0,1,9.6-22.92A30.94,30.94,0,0,1,167.9,56c12.66.16,24.49,7.88,29.44,19.21A8,8,0,0,0,204.67,80h16Z" />
-                </svg>
+    <footer className="py-20 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-4 gap-12 mb-16">
+          
+          {/* Brand */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center">
+                <Brain className="w-5 h-5 text-white" />
               </div>
-            </Link>
-            <Link href="#">
-              <div className="text-[#4e6e97] w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z" />
+              <span className="text-2xl font-bold text-white tracking-tight">TalentAIze</span>
+            </div>
+            <p className="text-white/60 leading-relaxed mb-6">
+              Transforming careers through precision AI matching and intelligent career insights.
+            </p>
+            <div className="flex gap-4">
+              <Link href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
-              </div>
-            </Link>
+              </Link>
+              <Link href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clipRule="evenodd" />
+                </svg>
+              </Link>
+            </div>
           </div>
-          <p className="text-[#4e6e97] text-base font-normal leading-normal">© 2024 TalentAIze. All rights reserved.</p>
-        </footer>
+          
+          {/* Platform */}
+          <div>
+            <h4 className="text-white font-semibold mb-6">Platform</h4>
+            <ul className="space-y-4">
+              <li><Link href="/features" className="text-white/60 hover:text-white transition-colors">Features</Link></li>
+              <li><Link href="/integrations" className="text-white/60 hover:text-white transition-colors">Integrations</Link></li>
+              <li><Link href="/security" className="text-white/60 hover:text-white transition-colors">Security</Link></li>
+              <li><Link href="/api" className="text-white/60 hover:text-white transition-colors">API</Link></li>
+            </ul>
+          </div>
+          
+          {/* Solutions */}
+          <div>
+            <h4 className="text-white font-semibold mb-6">Solutions</h4>
+            <ul className="space-y-4">
+              <li><Link href="/candidates" className="text-white/60 hover:text-white transition-colors">For Candidates</Link></li>
+              <li><Link href="/recruiters" className="text-white/60 hover:text-white transition-colors">For Recruiters</Link></li>
+              <li><Link href="/enterprise" className="text-white/60 hover:text-white transition-colors">Enterprise</Link></li>
+              <li><Link href="/partnerships" className="text-white/60 hover:text-white transition-colors">Partnerships</Link></li>
+            </ul>
+          </div>
+          
+          {/* Support */}
+          <div>
+            <h4 className="text-white font-semibold mb-6">Support</h4>
+            <ul className="space-y-4">
+              <li><Link href="/help" className="text-white/60 hover:text-white transition-colors">Help Center</Link></li>
+              <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link href="/status" className="text-white/60 hover:text-white transition-colors">Status</Link></li>
+              <li><Link href="/privacy" className="text-white/60 hover:text-white transition-colors">Privacy</Link></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white/60 text-sm">
+            © 2024 TalentAIze. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 text-sm text-white/60">
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+          </div>
+        </div>
       </div>
     </footer>
   )
@@ -451,66 +672,60 @@ function FigmaFooter() {
 // Main Landing Page Component - Neuronic Design
 export default function LandingPage() {
   return (
-    <NeuronicLayout variant="intense" className="overflow-x-hidden" style={{fontFamily: 'Inter, "Noto Sans", sans-serif'}}>
+    <NeuronicLayout variant="intense" className="overflow-x-hidden">
       <div className="layout-container flex h-full grow flex-col">
-        {/* Enhanced Navigation with High Contrast Glass Effect */}
-        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-white/20 px-10 py-3 backdrop-blur-md bg-white/10">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-4 text-white">
-              <div className="size-4">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-              <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">TalentAIze</h2>
-            </div>
-            <div className="flex items-center gap-9">
-              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/jobs">Jobs</Link>
-              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/ai-advisor">AI Advisor</Link>
-              <Link className="text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors" href="/company">Company</Link>
-            </div>
-          </div>
-          <div className="flex flex-1 justify-end gap-8">
-            <label className="flex flex-col min-w-40 !h-10 max-w-64">
-              <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-                <div className="text-white/80 flex border-none bg-white/20 backdrop-blur-sm items-center justify-center pl-4 rounded-l-lg border-r-0">
-                  <Search className="w-6 h-6" />
+        {/* Extraordinary Professional Navigation */}
+        <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b-2 border-white/20 shadow-2xl">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex items-center justify-between h-24">
+              
+              {/* Logo */}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <Brain className="w-6 h-6 text-white" />
                 </div>
-                <input
-                  placeholder="Search"
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-white/20 backdrop-blur-sm focus:border-none h-full placeholder:text-white/80 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                />
+                <span className="text-3xl font-black text-white tracking-tight">TalentAIze</span>
               </div>
-            </label>
-            <div className="flex gap-2">
-              <Link href="/auth/register" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
-                <span className="truncate">Sign Up</span>
-              </Link>
-              <Link href="/auth/login" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors border border-white/20">
-                <span className="truncate">Login</span>
-              </Link>
+              
+              {/* Navigation */}
+              <nav className="hidden lg:flex items-center gap-16">
+                <Link href="/platform" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Platform
+                </Link>
+                <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Solutions
+                </Link>
+                <Link href="/developers" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Developers
+                </Link>
+                <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Pricing
+                </Link>
+              </nav>
+              
+              {/* Actions */}
+              <div className="flex items-center gap-4">
+                <Link href="/auth/login" className="h-12 px-6 flex items-center text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Sign in
+                </Link>
+                <button className="h-12 px-8 bg-white text-black rounded-xl font-black text-[16px] hover:bg-gray-100 transition-all shadow-lg">
+                  Get started
+                </button>
+              </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <div className="px-40 flex flex-1 justify-center py-5">
-          <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <HeroSection />
-            <FeaturedJobsSection />
-            <CareerInsightsSection />
-            <FeaturesSection />
-            <HowItWorksSection />
-            <TestimonialsSection />
-            <FinalCTASection />
-          </div>
-        </div>
+        <main className="pt-20">
+          <HeroSection />
+          <FeaturesSection />
+          <TestimonialsSection />
+          <CTASection />
+        </main>
 
         {/* Footer */}
-        <FigmaFooter />
+        <ProfessionalFooter />
       </div>
     </NeuronicLayout>
   )
