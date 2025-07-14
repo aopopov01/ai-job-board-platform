@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-
 import { Button } from '@job-board/ui'
 import { Input } from '@job-board/ui'
 import { cvDocumentService, supabase } from '@job-board/database'
+import CVUpload from '../../../components/CVUpload'
 
 interface CVDocument {
   id: string
@@ -196,62 +197,12 @@ export default function CVManagementPage() {
       </div>
 
       {/* Upload Section */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Upload New CV</CardTitle>
-          <CardDescription>
-            Upload your CV in PDF or Word format (max 5MB). We'll automatically parse your skills and experience.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div
-            {...getRootProps()}
-            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-              isDragActive
-                ? 'border-blue-500 bg-blue-50'
-                : uploading
-                ? 'border-gray-300 bg-gray-50 cursor-not-allowed'
-                : 'border-gray-300 hover:border-gray-400'
-            }`}
-          >
-            <input {...getInputProps()} />
-            <div className="space-y-4">
-              <div className="mx-auto w-12 h-12 text-gray-400">
-                📄
-              </div>
-              {uploading ? (
-                <div>
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                  <p className="text-gray-600">Uploading and parsing your CV...</p>
-                </div>
-              ) : isDragActive ? (
-                <p className="text-blue-600 font-medium">Drop your CV here...</p>
-              ) : (
-                <div>
-                  <p className="text-gray-600 font-medium">
-                    Drag & drop your CV here, or click to select
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    Supports PDF, DOC, and DOCX files up to 5MB
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {error && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
-
-          {success && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-              <p className="text-green-600 text-sm">{success}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      <CVUpload 
+        onUploadSuccess={(cv) => {
+          setCvDocuments(prev => [cv, ...prev])
+          setSuccess('CV uploaded successfully!')
+        }}
+      />
 
       {/* CV Documents List */}
       <Card>
