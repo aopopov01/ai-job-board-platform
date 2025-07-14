@@ -24,10 +24,10 @@ interface NeuronicBackgroundProps {
 
 export default function NeuronicBackground({
   className = '',
-  opacity = 0.3,
-  nodeCount = 50,
-  connectionDistance = 150,
-  pulseSpeed = 0.02
+  opacity = 0.7,   // More visible
+  nodeCount = 45,  // More nodes for better visibility
+  connectionDistance = 160, // Good connection density
+  pulseSpeed = 0.02  // Smooth but visible animation
 }: NeuronicBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
@@ -35,10 +35,18 @@ export default function NeuronicBackground({
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!canvas) {
+      console.log('NeuronicBackground: Canvas ref is null')
+      return
+    }
 
     const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    if (!ctx) {
+      console.log('NeuronicBackground: Cannot get 2D context')
+      return
+    }
+    
+    console.log('NeuronicBackground: Starting animation with', { opacity, nodeCount, connectionDistance, pulseSpeed })
 
     // Initialize nodes
     const initializeNodes = () => {
@@ -47,8 +55,8 @@ export default function NeuronicBackground({
         nodesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.2,
-          vy: (Math.random() - 0.5) * 1.2,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
           pulse: Math.random() * Math.PI * 2,
           pulseDirection: Math.random() > 0.5 ? 1 : -1,
           connections: [],
@@ -86,6 +94,13 @@ export default function NeuronicBackground({
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
+      // Debug: Draw test rectangle to verify animation is running
+      ctx.fillStyle = 'rgba(255, 255, 0, 0.5)'
+      ctx.fillRect(10, 10, 100, 50)
+      ctx.fillStyle = 'black'
+      ctx.font = '12px Arial'
+      ctx.fillText(`Nodes: ${nodesRef.current.length}`, 15, 30)
+      
       // Update nodes
       nodesRef.current.forEach(node => {
         // Update position
@@ -105,9 +120,9 @@ export default function NeuronicBackground({
         if (node.pulse > Math.PI * 2) node.pulse = 0
         if (node.pulse < 0) node.pulse = Math.PI * 2
         
-        // Update lightning charge for electric effects (reduced intensity)
-        node.lightningCharge += pulseSpeed * 1.5
-        node.energy = Math.sin(node.lightningCharge) * 0.3 + 0.4
+        // Gentle energy waves for comfort
+        node.lightningCharge += pulseSpeed * 0.8
+        node.energy = Math.sin(node.lightningCharge) * 0.2 + 0.3
       })
 
       // Recalculate connections
@@ -121,38 +136,31 @@ export default function NeuronicBackground({
             const dx = node.x - otherNode.x
             const dy = node.y - otherNode.y
             const distance = Math.sqrt(dx * dx + dy * dy)
-            const alpha = (1 - distance / connectionDistance) * opacity * 0.5
+            const alpha = (1 - distance / connectionDistance) * opacity * 0.8
 
-            // Lightning-inspired electric connections (reduced sparkling)
+            // Visible neural connections
             const pulseIntensity = (Math.sin(node.pulse) + Math.sin(otherNode.pulse)) / 2
-            const lightningEnergy = (node.energy + otherNode.energy) / 2
-            const electricIntensity = Math.sin(Date.now() * 0.005 + distance * 0.05) * 0.2 + 0.8
-            const connectionAlpha = alpha * (0.7 + pulseIntensity * 0.3 + lightningEnergy * 0.2)
+            const neuralEnergy = (node.energy + otherNode.energy) / 2
+            const flowIntensity = Math.sin(Date.now() * 0.005 + distance * 0.03) * 0.3 + 0.7
+            const connectionAlpha = alpha * (0.6 + pulseIntensity * 0.3 + neuralEnergy * 0.2)
 
-            // Electric lightning colors - more controlled brightness
-            const electricColor = lightningEnergy > 0.8 
-              ? `rgba(200, 230, 255, ${connectionAlpha * electricIntensity})` 
-              : `rgba(120, 180, 255, ${connectionAlpha})`
+            // MAXIMUM VISIBILITY neural colors
+            const neuralColor = neuralEnergy > 0.5 
+              ? `rgba(0, 150, 255, 1)` // BRIGHT BLUE - FULL OPACITY
+              : `rgba(0, 120, 255, 0.8)` // MEDIUM BLUE - HIGH OPACITY
             
-            ctx.strokeStyle = electricColor
-            ctx.lineWidth = 1.5 + lightningEnergy * 1.5
+            ctx.strokeStyle = neuralColor
+            ctx.lineWidth = 1.2 + neuralEnergy * 1.8  // Visible lines
             
-            // Add subtle electric glow to connections
-            ctx.shadowColor = electricColor
-            ctx.shadowBlur = 4 + lightningEnergy * 6
+            // Clear glow for visibility
+            ctx.shadowColor = neuralColor
+            ctx.shadowBlur = 3 + neuralEnergy * 6
             
             ctx.beginPath()
             ctx.moveTo(node.x, node.y)
             
-            // Add subtle lightning-style jagged connections for very high energy only
-            if (lightningEnergy > 0.9) {
-              const midX = (node.x + otherNode.x) / 2 + (Math.random() - 0.5) * 10
-              const midY = (node.y + otherNode.y) / 2 + (Math.random() - 0.5) * 10
-              ctx.lineTo(midX, midY)
-              ctx.lineTo(otherNode.x, otherNode.y)
-            } else {
-              ctx.lineTo(otherNode.x, otherNode.y)
-            }
+            // Smooth, organic connections
+            ctx.lineTo(otherNode.x, otherNode.y)
             
             ctx.stroke()
             ctx.shadowBlur = 0
@@ -160,23 +168,23 @@ export default function NeuronicBackground({
         })
       })
 
-      // Draw lightning-charged nodes with electric energy
+      // Draw visible neural nodes
       nodesRef.current.forEach(node => {
-        const pulseIntensity = Math.sin(node.pulse) * 0.5 + 0.5
-        const electricCharge = node.energy
-        const nodeOpacity = opacity * (0.8 + pulseIntensity * 0.3 + electricCharge * 0.2)
-        const nodeSize = 4 + pulseIntensity * 4 + electricCharge * 2
-        const isHighEnergy = electricCharge > 0.8
+        const pulseIntensity = Math.sin(node.pulse) * 0.4 + 0.5
+        const neuralEnergy = node.energy
+        const nodeOpacity = opacity * (0.7 + pulseIntensity * 0.3 + neuralEnergy * 0.2)
+        const nodeSize = 3 + pulseIntensity * 3 + neuralEnergy * 2  // Visible nodes
+        const isActive = neuralEnergy > 0.5
 
-        // Lightning-charged node with controlled electric colors
-        const nodeColor = isHighEnergy 
-          ? `rgba(220, 240, 255, ${nodeOpacity})` // Bright but not pure white
-          : `rgba(120, 180, 255, ${nodeOpacity})` // Electric blue
+        // MAXIMUM VISIBILITY node colors
+        const nodeColor = isActive 
+          ? `rgba(0, 200, 255, 1)` // BRIGHT CYAN - FULL OPACITY
+          : `rgba(0, 150, 255, 0.9)` // BRIGHT BLUE - HIGH OPACITY
           
-        // Add subtle electric glow to high energy nodes
-        if (isHighEnergy) {
-          ctx.shadowColor = 'rgba(200, 230, 255, 0.6)'
-          ctx.shadowBlur = 8 + electricCharge * 6
+        // Strong glow for active nodes
+        if (isActive) {
+          ctx.shadowColor = 'rgba(120, 200, 255, 0.6)'
+          ctx.shadowBlur = 8 + neuralEnergy * 8
         }
         
         ctx.fillStyle = nodeColor
@@ -184,10 +192,10 @@ export default function NeuronicBackground({
         ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2)
         ctx.fill()
         
-        // Electric core - bright but controlled for lightning nodes
-        const coreColor = isHighEnergy 
-          ? `rgba(240, 250, 255, ${nodeOpacity})` 
-          : `rgba(180, 220, 255, ${nodeOpacity * 0.9})`
+        // Bright inner core for visibility
+        const coreColor = isActive 
+          ? `rgba(200, 230, 255, ${nodeOpacity * 0.9})` 
+          : `rgba(150, 200, 245, ${nodeOpacity * 0.8})`
           
         ctx.fillStyle = coreColor
         ctx.beginPath()
@@ -196,27 +204,26 @@ export default function NeuronicBackground({
         
         ctx.shadowBlur = 0
 
-        // Electric lightning glow with controlled inspirational energy
-        const glowRadius = nodeSize + pulseIntensity * 15 + electricCharge * 8
+        // Visible ambient glow
+        const glowRadius = nodeSize + pulseIntensity * 12 + neuralEnergy * 10
         const gradient = ctx.createRadialGradient(
           node.x, node.y, 0,
           node.x, node.y, glowRadius
         )
         
-        if (isHighEnergy) {
-          // Bright but controlled glow for high energy nodes
-          gradient.addColorStop(0, `rgba(220, 240, 255, ${nodeOpacity * 1.2})`)
-          gradient.addColorStop(0.1, `rgba(180, 220, 255, ${nodeOpacity * 1.0})`)
-          gradient.addColorStop(0.3, `rgba(140, 190, 255, ${nodeOpacity * 0.7})`)
-          gradient.addColorStop(0.6, `rgba(100, 150, 255, ${nodeOpacity * 0.4})`)
-          gradient.addColorStop(1, 'rgba(60, 120, 200, 0)')
+        if (isActive) {
+          // Bright visible glow for active nodes
+          gradient.addColorStop(0, `rgba(150, 210, 255, ${nodeOpacity * 0.8})`)
+          gradient.addColorStop(0.2, `rgba(120, 190, 245, ${nodeOpacity * 0.6})`)
+          gradient.addColorStop(0.4, `rgba(100, 170, 235, ${nodeOpacity * 0.4})`)
+          gradient.addColorStop(0.7, `rgba(80, 150, 225, ${nodeOpacity * 0.2})`)
+          gradient.addColorStop(1, 'rgba(60, 130, 215, 0)')
         } else {
-          // Electric blue glow for regular nodes
-          gradient.addColorStop(0, `rgba(180, 220, 255, ${nodeOpacity * 1.1})`)
-          gradient.addColorStop(0.2, `rgba(140, 190, 255, ${nodeOpacity * 0.8})`)
-          gradient.addColorStop(0.5, `rgba(100, 160, 255, ${nodeOpacity * 0.5})`)
-          gradient.addColorStop(0.8, `rgba(80, 130, 220, ${nodeOpacity * 0.3})`)
-          gradient.addColorStop(1, 'rgba(60, 110, 200, 0)')
+          // Clear glow for regular nodes
+          gradient.addColorStop(0, `rgba(120, 180, 240, ${nodeOpacity * 0.7})`)
+          gradient.addColorStop(0.3, `rgba(100, 160, 230, ${nodeOpacity * 0.5})`)
+          gradient.addColorStop(0.6, `rgba(80, 140, 220, ${nodeOpacity * 0.3})`)
+          gradient.addColorStop(1, 'rgba(60, 120, 210, 0)')
         }
         
         ctx.fillStyle = gradient
@@ -245,7 +252,7 @@ export default function NeuronicBackground({
     <canvas
       ref={canvasRef}
       className={`fixed inset-0 pointer-events-none z-0 ${className}`}
-      style={{ opacity }}
+      style={{ opacity: 1 }} // Force full visibility
     />
   )
 }

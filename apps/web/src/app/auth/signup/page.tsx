@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import { 
@@ -24,13 +26,20 @@ function SignupForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-black/70 backdrop-blur-md border-2 border-white/30 rounded-3xl p-8 shadow-2xl">
+      <div 
+        className="backdrop-blur-md border-2 rounded-3xl p-8 shadow-2xl"
+        style={{
+          background: 'rgba(26, 26, 26, 0.85)', /* Claude interface charcoal */
+          borderColor: 'rgba(64, 64, 64, 0.6)',  /* Enhanced contrast border */
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+        }}
+      >
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-xl shadow-blue-500/30">
             <Brain className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-black text-white mb-2">Join TalentAIze</h2>
-          <p className="text-white/80 font-medium">Start your lightning-powered journey</p>
+          <h2 className="text-3xl font-black mb-2" style={{ color: '#e5e5e5' }}>Join TalentAIze</h2>
+          <p className="font-medium" style={{ color: '#a0a0a0' }}>Start your lightning-powered journey</p>
         </div>
 
         <form className="space-y-6">
