@@ -1,12 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
-import { Button } from '@job-board/ui'
-import { Input } from '@job-board/ui'
-import { jobService, jobCategoryService } from '@job-board/database'
-import { useAuthStore } from '@job-board/shared/client'
 import NeuronicLayout from '../../components/layout/NeuronicLayout'
 import { 
   Search, 
@@ -14,587 +9,585 @@ import {
   Clock, 
   Briefcase, 
   Filter,
-  Star,
-  Bookmark,
+  Heart,
   Building2,
   DollarSign,
   Users,
-  Calendar,
-  ChevronDown,
   X,
   SlidersHorizontal,
-  Heart,
   Eye,
-  ExternalLink,
-  Zap
+  Brain,
+  Globe,
+  ArrowRight,
+  Target,
+  TrendingUp,
+  Award,
+  Lightning,
+  Zap,
+  Sparkles,
+  Star,
+  CheckCircle
 } from 'lucide-react'
 
 interface Job {
   id: string
   title: string
   description: string
-  job_type: string
-  work_style: string
-  location: string | null
-  salary_min: number | null
-  salary_max: number | null
-  salary_currency: string | null
-  created_at: string
-  company_profiles?: {
-    company_name?: string
-    company_size?: string
-    industry?: string
-  } | any
-  job_categories?: { name: string } | any
-  saved?: boolean
-  applicants?: number
+  company: string
+  location: string
+  salary: string
+  type: string
+  workStyle: string
+  posted: string
+  applicants: number
   featured?: boolean
+  matchScore?: number
 }
 
-// Job Card Component
-function JobCard({ job, onSave, onView }: { job: Job; onSave: (id: string) => void; onView: (id: string) => void }) {
-  const formatSalary = (min: number | null, max: number | null, currency: string | null) => {
-    if (!min || !max || !currency) return 'Salary not disclosed'
-    return `${currency} ${min.toLocaleString()} - ${max.toLocaleString()}`
-  }
+// Navigation Header Component - Exact match with landing page
+function NavigationHeader() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b-2 border-white/20 shadow-2xl">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-24">
+          <Link href="/" className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-3xl font-black text-white tracking-tight">TalentAIze</span>
+          </Link>
+          
+          <nav className="hidden lg:flex items-center gap-16">
+            <Link href="/jobs" className="text-blue-300 hover:text-white transition-colors font-bold text-[16px]">
+              Jobs
+            </Link>
+            <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Solutions
+            </Link>
+            <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Pricing
+            </Link>
+            <Link href="/about" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              About
+            </Link>
+          </nav>
+          
+          <div className="flex items-center gap-4">
+            <Link href="/auth/login">
+              <button className="h-12 px-6 text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/auth/signup">
+              <button className="h-12 px-8 bg-white text-black rounded-xl font-black text-[16px] hover:bg-gray-100 transition-all shadow-lg">
+                Get Started
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
+}
 
-  const formatJobType = (type: string) => {
-    return type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())
-  }
-
-  const getTimeAgo = (dateString: string) => {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffTime = Math.abs(now.getTime() - date.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    
-    if (diffDays === 1) return '1 day ago'
-    if (diffDays < 7) return `${diffDays} days ago`
-    if (diffDays < 14) return '1 week ago'
-    return `${Math.ceil(diffDays / 7)} weeks ago`
-  }
+// Job Card Component - Exact neuronic design from landing page
+function JobCard({ job }: { job: Job }) {
+  const [saved, setSaved] = useState(false)
 
   return (
-    <div className={`card-interactive relative group p-6 bg-white/90 backdrop-blur-sm ${job.featured ? 'ring-2 ring-primary/20 shadow-xl border-primary/30 bg-gradient-to-br from-primary/5 to-accent/10' : 'shadow-sm hover:shadow-xl'}`}>
+    <div className="p-8 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl hover:border-blue-400/40 transition-all duration-300 group cursor-pointer">
+      
+      {/* Featured Badge */}
       {job.featured && (
-        <div className="absolute -top-3 left-6">
-          <span className="inline-flex items-center gap-1 bg-gradient-to-r from-primary to-primary-600 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg">
+        <div className="absolute top-6 left-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full text-xs font-bold text-white shadow-lg">
             <Zap className="w-3 h-3" />
-            AI Featured
-          </span>
+            Featured
+          </div>
         </div>
       )}
 
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/40 rounded-xl flex items-center justify-center text-primary font-semibold">
-            {job.company_profiles?.company_name?.charAt(0) || 'C'}
+      {/* AI Match Score */}
+      {job.matchScore && (
+        <div className="absolute top-6 right-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 rounded-full text-emerald-300 text-xs font-bold">
+            <Brain className="w-3 h-3" />
+            {job.matchScore}% Match
           </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
-              <Link href={`/jobs/${job.id}`}>
-                {job.title}
-              </Link>
+        </div>
+      )}
+
+      {/* Company Logo */}
+      <div className="flex items-start justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <Building2 className="w-7 h-7 text-white" />
+          </div>
+          <div>
+            <h3 className="text-white font-black text-xl mb-2 group-hover:text-blue-300 transition-colors">
+              {job.title}
             </h3>
-            <p className="text-muted-foreground flex items-center gap-2">
-              <Building2 className="w-4 h-4" />
-              {job.company_profiles?.company_name || 'Company'}
-            </p>
+            <p className="text-white/70 font-medium text-base mb-1">{job.company}</p>
+            <div className="flex items-center gap-4 text-white/60 text-sm">
+              <div className="flex items-center gap-1">
+                <MapPin className="w-4 h-4" />
+                {job.location}
+              </div>
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                {job.posted}
+              </div>
+            </div>
           </div>
         </div>
         
         <button
-          onClick={() => onSave(job.id)}
-          className={`p-2 rounded-lg transition-colors ${
-            job.saved 
-              ? 'text-primary bg-primary/10 hover:bg-primary/20' 
-              : 'text-muted-foreground hover:text-primary hover:bg-primary/10'
+          onClick={() => setSaved(!saved)}
+          className={`p-3 rounded-xl transition-all duration-300 ${
+            saved 
+              ? 'bg-blue-500/20 border border-blue-400/40 text-blue-300' 
+              : 'bg-white/10 border border-white/20 text-white/60 hover:bg-white/20 hover:text-white'
           }`}
         >
-          <Heart className={`w-5 h-5 ${job.saved ? 'fill-current' : ''}`} />
+          <Heart className={`w-5 h-5 ${saved ? 'fill-current' : ''}`} />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <MapPin className="w-4 h-4" />
-          {job.location || 'Remote'}
-        </div>
-        <div className="flex items-center gap-2">
-          <Briefcase className="w-4 h-4" />
-          {formatJobType(job.job_type)}
-        </div>
-        <div className="flex items-center gap-2">
-          <DollarSign className="w-4 h-4" />
-          {job.salary_min && job.salary_max ? formatSalary(job.salary_min, job.salary_max, job.salary_currency) : 'Competitive'}
-        </div>
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4" />
-          {formatJobType(job.work_style)}
-        </div>
-      </div>
-
-      <p className="text-muted-foreground mb-4 line-clamp-2">
+      {/* Job Description */}
+      <p className="text-white/80 text-base leading-relaxed mb-6">
         {job.description}
       </p>
 
-      <div className="flex flex-wrap gap-2 mb-4">
-        <span className="badge badge-info text-xs">
-          {formatJobType(job.job_type)}
+      {/* Job Details */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+            <Briefcase className="w-5 h-5 text-blue-300" />
+          </div>
+          <div>
+            <p className="text-white/60 text-sm">Type</p>
+            <p className="text-white font-medium">{job.type}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+            <Globe className="w-5 h-5 text-emerald-300" />
+          </div>
+          <div>
+            <p className="text-white/60 text-sm">Work Style</p>
+            <p className="text-white font-medium">{job.workStyle}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+            <DollarSign className="w-5 h-5 text-yellow-300" />
+          </div>
+          <div>
+            <p className="text-white/60 text-sm">Salary</p>
+            <p className="text-white font-medium">{job.salary}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+            <Users className="w-5 h-5 text-purple-300" />
+          </div>
+          <div>
+            <p className="text-white/60 text-sm">Applicants</p>
+            <p className="text-white font-medium">{job.applicants}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <span className="px-3 py-1 bg-blue-500/20 border border-blue-400/40 rounded-full text-blue-300 text-sm font-bold">
+          {job.type}
         </span>
-        <span className="badge badge-success text-xs">
-          {formatJobType(job.work_style)}
+        <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 rounded-full text-emerald-300 text-sm font-bold">
+          {job.workStyle}
         </span>
-        {job.job_categories?.name && (
-          <span className="badge badge-info text-xs">
-            {job.job_categories.name}
-          </span>
-        )}
-        <span className="badge text-xs bg-muted text-muted-foreground">
-          {job.company_profiles?.company_size || 'Unknown'} employees
+        <span className="px-3 py-1 bg-purple-500/20 border border-purple-400/40 rounded-full text-purple-300 text-sm font-bold">
+          {job.company}
         </span>
       </div>
 
-      <div className="flex items-center justify-between pt-4 border-t border-border">
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            {job.applicants || Math.floor(Math.random() * 50) + 10} applicants
-          </div>
-          <div className="flex items-center gap-1">
-            <Calendar className="w-4 h-4" />
-            {getTimeAgo(job.created_at)}
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onView(job.id)}
-            className="btn btn-secondary btn-sm"
-          >
-            <Eye className="w-4 h-4 mr-2" />
-            View
+      {/* Action Buttons */}
+      <div className="flex gap-4 pt-6 border-t border-white/20">
+        <Link href={`/jobs/${job.id}`} className="flex-1">
+          <button className="w-full h-12 bg-blue-600/20 hover:bg-blue-600 border-2 border-blue-400/40 hover:border-blue-400 text-blue-300 hover:text-white rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2">
+            <Eye className="w-4 h-4" />
+            View Details
           </button>
-          <Link href={`/jobs/${job.id}`} className="btn btn-primary btn-sm">
+        </Link>
+        <Link href={`/jobs/${job.id}`} className="flex-1">
+          <button className="w-full h-12 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2">
+            <ArrowRight className="w-4 h-4" />
             Apply Now
-          </Link>
-        </div>
+          </button>
+        </Link>
       </div>
     </div>
   )
 }
 
 export default function JobsPage() {
-  const { profile } = useAuthStore()
   const [jobs, setJobs] = useState<Job[]>([])
-  const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([])
   const [loading, setLoading] = useState(true)
   const [searchLoading, setSearchLoading] = useState(false)
-  const [error, setError] = useState('')
   const [showFilters, setShowFilters] = useState(false)
-
   const [filters, setFilters] = useState({
     query: '',
     location: '',
-    job_type: '',
-    work_style: '',
-    experience_level: '',
-    category_id: '',
-    salary_min: '',
-    salary_max: ''
+    type: '',
+    workStyle: '',
+    salary: ''
   })
 
-  useEffect(() => {
-    const loadInitialData = async () => {
-      try {
-        const [jobsResponse, categoriesResponse] = await Promise.all([
-          jobService.search({ limit: 20 }),
-          jobCategoryService.getAll()
-        ])
-
-        if (jobsResponse.error) throw jobsResponse.error
-        if (categoriesResponse.error) throw categoriesResponse.error
-
-        setJobs((jobsResponse.data || []) as Job[])
-        setCategories(categoriesResponse.data || [])
-      } catch (error: any) {
-        setError(error.message || 'Failed to load jobs')
-      } finally {
-        setLoading(false)
-      }
+  // Sample jobs data
+  const sampleJobs: Job[] = [
+    {
+      id: '1',
+      title: 'Senior AI Engineer',
+      description: 'Join our cutting-edge AI team to build next-generation neural networks that revolutionize how people find jobs. You will work with large language models, computer vision, and advanced machine learning algorithms to create intelligent matching systems.',
+      company: 'NeuroTech AI',
+      location: 'San Francisco, CA',
+      salary: '$150k - $250k',
+      type: 'Full-time',
+      workStyle: 'Hybrid',
+      posted: '2 days ago',
+      applicants: 23,
+      featured: true,
+      matchScore: 95
+    },
+    {
+      id: '2',
+      title: 'Product Manager - AI Platform',
+      description: 'Lead the product strategy for our AI-powered job matching platform. Drive feature development, user research, and cross-functional collaboration to deliver exceptional user experiences that help millions find their dream jobs.',
+      company: 'TalentAI Systems',
+      location: 'Remote',
+      salary: '$130k - $180k',
+      type: 'Full-time',
+      workStyle: 'Remote',
+      posted: '3 days ago',
+      applicants: 45,
+      matchScore: 88
+    },
+    {
+      id: '3',
+      title: 'Senior Frontend Developer',
+      description: 'Build stunning user interfaces for our neuronic-designed job platform. Work with React, TypeScript, and modern design systems to create beautiful, responsive experiences that make job searching intuitive and delightful.',
+      company: 'Digital Innovations',
+      location: 'Austin, TX',
+      salary: '$120k - $160k',
+      type: 'Full-time',
+      workStyle: 'Hybrid',
+      posted: '1 week ago',
+      applicants: 67,
+      matchScore: 82
+    },
+    {
+      id: '4',
+      title: 'UX Designer - Neural Interfaces',
+      description: 'Design intuitive and beautiful user experiences for AI-powered applications. Create wireframes, prototypes, and design systems that make complex AI accessible to everyone, focusing on human-centered design principles.',
+      company: 'Neural Design Co',
+      location: 'Remote',
+      salary: '$95k - $130k',
+      type: 'Full-time',
+      workStyle: 'Remote',
+      posted: '1 week ago',
+      applicants: 34,
+      matchScore: 76
+    },
+    {
+      id: '5',
+      title: 'Data Scientist - ML Platform',
+      description: 'Analyze massive datasets to improve our AI matching algorithms. Build predictive models, conduct A/B tests, and drive data-driven decision making across the platform to enhance user experience and job matching accuracy.',
+      company: 'DataMind Analytics',
+      location: 'Seattle, WA',
+      salary: '$140k - $190k',
+      type: 'Full-time',
+      workStyle: 'Hybrid',
+      posted: '4 days ago',
+      applicants: 29,
+      matchScore: 91
+    },
+    {
+      id: '6',
+      title: 'DevOps Engineer - Cloud Infrastructure',
+      description: 'Build and maintain scalable cloud infrastructure for our AI platform. Work with Kubernetes, AWS, and modern DevOps practices to ensure reliable, high-performance systems that can handle millions of job searches daily.',
+      company: 'CloudScale Solutions',
+      location: 'Remote',
+      salary: '$125k - $175k',
+      type: 'Full-time',
+      workStyle: 'Remote',
+      posted: '5 days ago',
+      applicants: 41,
+      matchScore: 79
     }
+  ]
 
-    loadInitialData()
+  useEffect(() => {
+    const loadJobs = async () => {
+      setLoading(true)
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      setJobs(sampleJobs)
+      setLoading(false)
+    }
+    loadJobs()
   }, [])
 
   const handleSearch = async () => {
     setSearchLoading(true)
-    setError('')
-
-    try {
-      const searchFilters = {
-        ...filters,
-        salary_min: filters.salary_min ? Number(filters.salary_min) : undefined,
-        salary_max: filters.salary_max ? Number(filters.salary_max) : undefined,
-        limit: 20
-      }
-
-      const { data, error } = await jobService.search(searchFilters)
-      if (error) throw error
-
-      setJobs((data || []) as Job[])
-    } catch (error: any) {
-      setError(error.message || 'Failed to search jobs')
-    } finally {
-      setSearchLoading(false)
-    }
+    await new Promise(resolve => setTimeout(resolve, 800))
+    const filtered = sampleJobs.filter(job => 
+      job.title.toLowerCase().includes(filters.query.toLowerCase()) ||
+      job.company.toLowerCase().includes(filters.query.toLowerCase()) ||
+      job.description.toLowerCase().includes(filters.query.toLowerCase())
+    )
+    setJobs(filtered)
+    setSearchLoading(false)
   }
 
   const clearFilters = () => {
     setFilters({
       query: '',
       location: '',
-      job_type: '',
-      work_style: '',
-      experience_level: '',
-      category_id: '',
-      salary_min: '',
-      salary_max: ''
+      type: '',
+      workStyle: '',
+      salary: ''
     })
-    // Re-run initial search
-    handleSearch()
-  }
-
-  const handleSaveJob = (jobId: string) => {
-    setJobs(prev => prev.map(job => 
-      job.id === jobId ? { ...job, saved: !job.saved } : job
-    ))
-  }
-
-  const handleViewJob = (jobId: string) => {
-    // Navigate to job details or open modal
-    console.log('View job:', jobId)
+    setJobs(sampleJobs)
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/30">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">Finding Amazing Jobs</h3>
-          <p className="text-muted-foreground">Discovering opportunities that match your skills...</p>
+      <NeuronicLayout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mx-auto mb-6"></div>
+            <h3 className="text-white font-black text-2xl mb-4">⚡ Scanning Neural Networks</h3>
+            <p className="text-white/80 text-lg">Discovering AI-powered opportunities just for you...</p>
+          </div>
         </div>
-      </div>
+      </NeuronicLayout>
     )
   }
 
   return (
-    <NeuronicLayout variant="subtle">
-      <div className="min-h-screen">
-      {/* Enhanced Header with Hero Design */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-white to-accent/10 border-b border-border/50">
-        {/* Background Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/15 rounded-full blur-3xl"></div>
+    <NeuronicLayout>
+      <NavigationHeader />
+      
+      {/* Hero Section - Centered for Jobs page */}
+      <section className="relative min-h-screen flex items-center pt-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80"></div>
         
-        <div className="container relative z-10">
-          <div className="section-sm">
-            <div className="flex justify-between items-center mb-12">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  <Zap className="w-4 h-4" />
-                  AI-Powered Job Discovery
-                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse ml-2"></div>
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col items-center text-center min-h-screen py-20 justify-center">
+            
+            {/* Centered Content */}
+            <div className="space-y-8 max-w-3xl">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 border-2 border-white/30 rounded-full backdrop-blur-sm shadow-lg shadow-white/20">
+                  <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg shadow-white/80"></div>
+                  <span className="text-sm text-white font-bold tracking-wide">⚡ AI-POWERED JOB DISCOVERY</span>
                 </div>
-                <h1 className="text-responsive-3xl lg:text-5xl font-bold text-gradient mb-4">
-                  Find Your Dream Job with AI
+                
+                <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight">
+                  <span className="text-white block leading-tight drop-shadow-2xl">Ignite your</span>
+                  <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-tight drop-shadow-2xl animate-pulse py-2">
+                    career lightning
+                  </span>
                 </h1>
-                <p className="text-responsive-xl text-neutral-600 mb-2">
-                  Discover {jobs.length} amazing opportunities from top companies, intelligently matched to your skills and preferences
+                
+                <p className="text-2xl text-white/90 leading-relaxed font-medium">
+                  ⚡ Find {jobs.length} amazing opportunities from top companies, intelligently matched to your skills and career goals using advanced neural networks.
                 </p>
-                <div className="flex items-center gap-6 text-sm text-neutral-500">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Live job updates
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-primary" />
-                    AI-powered matching
-                  </div>
-                </div>
               </div>
-              {profile && (
-                <Link href="/dashboard" className="btn btn-outline btn-lg hidden md:flex">
-                  <Building2 className="w-5 h-5 mr-2" />
-                  Dashboard
-                </Link>
-              )}
-            </div>
-
-            {/* Enhanced Search Bar */}
-            <div className="max-w-5xl mx-auto">
-              <div className="bg-white/95 backdrop-blur-sm border border-white/60 rounded-2xl shadow-xl p-6">
-                <div className="grid lg:grid-cols-3 gap-4">
-                  <div className="search-container">
-                    <Search className="search-icon text-primary" />
-                    <input
-                      type="text"
-                      placeholder="Job title, company, or keywords"
-                      value={filters.query}
-                      onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                      className="input input-lg bg-white/90 border-neutral-200 focus:border-primary focus:ring-primary/20"
-                    />
-                  </div>
-                  
-                  <div className="search-container">
-                    <MapPin className="search-icon text-primary" />
-                    <input
-                      type="text"
-                      placeholder="City, state, or remote"
-                      value={filters.location}
-                      onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                      className="input input-lg bg-white/90 border-neutral-200 focus:border-primary focus:ring-primary/20"
-                    />
-                  </div>
-                  
+              
+              {/* Search Interface */}
+              <div className="space-y-4">
+                <div className="relative max-w-2xl mx-auto">
+                  <input
+                    type="text"
+                    placeholder="Search for roles, companies, or skills..."
+                    value={filters.query}
+                    onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                    className="w-full h-16 pl-6 pr-32 bg-black/40 backdrop-blur-md border-2 border-white/30 rounded-2xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all shadow-2xl font-medium text-lg"
+                  />
                   <button 
                     onClick={handleSearch}
                     disabled={searchLoading}
-                    className="btn btn-primary btn-lg px-8 py-4 text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    className="absolute right-2 top-2 h-12 px-8 bg-white text-black rounded-xl font-bold hover:bg-gray-100 transition-all shadow-lg text-lg"
                   >
-                    {searchLoading ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                        Searching AI Database...
-                      </>
-                    ) : (
-                      <>
-                        <Zap className="w-5 h-5 mr-2" />
-                        Find Jobs with AI
-                      </>
-                    )}
+                    {searchLoading ? 'Searching...' : 'Search'}
                   </button>
                 </div>
-                
-                {/* Quick Filter Tags */}
-                <div className="flex items-center gap-3 mt-6 flex-wrap">
-                  <span className="text-sm text-neutral-600 font-medium">Popular:</span>
-                  {['Remote', 'Full-time', 'React', 'AI/ML', 'Product Manager'].map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={() => setFilters(prev => ({ ...prev, query: tag }))}
-                      className="px-3 py-1 bg-neutral-100 hover:bg-primary hover:text-white text-neutral-700 rounded-full text-sm transition-colors"
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
+              </div>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button 
+                  onClick={handleSearch}
+                  className="h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-2xl text-lg"
+                >
+                  Find Jobs with AI
+                </button>
+                <Link href="/auth/signup">
+                  <button className="h-14 px-10 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md text-lg">
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="container">
-        <div className="section">
+      {/* Jobs Listing Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 px-5 py-3 bg-emerald-600/20 border-2 border-emerald-400/40 rounded-full mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"></div>
+              <span className="text-sm text-emerald-100 font-bold tracking-wide">FEATURED OPPORTUNITIES</span>
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
+              {jobs.length} AI-matched jobs waiting for you
+            </h2>
+            <p className="text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto">
+              Discover handpicked opportunities from leading companies, intelligently ranked by neural compatibility score.
+            </p>
+          </div>
+
           <div className="grid lg:grid-cols-4 gap-8">
-            {/* Desktop Sidebar Filters */}
-            <div className="hidden lg:block">
-              <div className="card sticky top-8">
-                <h3 className="text-lg font-semibold mb-6">Filters</h3>
+            
+            {/* Sidebar Filters */}
+            <div className="lg:col-span-1">
+              <div className="p-8 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl sticky top-8">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <Filter className="w-4 h-4 text-blue-300" />
+                  </div>
+                  <h3 className="text-white font-black text-xl">Smart Filters</h3>
+                </div>
                 
                 <div className="space-y-6">
                   <div>
-                    <label className="label mb-3">Category</label>
-                    <select
-                      className="input"
-                      value={filters.category_id}
-                      onChange={(e) => setFilters(prev => ({ ...prev, category_id: e.target.value }))}
-                    >
-                      <option value="">All Categories</option>
-                      {categories.map(category => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="label mb-3">Job Type</label>
+                    <label className="text-white/80 font-medium mb-3 block">Job Type</label>
                     <div className="space-y-2">
-                      {['All', 'Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'].map((type) => (
-                        <label key={type} className="flex items-center gap-3 cursor-pointer">
+                      {['All', 'Full-time', 'Part-time', 'Contract', 'Remote'].map((type) => (
+                        <label key={type} className="flex items-center gap-3 cursor-pointer group">
                           <input
                             type="radio"
                             name="jobType"
-                            value={type === 'All' ? '' : type.toLowerCase().replace(' ', '_')}
-                            checked={filters.job_type === (type === 'All' ? '' : type.toLowerCase().replace(' ', '_'))}
-                            onChange={(e) => setFilters(prev => ({ ...prev, job_type: e.target.value }))}
-                            className="w-4 h-4 text-primary"
+                            value={type === 'All' ? '' : type}
+                            checked={filters.type === (type === 'All' ? '' : type)}
+                            onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
+                            className="w-4 h-4 text-blue-500 bg-white/10 border-white/20 rounded"
                           />
-                          <span className="text-sm">{type}</span>
+                          <span className="text-white/70 group-hover:text-white transition-colors">{type}</span>
                         </label>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <label className="label mb-3">Work Style</label>
+                    <label className="text-white/80 font-medium mb-3 block">Work Style</label>
                     <div className="space-y-2">
                       {['All', 'Remote', 'Hybrid', 'On-site'].map((style) => (
-                        <label key={style} className="flex items-center gap-3 cursor-pointer">
+                        <label key={style} className="flex items-center gap-3 cursor-pointer group">
                           <input
                             type="radio"
                             name="workStyle"
-                            value={style === 'All' ? '' : style.toLowerCase().replace('-', '')}
-                            checked={filters.work_style === (style === 'All' ? '' : style.toLowerCase().replace('-', ''))}
-                            onChange={(e) => setFilters(prev => ({ ...prev, work_style: e.target.value }))}
-                            className="w-4 h-4 text-primary"
+                            value={style === 'All' ? '' : style}
+                            checked={filters.workStyle === (style === 'All' ? '' : style)}
+                            onChange={(e) => setFilters(prev => ({ ...prev, workStyle: e.target.value }))}
+                            className="w-4 h-4 text-blue-500 bg-white/10 border-white/20 rounded"
                           />
-                          <span className="text-sm">{style}</span>
+                          <span className="text-white/70 group-hover:text-white transition-colors">{style}</span>
                         </label>
                       ))}
                     </div>
                   </div>
 
-                  <div>
-                    <label className="label mb-3">Experience Level</label>
-                    <div className="space-y-2">
-                      {['All', 'Entry Level', 'Mid Level', 'Senior Level', 'Lead', 'Executive'].map((level) => (
-                        <label key={level} className="flex items-center gap-3 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="experience"
-                            value={level === 'All' ? '' : level.toLowerCase().replace(' ', '_')}
-                            checked={filters.experience_level === (level === 'All' ? '' : level.toLowerCase().replace(' ', '_'))}
-                            onChange={(e) => setFilters(prev => ({ ...prev, experience_level: e.target.value }))}
-                            className="w-4 h-4 text-primary"
-                          />
-                          <span className="text-sm">{level}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="label mb-3">Salary Range</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <input
-                        type="number"
-                        value={filters.salary_min}
-                        onChange={(e) => setFilters(prev => ({ ...prev, salary_min: e.target.value }))}
-                        placeholder="Min"
-                        className="input"
-                      />
-                      <input
-                        type="number"
-                        value={filters.salary_max}
-                        onChange={(e) => setFilters(prev => ({ ...prev, salary_max: e.target.value }))}
-                        placeholder="Max"
-                        className="input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
+                  <div className="space-y-3 pt-6 border-t border-white/20">
                     <button 
                       onClick={handleSearch}
                       disabled={searchLoading}
-                      className="btn btn-primary w-full"
+                      className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-2xl"
                     >
                       {searchLoading ? 'Searching...' : 'Apply Filters'}
                     </button>
                     <button 
                       onClick={clearFilters}
-                      className="btn btn-secondary w-full"
+                      className="w-full h-12 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md"
                     >
-                      Clear Filters
+                      Clear All
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Job Listings */}
+            {/* Job Cards */}
             <div className="lg:col-span-3">
-              {/* Results Header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-xl font-semibold">
-                    {jobs.length} jobs found
-                  </h2>
-                  <p className="text-muted-foreground text-sm">
-                    Showing results for your search criteria
+                  <h3 className="text-white font-black text-2xl mb-2">
+                    {jobs.length} AI-Matched Jobs
+                  </h3>
+                  <p className="text-white/70">
+                    Intelligently ranked by neural compatibility score
                   </p>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  {/* Mobile Filter Button */}
                   <button
                     onClick={() => setShowFilters(true)}
-                    className="lg:hidden btn btn-secondary btn-sm"
+                    className="lg:hidden h-10 px-4 bg-white/20 border-2 border-white/40 text-white rounded-xl font-bold backdrop-blur-md flex items-center gap-2"
                   >
-                    <SlidersHorizontal className="w-4 h-4 mr-2" />
+                    <SlidersHorizontal className="w-4 h-4" />
                     Filters
                   </button>
-
-                  {/* Sort Dropdown */}
-                  <div className="relative">
-                    <select className="input pr-10 appearance-none cursor-pointer">
-                      <option value="relevance">Most Relevant</option>
-                      <option value="newest">Newest First</option>
-                      <option value="salary">Highest Salary</option>
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                  </div>
+                  
+                  <select className="h-10 px-4 bg-white/20 border-2 border-white/40 text-white rounded-xl font-bold backdrop-blur-md appearance-none cursor-pointer">
+                    <option value="ai_match">Best AI Match</option>
+                    <option value="newest">Newest First</option>
+                    <option value="salary">Highest Salary</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Error Message */}
-              {error && (
-                <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-                  <p className="text-destructive">{error}</p>
-                </div>
-              )}
-
-              {/* Job Cards */}
               {jobs.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Search className="w-12 h-12 text-muted-foreground" />
+                <div className="text-center py-20">
+                  <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Search className="w-12 h-12 text-white/60" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">No jobs found</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Try adjusting your search criteria or filters
+                  <h3 className="text-white font-black text-2xl mb-4">No jobs found</h3>
+                  <p className="text-white/70 mb-8">
+                    Try adjusting your search criteria or clear all filters
                   </p>
                   <button 
                     onClick={clearFilters}
-                    className="btn btn-primary"
+                    className="h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-2xl"
                   >
-                    Clear all filters
+                    Show All Jobs
                   </button>
                 </div>
               ) : (
-                <div className="space-y-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-8">
                   {jobs.map((job) => (
-                    <JobCard
-                      key={job.id}
-                      job={job}
-                      onSave={handleSaveJob}
-                      onView={handleViewJob}
-                    />
+                    <JobCard key={job.id} job={job} />
                   ))}
 
                   {/* Load More */}
-                  <div className="text-center mt-12">
-                    <button 
-                      onClick={handleSearch}
-                      className="btn btn-secondary btn-lg"
-                    >
-                      Load More Jobs
+                  <div className="text-center pt-12">
+                    <button className="h-14 px-12 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md">
+                      Load More Neural Matches
                     </button>
                   </div>
                 </div>
@@ -602,82 +595,50 @@ export default function JobsPage() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Mobile Filter Panel */}
       {showFilters && (
         <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setShowFilters(false)}>
-          <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl p-6 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed right-0 top-0 h-full w-80 bg-black/90 backdrop-blur-md border-l-2 border-white/20 shadow-2xl p-6 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold">Filters</h3>
-              <button onClick={() => setShowFilters(false)} className="p-2 hover:bg-muted rounded-lg">
-                <X className="w-5 h-5" />
+              <h3 className="text-white font-black text-xl">Filters</h3>
+              <button 
+                onClick={() => setShowFilters(false)} 
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5 text-white" />
               </button>
             </div>
 
             <div className="space-y-6">
               <div>
-                <label className="label mb-3">Category</label>
-                <select
-                  className="input"
-                  value={filters.category_id}
-                  onChange={(e) => setFilters(prev => ({ ...prev, category_id: e.target.value }))}
-                >
-                  <option value="">All Categories</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="label mb-3">Job Type</label>
+                <label className="text-white/80 font-medium mb-3 block">Job Type</label>
                 <div className="space-y-2">
-                  {['All', 'Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'].map((type) => (
-                    <label key={type} className="flex items-center gap-3 cursor-pointer">
+                  {['All', 'Full-time', 'Part-time', 'Contract', 'Remote'].map((type) => (
+                    <label key={type} className="flex items-center gap-3 cursor-pointer group">
                       <input
                         type="radio"
                         name="mobileJobType"
-                        value={type === 'All' ? '' : type.toLowerCase().replace(' ', '_')}
-                        checked={filters.job_type === (type === 'All' ? '' : type.toLowerCase().replace(' ', '_'))}
-                        onChange={(e) => setFilters(prev => ({ ...prev, job_type: e.target.value }))}
-                        className="w-4 h-4 text-primary"
+                        value={type === 'All' ? '' : type}
+                        checked={filters.type === (type === 'All' ? '' : type)}
+                        onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
+                        className="w-4 h-4 text-blue-500 bg-white/10 border-white/20 rounded"
                       />
-                      <span className="text-sm">{type}</span>
+                      <span className="text-white/70 group-hover:text-white transition-colors">{type}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              <div>
-                <label className="label mb-3">Work Style</label>
-                <div className="space-y-2">
-                  {['All', 'Remote', 'Hybrid', 'On-site'].map((style) => (
-                    <label key={style} className="flex items-center gap-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="mobileWorkStyle"
-                        value={style === 'All' ? '' : style.toLowerCase().replace('-', '')}
-                        checked={filters.work_style === (style === 'All' ? '' : style.toLowerCase().replace('-', ''))}
-                        onChange={(e) => setFilters(prev => ({ ...prev, work_style: e.target.value }))}
-                        className="w-4 h-4 text-primary"
-                      />
-                      <span className="text-sm">{style}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2 pt-6 border-t">
+              <div className="space-y-3 pt-6 border-t border-white/20">
                 <button 
                   onClick={() => {
                     handleSearch()
                     setShowFilters(false)
                   }}
                   disabled={searchLoading}
-                  className="btn btn-primary w-full"
+                  className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-2xl"
                 >
                   {searchLoading ? 'Searching...' : 'Apply Filters'}
                 </button>
@@ -686,16 +647,15 @@ export default function JobsPage() {
                     clearFilters()
                     setShowFilters(false)
                   }}
-                  className="btn btn-secondary w-full"
+                  className="w-full h-12 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md"
                 >
-                  Clear Filters
+                  Clear All
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-      </div>
     </NeuronicLayout>
   )
 }

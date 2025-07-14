@@ -554,7 +554,7 @@
 @layer utilities {
   /* Custom utilities */
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-primary-600 bg-clip-text text-transparent py-1 leading-tight;
   }
 
   .border-gradient {

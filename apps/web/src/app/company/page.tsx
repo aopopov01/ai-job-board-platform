@@ -36,11 +36,11 @@ function CompanyHeroSection() {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-                <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent py-1">
                   Find Top Talent
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-purple-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-purple-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent py-1">
                   with AI Precision
                 </span>
               </h1>
@@ -261,7 +261,7 @@ function PricingSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent py-1">
               Choose Your Plan
             </span>
           </h2>
@@ -348,7 +348,7 @@ function TestimonialsSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent py-1">
               Trusted by Leading Companies
             </span>
           </h2>
@@ -390,7 +390,7 @@ function CTASection() {
       <div className="container mx-auto px-4">
         <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-12 text-center shadow-xl">
           <h2 className="text-4xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-200 via-white to-purple-200 bg-clip-text text-transparent py-1">
               Ready to Transform Your Hiring?
             </span>
           </h2>

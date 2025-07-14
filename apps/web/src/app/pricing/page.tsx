@@ -35,8 +35,8 @@ function PricingHero() {
           </div>
           
           <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight mb-8">
-            <span className="text-white block leading-none drop-shadow-2xl">Plans that</span>
-            <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-none drop-shadow-2xl">
+            <span className="text-white block leading-tight drop-shadow-2xl">Plans that</span>
+            <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-tight drop-shadow-2xl py-2">
               electrify success
             </span>
           </h1>

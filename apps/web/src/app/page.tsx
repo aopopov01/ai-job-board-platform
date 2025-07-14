@@ -35,7 +35,7 @@ import { Ripple } from '../components/magicui/ripple'
 // Extraordinary Professional Hero Section
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-screen flex items-center pt-24">
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80"></div>
       
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
@@ -49,9 +49,9 @@ function HeroSection() {
                 <span className="text-sm text-white font-bold tracking-wide">⚡ LIGHTNING-FAST MATCHING</span>
               </div>
               
-              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight">
-                <span className="text-white block leading-none drop-shadow-2xl">Ignite your</span>
-                <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block leading-none drop-shadow-2xl animate-pulse">
+              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-none">
+                <span className="text-white block drop-shadow-2xl">Ignite your</span>
+                <span className="bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent block drop-shadow-2xl animate-pulse pb-2">
                   career lightning
                 </span>
               </h1>
@@ -142,86 +142,180 @@ function HeroSection() {
   )
 }
 
-// Featured Jobs Section (Neuronic Design)
+// Featured Jobs Section (Proper Neuronic Design)
 function FeaturedJobsSection() {
   const featuredJobs = [
     {
-      title: "Software Engineer",
-      company: "Tech Innovators Inc.",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOTKKlYJNHktoCoCoXEk2d6zTPVcJzlBjUs3_lEGtiOY6Gi9DcrlRoVikjuSIwpf5wYIbd95XP5_kNRISlUtnM1NiYDtRS1e0orDmg1WgJfLIifzpwbMqeOhNMLXOSCyrqU67s9BqiOBtzDhADwxQIeNMRPVPjlxsERJI9Ko1vMN8_77cH5yJmMZTEqGg1v1jkk25GTZjAAejxFXuSwcneqo9FPgv67yhy9bpInWkNs4TUjXV4r7B_i9uCiG87a9RsbtJ3KKWRJw"
+      title: "Senior Frontend Engineer",
+      company: "TechCorp",
+      location: "San Francisco, CA",
+      salary: "$120k - $180k",
+      type: "Full-time"
     },
     {
-      title: "Registered Nurse",
-      company: "Community Health Systems",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBGkY7s-RQmpmtKCarLg9jg2h_l05vax9NEczb0uWRH1sZM4oCbehfbBb0-4MFvTTEQCxjAJC_AvY6VUY1qMZkFtUnCD1CCGSCisTzmYfYvyYQunMUZg8EaycKnWzhgas7rMXDB3PtKVGVLr90TE-rmzHriCixiZxyoPkxuV_sE3DaxqyEQRoxjJVzLj9FbqNhFQHoLiOwu13S8sK3W55WKl41BQKwO3C6beEPzmPkAn4pKUrFjS6lWz-rf5Gu6n3gJIGgglSuViA"
+      title: "Product Manager",
+      company: "InnovateAI",
+      location: "Austin, TX",
+      salary: "$130k - $200k",
+      type: "Full-time"
     },
     {
-      title: "Financial Analyst",
-      company: "Global Investments LLC",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuChmM8JFqA2PYJ0ZDeocp4uAfj-s0klvV21KRRN1zLoi3yQWGwYaOacAll0tKJ3G6ZHrxkolMS0teUlyP0YIODq6dUeomUJk-JhiN0Ty51hDyongX33t10WiHSD0MmOCeEKgd6gHZyJBc4cCNBI1XJWnD2-NLuYS8gyJo0_DpmR-3XAeAccra9FzDnU5Ll-pGFGxMk7mbKSS3QfNwuHpZ-sX5OaZ0mh-9vckNKL0iOmxLNbNPW-HvyZaW1lKeDQLMXL3gPrVI5S6g"
+      title: "UI/UX Designer",
+      company: "Design Studio",
+      location: "New York, NY",
+      salary: "$90k - $140k",
+      type: "Full-time"
     }
   ]
 
   return (
-    <section className="px-40 py-5">
-      <div className="max-w-[960px] mx-auto">
-        <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 drop-shadow-lg">Featured Jobs</h2>
-        <div className="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex items-stretch p-4 gap-3">
-            {featuredJobs.map((job, index) => (
-              <MagicCard key={index} className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40 cursor-pointer group">
-                <div
-                  className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col group-hover:scale-105 transition-transform duration-300"
-                  style={{backgroundImage: `url("${job.image}")`}}
-                ></div>
-                <div className="p-4">
-                  <p className="text-white text-base font-medium leading-normal">{job.title}</p>
-                  <p className="text-white/80 text-sm font-normal leading-normal">{job.company}</p>
-                </div>
-              </MagicCard>
-            ))}
+    <section className="py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 px-5 py-3 bg-emerald-600/20 border-2 border-emerald-400/40 rounded-full mb-8 backdrop-blur-sm">
+            <div className="w-3 h-3 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"></div>
+            <span className="text-sm text-emerald-100 font-bold tracking-wide">FEATURED OPPORTUNITIES</span>
           </div>
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
+            Top jobs waiting for you
+          </h2>
+          <p className="text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto">
+            Discover handpicked opportunities from leading companies actively seeking talent.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredJobs.map((job, index) => (
+            <div key={index} className="p-8 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl hover:border-blue-400/40 transition-all duration-300 group cursor-pointer">
+              <div className="flex items-start justify-between mb-6">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <Briefcase className="w-7 h-7 text-white" />
+                </div>
+                <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 rounded-full text-emerald-300 text-sm font-bold">
+                  {job.type}
+                </span>
+              </div>
+              
+              <h3 className="text-white font-black text-xl mb-2 group-hover:text-blue-300 transition-colors">
+                {job.title}
+              </h3>
+              <p className="text-white/70 font-medium text-base mb-4">{job.company}</p>
+              <p className="text-white/60 text-sm mb-4 flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                {job.location}
+              </p>
+              <p className="text-blue-300 font-bold text-lg">{job.salary}</p>
+              
+              <div className="mt-6 pt-6 border-t border-white/20">
+                <button className="w-full h-12 bg-blue-600/20 hover:bg-blue-600 border-2 border-blue-400/40 hover:border-blue-400 text-blue-300 hover:text-white rounded-xl font-bold transition-all duration-300">
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   )
 }
 
-// AI-Driven Career Insights Section (Neuronic Design)
+// AI-Driven Career Insights Section (Proper Neuronic Design)
 function CareerInsightsSection() {
   const insights = [
     {
       title: "Average Salary Increase",
-      value: "+15%",
-      change: "+15%",
-      isPositive: true
+      value: "+40%",
+      description: "Users see 40% higher salaries with AI matching",
+      icon: TrendingUp,
+      color: "emerald"
     },
     {
-      title: "Job Application Success Rate",
-      value: "2x Higher",
-      change: "+100%",
-      isPositive: true
+      title: "Job Match Accuracy",
+      value: "98.5%",
+      description: "AI precision matching with perfect compatibility",
+      icon: Target,
+      color: "blue"
     },
     {
-      title: "Career Path Optimization",
-      value: "90% Satisfaction",
-      change: "+90%",
-      isPositive: true
+      title: "Time to Hire",
+      value: "3x Faster",
+      description: "Reduce job search time with intelligent automation",
+      icon: Clock,
+      color: "purple"
+    },
+    {
+      title: "Career Satisfaction",
+      value: "95%",
+      description: "Users report higher job satisfaction and growth",
+      icon: Heart,
+      color: "pink"
     }
   ]
 
+  const getColorClasses = (color: string) => {
+    const colors = {
+      emerald: {
+        bg: "bg-emerald-500/20",
+        border: "border-emerald-400/40",
+        text: "text-emerald-300",
+        glow: "shadow-emerald-500/30"
+      },
+      blue: {
+        bg: "bg-blue-500/20",
+        border: "border-blue-400/40", 
+        text: "text-blue-300",
+        glow: "shadow-blue-500/30"
+      },
+      purple: {
+        bg: "bg-purple-500/20",
+        border: "border-purple-400/40",
+        text: "text-purple-300", 
+        glow: "shadow-purple-500/30"
+      },
+      pink: {
+        bg: "bg-pink-500/20",
+        border: "border-pink-400/40",
+        text: "text-pink-300",
+        glow: "shadow-pink-500/30"
+      }
+    }
+    return colors[color as keyof typeof colors] || colors.blue
+  }
+
   return (
-    <section className="px-40 py-5">
-      <div className="max-w-[960px] mx-auto">
-        <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 drop-shadow-lg">AI-Driven Career Insights</h2>
-        <div className="flex flex-wrap gap-4 p-4">
-          {insights.map((insight, index) => (
-            <MagicCard key={index} className="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6">
-              <p className="text-white text-base font-medium leading-normal">{insight.title}</p>
-              <p className="text-white tracking-light text-2xl font-bold leading-tight">{insight.value}</p>
-              <p className="text-green-400 text-base font-medium leading-normal">{insight.change}</p>
-            </MagicCard>
-          ))}
+    <section className="py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 px-5 py-3 bg-purple-600/20 border-2 border-purple-400/40 rounded-full mb-8 backdrop-blur-sm">
+            <div className="w-3 h-3 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50"></div>
+            <span className="text-sm text-purple-100 font-bold tracking-wide">AI-POWERED INSIGHTS</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
+            Data-driven career intelligence
+          </h2>
+          <p className="text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto">
+            Leverage advanced analytics and machine learning to accelerate your professional growth.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {insights.map((insight, index) => {
+            const colorClasses = getColorClasses(insight.color)
+            return (
+              <div key={index} className="p-8 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl hover:border-white/40 transition-all duration-300 group">
+                <div className={`w-16 h-16 ${colorClasses.bg} border-2 ${colorClasses.border} rounded-2xl flex items-center justify-center mb-6 shadow-lg ${colorClasses.glow} group-hover:scale-110 transition-transform duration-300`}>
+                  <insight.icon className={`w-8 h-8 ${colorClasses.text}`} />
+                </div>
+                
+                <div className={`text-4xl font-black ${colorClasses.text} mb-3 drop-shadow-lg group-hover:scale-105 transition-transform duration-300`}>
+                  {insight.value}
+                </div>
+                
+                <h3 className="text-white font-bold text-lg mb-3">{insight.title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed font-medium">{insight.description}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -345,7 +439,7 @@ function FeaturesSection() {
   )
 }
 
-// How It Works Section (Neuronic Design)
+// How It Works Section (Proper Neuronic Design)
 function HowItWorksSection() {
   const steps = [
     {
@@ -371,29 +465,30 @@ function HowItWorksSection() {
   ]
 
   return (
-    <section className="px-40 py-16">
-      <div className="max-w-[960px] mx-auto">
+    <section className="py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] mb-6 drop-shadow-lg">
-            <span className="bg-gradient-to-r from-gray-200 via-white to-emerald-200 bg-clip-text text-transparent">
-              How TalentAIze Works
-            </span>
+          <div className="inline-flex items-center gap-3 px-5 py-3 bg-blue-600/20 border-2 border-blue-400/40 rounded-full mb-8 backdrop-blur-sm">
+            <div className="w-3 h-3 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></div>
+            <span className="text-sm text-blue-100 font-bold tracking-wide">HOW IT WORKS</span>
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
+            Get started in 4 simple steps
           </h2>
-          <p className="text-white/90 text-lg max-w-2xl mx-auto">
-            Get started in minutes and let our AI do the heavy lifting to find your next opportunity.
+          <p className="text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto">
+            Our streamlined process gets you matched with perfect opportunities in minutes, not months.
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <MagicCard key={step.step} className="p-8 text-center relative overflow-hidden">
-              <Ripple />
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl text-xl font-bold mb-6 shadow-lg relative z-10">
-                {step.step}
+            <div key={step.step} className="p-8 bg-black/60 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl hover:border-blue-400/40 transition-all duration-300 group text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                <span className="text-white font-black text-xl">{step.step}</span>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-4 relative z-10">{step.title}</h3>
-              <p className="text-white/80 relative z-10">{step.description}</p>
-            </MagicCard>
+              <h3 className="text-white font-black text-xl mb-4 group-hover:text-blue-300 transition-colors">{step.title}</h3>
+              <p className="text-white/70 text-base leading-relaxed font-medium">{step.description}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -464,9 +559,9 @@ function TestimonialsSection() {
             TRUSTED BY PROFESSIONALS
           </div>
           
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-10 drop-shadow-2xl">
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-10 drop-shadow-2xl leading-none">
             Success
-            <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> stories</span>
+            <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent pb-1"> stories</span>
           </h2>
           
           <p className="text-2xl text-white/80 max-w-4xl mx-auto font-medium">
@@ -545,9 +640,9 @@ function CTASection() {
               <span className="text-sm text-blue-100 font-bold tracking-wide">JOIN THE FUTURE</span>
             </div>
             
-            <h2 className="text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight leading-tight drop-shadow-2xl">
+            <h2 className="text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight leading-none drop-shadow-2xl">
               Ready to transform
-              <span className="bg-gradient-to-r from-blue-300 to-cyan-200 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-blue-300 to-cyan-200 bg-clip-text text-transparent block pb-2">
                 your career?
               </span>
             </h2>
@@ -675,9 +770,56 @@ function ProfessionalFooter() {
   )
 }
 
+// Navigation Header Component
+function NavigationHeader() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b-2 border-white/20 shadow-2xl">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-24">
+          <Link href="/" className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-3xl font-black text-white tracking-tight">TalentAIze</span>
+          </Link>
+          
+          <nav className="hidden lg:flex items-center gap-16">
+            <Link href="/jobs" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Jobs
+            </Link>
+            <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Solutions
+            </Link>
+            <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Pricing
+            </Link>
+            <Link href="/about" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              About
+            </Link>
+          </nav>
+          
+          <div className="flex items-center gap-4">
+            <Link href="/auth/login">
+              <button className="h-12 px-6 text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/auth/signup">
+              <button className="h-12 px-8 bg-white text-black rounded-xl font-black text-[16px] hover:bg-gray-100 transition-all shadow-lg">
+                Get Started
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
+}
+
 export default function HomePage() {
   return (
     <NeuronicLayout>
+      <NavigationHeader />
       <HeroSection />
       <FeaturedJobsSection />
       <CareerInsightsSection />
