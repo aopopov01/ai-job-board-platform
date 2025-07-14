@@ -1,0 +1,18 @@
+services:
+  demo-web:
+    build:
+      context: /home/he_reat/job-demo
+      dockerfile_inline: |
+        FROM node:20-alpine
+        WORKDIR /app
+        COPY package*.json ./
+        RUN npm install
+        COPY . .
+        RUN npm run build
+        EXPOSE 3000
+        CMD ["npm", "start"]
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

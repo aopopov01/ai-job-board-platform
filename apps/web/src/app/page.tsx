@@ -617,51 +617,57 @@ function ProfessionalFooter() {
                   <path fillRule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clipRule="evenodd" />
                 </svg>
               </Link>
+              <Link href="#" className="w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
+                </svg>
+              </Link>
             </div>
           </div>
           
-          {/* Platform */}
-          <div>
-            <h4 className="text-white font-semibold mb-6">Platform</h4>
-            <ul className="space-y-4">
-              <li><Link href="/features" className="text-white/60 hover:text-white transition-colors">Features</Link></li>
-              <li><Link href="/integrations" className="text-white/60 hover:text-white transition-colors">Integrations</Link></li>
-              <li><Link href="/security" className="text-white/60 hover:text-white transition-colors">Security</Link></li>
-              <li><Link href="/api" className="text-white/60 hover:text-white transition-colors">API</Link></li>
-            </ul>
-          </div>
-          
-          {/* Solutions */}
-          <div>
-            <h4 className="text-white font-semibold mb-6">Solutions</h4>
-            <ul className="space-y-4">
-              <li><Link href="/candidates" className="text-white/60 hover:text-white transition-colors">For Candidates</Link></li>
-              <li><Link href="/recruiters" className="text-white/60 hover:text-white transition-colors">For Recruiters</Link></li>
-              <li><Link href="/enterprise" className="text-white/60 hover:text-white transition-colors">Enterprise</Link></li>
-              <li><Link href="/partnerships" className="text-white/60 hover:text-white transition-colors">Partnerships</Link></li>
-            </ul>
-          </div>
-          
-          {/* Support */}
-          <div>
-            <h4 className="text-white font-semibold mb-6">Support</h4>
-            <ul className="space-y-4">
-              <li><Link href="/help" className="text-white/60 hover:text-white transition-colors">Help Center</Link></li>
-              <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors">Contact</Link></li>
-              <li><Link href="/status" className="text-white/60 hover:text-white transition-colors">Status</Link></li>
-              <li><Link href="/privacy" className="text-white/60 hover:text-white transition-colors">Privacy</Link></li>
-            </ul>
+          {/* Links Columns */}
+          <div className="lg:col-span-3 grid md:grid-cols-3 gap-8">
+            <div>
+              <h4 className="text-white font-bold mb-6 text-lg">Platform</h4>
+              <ul className="space-y-4">
+                {['Job Search', 'Post Jobs', 'AI Matching', 'Analytics'].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-white/60 hover:text-white transition-colors text-base">{item}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-bold mb-6 text-lg">Resources</h4>
+              <ul className="space-y-4">
+                {['Documentation', 'API', 'Help Center', 'Blog'].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-white/60 hover:text-white transition-colors text-base">{item}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-bold mb-6 text-lg">Company</h4>
+              <ul className="space-y-4">
+                {['About', 'Careers', 'Press', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-white/60 hover:text-white transition-colors text-base">{item}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
         
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/60 text-sm">
-            © 2024 TalentAIze. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6 text-sm text-white/60">
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+        {/* Bottom */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-white/60 text-base">© 2024 TalentAIze. All rights reserved.</p>
+          <div className="flex gap-8 mt-4 md:mt-0">
+            <Link href="#" className="text-white/60 hover:text-white transition-colors text-base">Privacy Policy</Link>
+            <Link href="#" className="text-white/60 hover:text-white transition-colors text-base">Terms of Service</Link>
           </div>
         </div>
       </div>
@@ -669,64 +675,17 @@ function ProfessionalFooter() {
   )
 }
 
-// Main Landing Page Component - Neuronic Design
-export default function LandingPage() {
+export default function HomePage() {
   return (
-    <NeuronicLayout variant="intense" className="overflow-x-hidden">
-      <div className="layout-container flex h-full grow flex-col">
-        {/* Extraordinary Professional Navigation */}
-        <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b-2 border-white/20 shadow-2xl">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex items-center justify-between h-24">
-              
-              {/* Logo */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-                  <Brain className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-3xl font-black text-white tracking-tight">TalentAIze</span>
-              </div>
-              
-              {/* Navigation */}
-              <nav className="hidden lg:flex items-center gap-16">
-                <Link href="/platform" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Platform
-                </Link>
-                <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Solutions
-                </Link>
-                <Link href="/developers" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Developers
-                </Link>
-                <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Pricing
-                </Link>
-              </nav>
-              
-              {/* Actions */}
-              <div className="flex items-center gap-4">
-                <Link href="/auth/login" className="h-12 px-6 flex items-center text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Sign in
-                </Link>
-                <button className="h-12 px-8 bg-white text-black rounded-xl font-black text-[16px] hover:bg-gray-100 transition-all shadow-lg">
-                  Get started
-                </button>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="pt-20">
-          <HeroSection />
-          <FeaturesSection />
-          <TestimonialsSection />
-          <CTASection />
-        </main>
-
-        {/* Footer */}
-        <ProfessionalFooter />
-      </div>
+    <NeuronicLayout>
+      <HeroSection />
+      <FeaturedJobsSection />
+      <CareerInsightsSection />
+      <FeaturesSection />
+      <HowItWorksSection />
+      <TestimonialsSection />
+      <CTASection />
+      <ProfessionalFooter />
     </NeuronicLayout>
   )
 }

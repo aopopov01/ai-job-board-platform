@@ -102,25 +102,51 @@
   }
 
   .dark {
+    /* Claude Interface Inspired Colors */
     --primary: 214 100% 60%;
-    --primary-foreground: 220 13% 9%;
-    --secondary: 220 13% 17%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 220 13% 17%;
-    --muted-foreground: 220 8% 65%;
-    --accent: 220 13% 17%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Deep charcoal backgrounds from Claude interface */
+    --background: 0 0% 10%;  /* #1a1a1a - Deep charcoal base */
+    --foreground: 0 0% 90%;  /* #e5e5e5 - Light gray text */
+    
+    /* Panel and surface colors */
+    --secondary: 0 0% 16%;   /* #2a2a2a - Medium gray panels */
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 20%;       /* #333333 - Input fields background */
+    --muted-foreground: 0 0% 63%; /* #a0a0a0 - Secondary text */
+    
+    /* Interactive elements */
+    --accent: 0 0% 16%;      /* #2a2a2a - Accent backgrounds */
+    --accent-foreground: 0 0% 90%;
+    --border: 0 0% 20%;      /* #333333 - Border color */
+    --input: 0 0% 16%;       /* #2a2a2a - Input backgrounds */
+    
+    /* Status colors matching Claude interface */
+    --destructive: 0 84% 55%; /* #ef4444 - Red accent from interface */
+    --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
-    --success-foreground: 0 0% 98%;
+    --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 98%;
-    --border: 220 13% 17%;
-    --input: 220 13% 17%;
+    --warning-foreground: 0 0% 100%;
+    
     --ring: 214 100% 60%;
-    --background: 220 13% 9%;
-    --foreground: 0 0% 98%;
+  }
+  
+  /* Claude Interface Color Variables */
+  :root {
+    --claude-deep-charcoal: #1a1a1a;
+    --claude-medium-gray: #2a2a2a;
+    --claude-input-gray: #333333;
+    --claude-light-text: #e5e5e5;
+    --claude-muted-text: #a0a0a0;
+    --claude-red-accent: #ef4444;
+    --claude-red-badge: #dc2626;
+    
+    /* Enhanced contrast ratios for accessibility */
+    --claude-contrast-bg: #0d0d0d;
+    --claude-contrast-panel: #1f1f1f;
+    --claude-contrast-border: #404040;
   }
 }
 
