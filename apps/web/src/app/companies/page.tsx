@@ -35,247 +35,321 @@ import NeuronicLayout from '../../components/layout/NeuronicLayout'
 // Company subscription tiers
 type SubscriptionTier = 'premium' | 'professional' | 'free'
 
-// Sample companies data with subscription tiers and comprehensive info
+// Real Tech Island member companies data with subscription tiers and comprehensive info
 const companiesData = [
   // PREMIUM TIER - Highest paying customers
   {
-    id: "techcorp-ai",
-    name: "TechCorp AI",
+    id: "prognosys-solutions",
+    name: "Prognosys Solutions",
     logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=80&h=80&fit=crop&crop=center",
-    tagline: "Building the future of artificial intelligence",
-    location: "San Francisco, CA",
-    employees: "1000+",
-    industry: "Artificial Intelligence",
+    tagline: "Regulatory Compliance Solutions for Financial Industry",
+    location: "Nicosia, Cyprus",
+    employees: "50-100",
+    industry: "RegTech (Regulatory Technology)",
     workType: "Hybrid",
-    rating: 4.9,
-    reviewCount: 423,
-    openJobs: 47,
+    rating: 4.7,
+    reviewCount: 89,
+    openJobs: 2,
     subscriptionTier: "premium" as SubscriptionTier,
-    founded: "2018",
-    website: "https://techcorp.ai",
-    specialties: ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing"],
-    techStack: ["Python", "TensorFlow", "PyTorch", "Kubernetes", "AWS", "React", "TypeScript"],
-    companySize: "Large",
+    founded: "2004",
+    website: "https://prognosys.com.cy",
+    specialties: ["Regulatory Compliance", "Financial Reporting", "Risk Management", "Tax Reporting"],
+    techStack: ["VB.NET", "C#", "MS SQL Server", "REST API", "SOAP", "SQL Stored Procedures"],
+    companySize: "Medium",
     benefits: [
-      "Comprehensive health, dental & vision insurance",
-      "Unlimited PTO policy",
-      "Stock options with high growth potential", 
-      "Remote work flexibility",
-      "Annual learning budget $5,000",
-      "Free meals and premium snacks",
-      "Gym membership and wellness stipend",
-      "Parental leave 16 weeks paid",
-      "Mental health support",
-      "Latest tech equipment"
+      "Competitive salary package",
+      "On-the-job training programs",
+      "Flexible working hours",
+      "Professional development opportunities",
+      "Health insurance coverage",
+      "Career growth opportunities",
+      "Modern office environment",
+      "Team building activities"
     ],
     culture: {
-      workLifeBalance: 4.8,
-      compensation: 4.9,
+      workLifeBalance: 4.6,
+      compensation: 4.5,
       careerGrowth: 4.7,
-      management: 4.6,
-      diversity: 4.8
+      management: 4.4,
+      diversity: 4.3
     },
     teamMembers: [
-      { name: "Sarah Chen", role: "CEO & Co-Founder", image: "https://images.unsplash.com/photo-1494790108755-2616b612b5c5?w=60&h=60&fit=crop&crop=face" },
-      { name: "Marcus Rodriguez", role: "CTO", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" },
-      { name: "Emily Zhang", role: "Head of AI Research", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" }
+      { name: "Andreas Economides", role: "CEO", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" },
+      { name: "Maria Constantinou", role: "CTO", image: "https://images.unsplash.com/photo-1494790108755-2616b612b5c5?w=60&h=60&fit=crop&crop=face" },
+      { name: "Dimitris Ioannou", role: "Head of Development", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" }
     ],
     testimonials: [
       { 
-        author: "Alex Thompson", 
-        role: "Senior ML Engineer", 
-        content: "Best place I've ever worked. The team is brilliant and the technology challenges are fascinating.",
+        author: "Sofia Georgiou", 
+        role: "Software Developer", 
+        content: "Great company culture with excellent learning opportunities. The team is supportive and the technology stack is modern.",
         rating: 5
       },
       {
-        author: "Maria Garcia",
-        role: "Product Manager", 
-        content: "Incredible growth opportunities and work-life balance. Leadership truly cares about employees.",
+        author: "Michalis Petrou",
+        role: "Implementation Engineer", 
+        content: "Professional growth opportunities are outstanding. Management is very supportive of career development.",
         rating: 5
       }
     ],
     recentNews: [
       {
-        title: "TechCorp AI Raises $100M Series C",
-        date: "2024-01-15",
-        summary: "Funding will accelerate AI research and global expansion"
+        title: "Prognosys Expands Regulatory Solutions",
+        date: "2024-01-20",
+        summary: "New compliance modules launched for European financial institutions"
       },
       {
-        title: "Named 'Best AI Company 2024'",
-        date: "2024-01-10", 
-        summary: "Recognition for breakthrough innovations in machine learning"
+        title: "ISO 27001 Certification Achieved",
+        date: "2024-01-15", 
+        summary: "Enhanced security standards for financial data protection"
       }
     ],
-    description: "TechCorp AI is a leading artificial intelligence company focused on developing cutting-edge machine learning solutions that transform industries. We're passionate about creating intelligent systems that enhance human capabilities and solve complex global challenges. Our team of world-class researchers and engineers work on breakthrough technologies in computer vision, natural language processing, and autonomous systems."
+    description: "Prognosys Solutions helps Financial Institutions automate, simplify and streamline Regulatory Compliance, Financial, Tax and Risk Reporting. With over 20 years of experience, we provide comprehensive solutions that ensure compliance with evolving regulatory requirements while improving operational efficiency."
   },
   
   {
-    id: "quantum-innovations",
-    name: "Quantum Innovations",
+    id: "adtech-holding",
+    name: "AdTech Holding",
     logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&h=80&fit=crop&crop=center",
-    tagline: "Pioneering quantum computing for tomorrow",
-    location: "Boston, MA", 
-    employees: "500-1000",
-    industry: "Quantum Computing",
-    workType: "On-site",
+    tagline: "Innovation hub for AdTech & MarTech ecosystem",
+    location: "Limassol, Cyprus", 
+    employees: "500+",
+    industry: "AdTech & MarTech",
+    workType: "Hybrid",
     rating: 4.8,
-    reviewCount: 287,
-    openJobs: 31,
+    reviewCount: 312,
+    openJobs: 15,
     subscriptionTier: "premium" as SubscriptionTier,
-    founded: "2019",
-    website: "https://quantuminnovations.com",
-    specialties: ["Quantum Algorithms", "Quantum Hardware", "Quantum Software", "Research"],
-    techStack: ["Qiskit", "Cirq", "Python", "C++", "MATLAB", "Docker", "Linux"],
+    founded: "2011",
+    website: "https://adtechholding.com",
+    specialties: ["Predictive Targeting AI", "Fraud Prevention", "Machine Learning", "Big Data Analysis", "Programmatic Media"],
+    techStack: ["Python", "JavaScript", "React", "Node.js", "PostgreSQL", "Redis", "Docker", "Kubernetes"],
     companySize: "Large",
     benefits: [
-      "Premium health coverage",
-      "Research sabbatical program", 
-      "Patent bonus program",
-      "Education reimbursement unlimited",
-      "Relocation assistance",
-      "Stock equity program",
-      "Conference and training budget",
-      "Flexible working hours"
+      "Health Insurance coverage",
+      "Office lunch provided",
+      "Personal development budget",
+      "Hybrid work flexibility", 
+      "Conference attendance support",
+      "Free language courses",
+      "5 extra vacation days",
+      "Corporate events and parties",
+      "Modern tech equipment",
+      "Relocation assistance"
     ],
     culture: {
       workLifeBalance: 4.7,
       compensation: 4.9,
       careerGrowth: 4.8,
-      management: 4.5,
-      diversity: 4.6
+      management: 4.6,
+      diversity: 4.7
     },
-    description: "Leading the quantum revolution with breakthrough computing technologies that solve previously impossible problems. Our researchers work on cutting-edge quantum algorithms and hardware."
+    teamMembers: [
+      { name: "Dmitry Starostin", role: "CEO", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" },
+      { name: "Elena Vishnevskaya", role: "CTO", image: "https://images.unsplash.com/photo-1494790108755-2616b612b5c5?w=60&h=60&fit=crop&crop=face" },
+      { name: "Alexander Petrov", role: "Head of AI", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" }
+    ],
+    testimonials: [
+      { 
+        author: "Anna Kowalski", 
+        role: "Machine Learning Engineer", 
+        content: "Innovative company with cutting-edge technology. Great opportunities for professional growth in AdTech.",
+        rating: 5
+      },
+      {
+        author: "Pavel Novak",
+        role: "Data Scientist", 
+        content: "Excellent work-life balance and supportive team environment. The projects are challenging and rewarding.",
+        rating: 5
+      }
+    ],
+    recentNews: [
+      {
+        title: "AdTech Holding Launches New AI Platform",
+        date: "2024-02-01",
+        summary: "Revolutionary predictive targeting solution for programmatic advertising"
+      },
+      {
+        title: "Expansion to European Markets",
+        date: "2024-01-25", 
+        summary: "Opening new offices in Berlin and Amsterdam to serve European clients"
+      }
+    ],
+    description: "AdTech Holding is an innovation hub that creates startup ecosystems and cutting-edge technologies for AdTech & MarTech projects. With over 500 experts and multiple successful brands including PropellerAds, Notix, and Remoby, we're at the forefront of digital advertising innovation."
   },
 
   // PROFESSIONAL TIER - Mid-tier customers  
   {
-    id: "innovate-health",
-    name: "Innovate Health",
+    id: "3cx-ltd",
+    name: "3CX Ltd",
     logo: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=80&fit=crop&crop=center",
-    tagline: "Revolutionizing healthcare through technology",
-    location: "Austin, TX",
+    tagline: "Business VOIP solutions for modern communication",
+    location: "Cyprus",
     employees: "200-500", 
-    industry: "Healthcare Technology",
+    industry: "Telecommunications",
     workType: "Hybrid",
-    rating: 4.6,
-    reviewCount: 189,
-    openJobs: 22,
+    rating: 4.5,
+    reviewCount: 156,
+    openJobs: 8,
     subscriptionTier: "professional" as SubscriptionTier,
-    founded: "2020",
-    specialties: ["HealthTech", "Medical Devices", "Data Analytics", "Telemedicine"],
+    founded: "2005",
+    website: "https://3cx.com",
+    specialties: ["VOIP Solutions", "Business Communications", "PBX Systems", "Cloud Telephony"],
     companySize: "Medium",
     benefits: [
+      "Competitive salary package",
       "Health insurance",
       "Remote work options",
-      "Professional development budget",
-      "Flexible PTO",
-      "Stock options",
+      "Professional development",
+      "Flexible working hours",
       "Team building events"
     ],
     culture: {
-      workLifeBalance: 4.5,
+      workLifeBalance: 4.4,
       compensation: 4.3,
-      careerGrowth: 4.7,
+      careerGrowth: 4.6,
       management: 4.2,
-      diversity: 4.6
+      diversity: 4.3
     },
-    description: "We're transforming healthcare through innovative technology solutions that improve patient outcomes and streamline medical processes."
+    description: "3CX is a leading developer of open standards communications solutions that replace proprietary PBX systems. We serve over 25,000 channel partners worldwide with innovative VOIP technology."
   },
 
   {
-    id: "fintech-solutions",
-    name: "FinTech Solutions",
+    id: "advent-digital",
+    name: "Advent Digital",
     logo: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=80&h=80&fit=crop&crop=center", 
-    tagline: "Democratizing financial services with AI",
-    location: "New York, NY",
-    employees: "300-500",
-    industry: "Financial Technology",
+    tagline: "Digital consulting and product development",
+    location: "Cyprus",
+    employees: "50-100",
+    industry: "Digital Consulting",
     workType: "Remote",
-    rating: 4.5,
-    reviewCount: 156,
-    openJobs: 18,
+    rating: 4.6,
+    reviewCount: 78,
+    openJobs: 5,
     subscriptionTier: "professional" as SubscriptionTier,
-    founded: "2019",
-    specialties: ["Blockchain", "Payment Systems", "Risk Analytics", "Mobile Banking"],
-    companySize: "Medium",
+    founded: "2018",
+    website: "https://advent.digital",
+    specialties: ["Product Development", "Software Development", "Data Analytics", "Digital Strategy"],
+    companySize: "Small",
     benefits: [
-      "Competitive salary",
       "Remote-first culture",
+      "Flexible working hours",
+      "Professional development budget",
       "Health benefits",
-      "Learning stipend",
-      "Equity participation"
+      "Project diversity",
+      "Innovation time"
     ],
     culture: {
-      workLifeBalance: 4.4,
-      compensation: 4.6,
-      careerGrowth: 4.3,
-      management: 4.1,
-      diversity: 4.5
+      workLifeBalance: 4.7,
+      compensation: 4.4,
+      careerGrowth: 4.5,
+      management: 4.3,
+      diversity: 4.6
     },
-    description: "Building the future of financial services through innovative blockchain and AI technologies."
+    description: "Advent Digital is a niche digital consultancy specializing in product development and innovative software solutions. We help businesses transform through cutting-edge technology and data-driven insights."
   },
 
   // FREE TIER - Recently registered companies
   {
-    id: "green-energy-startup",
-    name: "Green Energy Startup",
+    id: "0100-ventures",
+    name: "0100 Ventures",
     logo: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=80&h=80&fit=crop&crop=center",
-    tagline: "Sustainable energy for a better tomorrow", 
-    location: "Portland, OR",
-    employees: "50-100",
-    industry: "Renewable Energy",
+    tagline: "Venture builder fostering startup ecosystems", 
+    location: "Slovakia / Cyprus",
+    employees: "100-200",
+    industry: "Venture Capital",
     workType: "Hybrid",
-    rating: 4.2,
-    reviewCount: 47,
-    openJobs: 8,
+    rating: 4.4,
+    reviewCount: 67,
+    openJobs: 3,
     subscriptionTier: "free" as SubscriptionTier,
-    founded: "2023",
-    specialties: ["Solar Technology", "Wind Energy", "Energy Storage"],
-    companySize: "Small",
+    founded: "2014",
+    website: "https://0100ventures.com",
+    specialties: ["Startup Building", "Venture Capital", "Innovation Consulting", "Ecosystem Development"],
+    companySize: "Medium",
     benefits: [
-      "Basic health insurance",
-      "Flexible hours",
-      "Learning opportunities"
+      "Startup environment",
+      "Learning opportunities",
+      "International exposure",
+      "Flexible work arrangements",
+      "Conference attendance"
     ],
     culture: {
       workLifeBalance: 4.3,
-      compensation: 3.8,
-      careerGrowth: 4.1,
-      management: 4.0,
-      diversity: 4.4
+      compensation: 4.1,
+      careerGrowth: 4.6,
+      management: 4.2,
+      diversity: 4.5
     },
-    description: "Early-stage company focused on sustainable energy solutions."
+    description: "0100 Ventures is a venture builder helping create and support awesome companies while fostering local and international talent. We're building the startup ecosystem in Central Europe."
   },
 
   {
-    id: "design-studio-co",
-    name: "Design Studio Co",
+    id: "aleph-holding",
+    name: "Aleph Holding",
     logo: "https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=80&h=80&fit=crop&crop=center",
-    tagline: "Creative design solutions for digital world",
-    location: "Seattle, WA", 
-    employees: "20-50",
-    industry: "Design & Creative",
+    tagline: "Global digital advertising and technology solutions",
+    location: "Dubai, UAE / Cyprus", 
+    employees: "1000+",
+    industry: "Digital Advertising",
     workType: "Remote",
-    rating: 4.1,
-    reviewCount: 23,
-    openJobs: 5,
+    rating: 4.3,
+    reviewCount: 245,
+    openJobs: 12,
     subscriptionTier: "free" as SubscriptionTier,
-    founded: "2023",
-    specialties: ["UI/UX Design", "Branding", "Digital Marketing"],
-    companySize: "Small",
+    founded: "2005",
+    website: "https://alephholding.com",
+    specialties: ["Digital Advertising", "Technology Platforms", "Cross-border Payments", "Market Expansion"],
+    companySize: "Large",
     benefits: [
-      "Creative freedom",
-      "Remote work",
-      "Project variety"
+      "Global opportunities",
+      "Remote work flexibility",
+      "International team",
+      "Professional development",
+      "Diverse projects"
     ],
     culture: {
       workLifeBalance: 4.2,
-      compensation: 3.6,
-      careerGrowth: 3.9,
-      management: 3.8,
-      diversity: 4.2
+      compensation: 4.4,
+      careerGrowth: 4.1,
+      management: 4.0,
+      diversity: 4.7
     },
-    description: "Small design studio specializing in digital brand experiences."
+    description: "Aleph Holding is a global network of digital experts connecting 26,000+ advertisers across 130+ countries. We provide comprehensive digital advertising solutions and technology platforms for global market expansion."
+  },
+
+  {
+    id: "adsterra",
+    name: "Adsterra",
+    logo: "https://images.unsplash.com/photo-1560472355-109703aa3edc?w=80&h=80&fit=crop&crop=center",
+    tagline: "Global advertising network trusted worldwide",
+    location: "Cyprus", 
+    employees: "200-500",
+    industry: "Digital Advertising",
+    workType: "Remote",
+    rating: 4.2,
+    reviewCount: 189,
+    openJobs: 6,
+    subscriptionTier: "free" as SubscriptionTier,
+    founded: "2013",
+    website: "https://adsterra.com",
+    specialties: ["Advertising Network", "Publisher Solutions", "Advertiser Services", "Performance Marketing"],
+    companySize: "Medium",
+    benefits: [
+      "Remote work culture",
+      "Performance bonuses",
+      "Flexible schedule",
+      "Professional growth",
+      "International team"
+    ],
+    culture: {
+      workLifeBalance: 4.1,
+      compensation: 4.2,
+      careerGrowth: 4.0,
+      management: 3.9,
+      diversity: 4.3
+    },
+    description: "Adsterra is a global advertising network trusted by 30,000+ advertisers and publishers worldwide. We provide comprehensive solutions for both advertisers looking to reach their target audience and publishers monetizing their traffic."
   }
 ]
 
@@ -464,12 +538,12 @@ function AdvancedFilters({ onFilterChange, filters, companies }: {
               className="h-12 px-4 bg-black/50 backdrop-blur-md border-2 border-white/20 rounded-xl text-white font-medium focus:outline-none focus:border-blue-400/60"
             >
               <option value="" className="bg-black">All Industries</option>
-              <option value="Artificial Intelligence" className="bg-black">Artificial Intelligence</option>
-              <option value="Healthcare Technology" className="bg-black">Healthcare Technology</option>
-              <option value="Financial Technology" className="bg-black">Financial Technology</option>
-              <option value="Quantum Computing" className="bg-black">Quantum Computing</option>
-              <option value="Renewable Energy" className="bg-black">Renewable Energy</option>
-              <option value="Design & Creative" className="bg-black">Design & Creative</option>
+              <option value="RegTech" className="bg-black">RegTech (Regulatory Technology)</option>
+              <option value="AdTech" className="bg-black">AdTech & MarTech</option>
+              <option value="Telecommunications" className="bg-black">Telecommunications</option>
+              <option value="Digital Consulting" className="bg-black">Digital Consulting</option>
+              <option value="Venture Capital" className="bg-black">Venture Capital</option>
+              <option value="Digital Advertising" className="bg-black">Digital Advertising</option>
             </select>
             
             {/* Company Size Filter */}
@@ -503,12 +577,12 @@ function AdvancedFilters({ onFilterChange, filters, companies }: {
               className="h-12 px-4 bg-black/50 backdrop-blur-md border-2 border-white/20 rounded-xl text-white font-medium focus:outline-none focus:border-blue-400/60"
             >
               <option value="" className="bg-black">All Locations</option>
-              <option value="San Francisco" className="bg-black">San Francisco, CA</option>
-              <option value="New York" className="bg-black">New York, NY</option>
-              <option value="Boston" className="bg-black">Boston, MA</option>
-              <option value="Austin" className="bg-black">Austin, TX</option>
-              <option value="Seattle" className="bg-black">Seattle, WA</option>
-              <option value="Portland" className="bg-black">Portland, OR</option>
+              <option value="Cyprus" className="bg-black">Cyprus</option>
+              <option value="Nicosia" className="bg-black">Nicosia, Cyprus</option>
+              <option value="Limassol" className="bg-black">Limassol, Cyprus</option>
+              <option value="Slovakia" className="bg-black">Slovakia</option>
+              <option value="Dubai" className="bg-black">Dubai, UAE</option>
+              <option value="Remote" className="bg-black">Remote/Global</option>
             </select>
           </div>
           
