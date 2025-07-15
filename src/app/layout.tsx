@@ -1,12 +1,8 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import React from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Job Board Platform',
-  description: 'AI-powered job board with intelligent matching',
+  description: 'AI-powered job board platform with Tech Island companies integration',
 }
 
 export default function RootLayout({
@@ -16,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body style={{ margin: 0, fontFamily: 'system-ui' }}>
+        {children}
+      </body>
     </html>
   )
 }
