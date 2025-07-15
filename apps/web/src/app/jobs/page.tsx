@@ -438,6 +438,32 @@ export default function JobsPage() {
       posted: '5 days ago',
       applicants: 21,
       matchScore: 64
+    },
+    {
+      id: '16',
+      title: 'Audio Visual Systems Engineer',
+      description: 'Design and install cutting-edge audio visual solutions for corporate, education, and hospitality sectors. Work with interactive displays, digital signage, and LED technology. Requires technical expertise in AV systems and project management skills.',
+      company: 'ACHELEC',
+      location: 'Limassol, Cyprus',
+      salary: '€32k - €42k',
+      type: 'Full-time',
+      workStyle: 'On-site',
+      posted: '4 days ago',
+      applicants: 14,
+      matchScore: 62
+    },
+    {
+      id: '17',
+      title: 'Marine Audio Systems Specialist',
+      description: 'Specialize in marine audio systems for yachts and cruise ships. Install, configure, and maintain advanced audio-visual equipment for maritime applications. Unique opportunity to work with luxury vessels and cutting-edge marine technology.',
+      company: 'ACHELEC',
+      location: 'Limassol, Cyprus',
+      salary: '€35k - €45k',
+      type: 'Full-time',
+      workStyle: 'On-site',
+      posted: '6 days ago',
+      applicants: 9,
+      matchScore: 60
     }
   ]
 

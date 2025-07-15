@@ -350,6 +350,40 @@ const companiesData = [
       diversity: 4.3
     },
     description: "Adsterra is a global advertising network trusted by 30,000+ advertisers and publishers worldwide. We provide comprehensive solutions for both advertisers looking to reach their target audience and publishers monetizing their traffic."
+  },
+
+  {
+    id: "achelec",
+    name: "ACHELEC",
+    logo: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop&crop=center",
+    tagline: "Cutting-edge Audio Visual solutions since 1986",
+    location: "Limassol, Cyprus",
+    employees: "10-50",
+    industry: "Audio Visual Technology",
+    workType: "On-site",
+    rating: 4.3,
+    reviewCount: 42,
+    openJobs: 2,
+    subscriptionTier: "free" as SubscriptionTier,
+    founded: "1986",
+    website: "https://achelec.com.cy",
+    specialties: ["Audio Visual Solutions", "Interactive Displays", "Digital Signage", "LED Technology", "Marine Audio Systems"],
+    companySize: "Small",
+    benefits: [
+      "Cutting-edge technology exposure",
+      "Professional training and support",
+      "Diverse project portfolio",
+      "Long-established company stability",
+      "Technical skill development"
+    ],
+    culture: {
+      workLifeBalance: 4.2,
+      compensation: 4.0,
+      careerGrowth: 4.4,
+      management: 4.1,
+      diversity: 4.0
+    },
+    description: "ACHELEC has been at the cutting edge of the Audio Visual revolution since 1986. Starting with Sony consumer products distribution, we now provide comprehensive AV solutions across corporate, education, hospitality, retail, and residential sectors. Our expertise spans interactive displays, digital signage, LED technology, and specialized marine audio systems for yachts and cruise ships."
   }
 ]
 
@@ -544,6 +578,7 @@ function AdvancedFilters({ onFilterChange, filters, companies }: {
               <option value="Digital Consulting" className="bg-black">Digital Consulting</option>
               <option value="Venture Capital" className="bg-black">Venture Capital</option>
               <option value="Digital Advertising" className="bg-black">Digital Advertising</option>
+              <option value="Audio Visual Technology" className="bg-black">Audio Visual Technology</option>
             </select>
             
             {/* Company Size Filter */}

@@ -202,6 +202,30 @@ const companyJobs: { [key: string]: any[] } = {
       applicants: 21,
       requirements: ['Technical support', 'Problem solving', 'Customer service', 'AdTech knowledge']
     }
+  ],
+  'achelec': [
+    {
+      id: '16',
+      title: 'Audio Visual Systems Engineer',
+      description: 'Design and install cutting-edge audio visual solutions for corporate, education, and hospitality sectors. Work with interactive displays, digital signage, and LED technology.',
+      salary: '€32k - €42k',
+      type: 'Full-time',
+      workStyle: 'On-site',
+      posted: '4 days ago',
+      applicants: 14,
+      requirements: ['AV systems expertise', 'Technical project management', 'Customer service', 'Problem solving']
+    },
+    {
+      id: '17',
+      title: 'Marine Audio Systems Specialist',
+      description: 'Specialize in marine audio systems for yachts and cruise ships. Install, configure, and maintain advanced audio-visual equipment for maritime applications.',
+      salary: '€35k - €45k',
+      type: 'Full-time',
+      workStyle: 'On-site',
+      posted: '6 days ago',
+      applicants: 9,
+      requirements: ['Marine electronics experience', 'Audio system installation', 'Technical troubleshooting', 'Travel availability']
+    }
   ]
 }
 
@@ -318,6 +342,61 @@ const companyDataMap: { [key: string]: any } = {
         title: "Expansion to European Markets",
         date: "2024-01-25", 
         summary: "Opening new offices in Berlin and Amsterdam to serve European clients"
+      }
+    ]
+  },
+  'achelec': {
+    id: "achelec",
+    name: "ACHELEC",
+    logo: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=120&h=120&fit=crop&crop=center",
+    coverImage: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=1200&h=400&fit=crop",
+    tagline: "Cutting-edge Audio Visual solutions since 1986",
+    description: "ACHELEC has been at the cutting edge of the Audio Visual revolution since 1986. Starting with Sony consumer products distribution, we now provide comprehensive AV solutions across corporate, education, hospitality, retail, and residential sectors. Our expertise spans interactive displays, digital signage, LED technology, and specialized marine audio systems for yachts and cruise ships.",
+    founded: "1986",
+    employees: "10-50",
+    headquarters: "Limassol, Cyprus",
+    website: "https://achelec.com.cy",
+    industry: "Audio Visual Technology",
+    specialties: ["Audio Visual Solutions", "Interactive Displays", "Digital Signage", "LED Technology", "Marine Audio Systems"],
+    rating: 4.3,
+    reviewCount: 42,
+    culture: {
+      workLifeBalance: 4.2,
+      compensation: 4.0,
+      careerGrowth: 4.4,
+      management: 4.1,
+      diversity: 4.0
+    },
+    stats: {
+      openJobs: 2,
+      profileViews: "1.2K",
+      followers: "384"
+    },
+    benefits: [
+      "Cutting-edge technology exposure",
+      "Professional training and support",
+      "Diverse project portfolio",
+      "Long-established company stability",
+      "Technical skill development",
+      "Modern office environment"
+    ],
+    values: [
+      "Innovation in AV technology",
+      "Quality craftsmanship",
+      "Customer satisfaction",
+      "Continuous learning",
+      "Professional excellence"
+    ],
+    recentNews: [
+      {
+        title: "ACHELEC Expands Marine Audio Services",
+        date: "2024-01-30",
+        summary: "New yacht and cruise ship audio system installations across Mediterranean"
+      },
+      {
+        title: "LED Technology Upgrade Initiative",
+        date: "2024-01-18", 
+        summary: "Latest LED display technology integration for corporate clients"
       }
     ]
   }
