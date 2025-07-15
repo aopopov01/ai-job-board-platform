@@ -1,0 +1,17 @@
+apps/
+packages/
+src/
+*.md
+Screenshot*
+*.sql
+*.log
+demo*
+neural-demo.html
+claude*
+docker-compose*
+Dockerfile*
+tsconfig.json.web
+tsconfig.tsbuildinfo
+turbo.json
+vitest.config.ts
+playwright.config.ts
