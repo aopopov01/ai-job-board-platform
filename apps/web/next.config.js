@@ -118,8 +118,8 @@ const nextConfig = {
     return config
   },
   
-  // Output for Docker
-  output: 'standalone',
+  // Output for production (standalone for Docker, default for Vercel)
+  output: process.env.NODE_ENV === 'production' && process.env.VERCEL !== '1' ? 'standalone' : undefined,
   
   // Disable static generation temporarily to fix build
   distDir: '.next',
