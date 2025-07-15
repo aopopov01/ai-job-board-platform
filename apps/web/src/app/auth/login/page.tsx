@@ -230,14 +230,11 @@ export default function LoginPage() {
               </Link>
               
               <nav className="hidden lg:flex items-center gap-16">
-                <Link href="/platform" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Platform
+                <Link href="/jobs" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Jobs
                 </Link>
-                <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Solutions
-                </Link>
-                <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-                  Pricing
+                <Link href="/companies" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+                  Companies
                 </Link>
               </nav>
               

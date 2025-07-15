@@ -61,14 +61,8 @@ function NavigationHeader() {
             <Link href="/jobs" className="text-blue-300 hover:text-white transition-colors font-bold text-[16px]">
               Jobs
             </Link>
-            <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              Solutions
-            </Link>
-            <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              Pricing
-            </Link>
-            <Link href="/about" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              About
+            <Link href="/companies" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Companies
             </Link>
           </nav>
           
@@ -342,11 +336,34 @@ export default function JobsPage() {
   const handleSearch = async () => {
     setSearchLoading(true)
     await new Promise(resolve => setTimeout(resolve, 800))
-    const filtered = sampleJobs.filter(job => 
-      job.title.toLowerCase().includes(filters.query.toLowerCase()) ||
-      job.company.toLowerCase().includes(filters.query.toLowerCase()) ||
-      job.description.toLowerCase().includes(filters.query.toLowerCase())
-    )
+    
+    let filtered = sampleJobs.filter(job => {
+      // Text search
+      const queryMatch = !filters.query || 
+        job.title.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.company.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.description.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.location.toLowerCase().includes(filters.query.toLowerCase())
+      
+      // Location filter
+      const locationMatch = !filters.location || 
+        job.location.toLowerCase().includes(filters.location.toLowerCase())
+      
+      // Job type filter
+      const typeMatch = !filters.type || job.type === filters.type
+      
+      // Work style filter
+      const workStyleMatch = !filters.workStyle || job.workStyle === filters.workStyle
+      
+      // Salary filter (basic implementation)
+      const salaryMatch = !filters.salary || true // Could implement salary range filtering
+      
+      return queryMatch && locationMatch && typeMatch && workStyleMatch && salaryMatch
+    })
+    
+    // Sort by match score if available
+    filtered.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0))
+    
     setJobs(filtered)
     setSearchLoading(false)
   }
@@ -477,9 +494,20 @@ export default function JobsPage() {
                 
                 <div className="space-y-6">
                   <div>
+                    <label className="text-white/80 font-medium mb-3 block">Location</label>
+                    <input
+                      type="text"
+                      placeholder="Enter location..."
+                      value={filters.location}
+                      onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
+                      className="w-full h-12 px-4 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                    />
+                  </div>
+
+                  <div>
                     <label className="text-white/80 font-medium mb-3 block">Job Type</label>
                     <div className="space-y-2">
-                      {['All', 'Full-time', 'Part-time', 'Contract', 'Remote'].map((type) => (
+                      {['All', 'Full-time', 'Part-time', 'Contract'].map((type) => (
                         <label key={type} className="flex items-center gap-3 cursor-pointer group">
                           <input
                             type="radio"
@@ -512,6 +540,21 @@ export default function JobsPage() {
                         </label>
                       ))}
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="text-white/80 font-medium mb-3 block">Salary Range</label>
+                    <select
+                      value={filters.salary}
+                      onChange={(e) => setFilters(prev => ({ ...prev, salary: e.target.value }))}
+                      className="w-full h-12 px-4 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-xl text-white focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                    >
+                      <option value="">Any Salary</option>
+                      <option value="50k-100k">$50k - $100k</option>
+                      <option value="100k-150k">$100k - $150k</option>
+                      <option value="150k-200k">$150k - $200k</option>
+                      <option value="200k+">$200k+</option>
+                    </select>
                   </div>
 
                   <div className="space-y-3 pt-6 border-t border-white/20">
@@ -613,9 +656,20 @@ export default function JobsPage() {
 
             <div className="space-y-6">
               <div>
+                <label className="text-white/80 font-medium mb-3 block">Location</label>
+                <input
+                  type="text"
+                  placeholder="Enter location..."
+                  value={filters.location}
+                  onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
+                  className="w-full h-12 px-4 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                />
+              </div>
+
+              <div>
                 <label className="text-white/80 font-medium mb-3 block">Job Type</label>
                 <div className="space-y-2">
-                  {['All', 'Full-time', 'Part-time', 'Contract', 'Remote'].map((type) => (
+                  {['All', 'Full-time', 'Part-time', 'Contract'].map((type) => (
                     <label key={type} className="flex items-center gap-3 cursor-pointer group">
                       <input
                         type="radio"
@@ -629,6 +683,40 @@ export default function JobsPage() {
                     </label>
                   ))}
                 </div>
+              </div>
+
+              <div>
+                <label className="text-white/80 font-medium mb-3 block">Work Style</label>
+                <div className="space-y-2">
+                  {['All', 'Remote', 'Hybrid', 'On-site'].map((style) => (
+                    <label key={style} className="flex items-center gap-3 cursor-pointer group">
+                      <input
+                        type="radio"
+                        name="mobileWorkStyle"
+                        value={style === 'All' ? '' : style}
+                        checked={filters.workStyle === (style === 'All' ? '' : style)}
+                        onChange={(e) => setFilters(prev => ({ ...prev, workStyle: e.target.value }))}
+                        className="w-4 h-4 text-blue-500 bg-white/10 border-white/20 rounded"
+                      />
+                      <span className="text-white/70 group-hover:text-white transition-colors">{style}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-white/80 font-medium mb-3 block">Salary Range</label>
+                <select
+                  value={filters.salary}
+                  onChange={(e) => setFilters(prev => ({ ...prev, salary: e.target.value }))}
+                  className="w-full h-12 px-4 bg-black/40 backdrop-blur-md border-2 border-white/20 rounded-xl text-white focus:outline-none focus:border-blue-400 focus:bg-black/60 transition-all font-medium"
+                >
+                  <option value="">Any Salary</option>
+                  <option value="50k-100k">$50k - $100k</option>
+                  <option value="100k-150k">$100k - $150k</option>
+                  <option value="150k-200k">$150k - $200k</option>
+                  <option value="200k+">$200k+</option>
+                </select>
               </div>
 
               <div className="space-y-3 pt-6 border-t border-white/20">

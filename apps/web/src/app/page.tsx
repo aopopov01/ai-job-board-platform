@@ -787,15 +787,10 @@ function NavigationHeader() {
             <Link href="/jobs" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
               Jobs
             </Link>
-            <Link href="/solutions" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              Solutions
+            <Link href="/companies" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
+              Companies
             </Link>
-            <Link href="/pricing" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              Pricing
-            </Link>
-            <Link href="/about" className="text-white/80 hover:text-white transition-colors font-bold text-[16px]">
-              About
-            </Link>
+            {/* UPDATED NAVIGATION - REMOVED SOLUTIONS/PRICING/ABOUT */}
           </nav>
           
           <div className="flex items-center gap-4">
