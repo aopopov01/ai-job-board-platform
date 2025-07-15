@@ -22,10 +22,10 @@ apps/web
    - Repository: `aopopov01/ai-job-board-platform`
 
 2. **Configure Project Settings**
-   - **Root Directory**: `apps/web`
+   - **Root Directory**: Leave **empty** (blank)
    - **Framework**: Next.js (auto-detected)
    - **Build Command**: `npm run build`
-   - **Output Directory**: `.next`
+   - **Output Directory**: `apps/web/.next`
    - **Install Command**: `npm install`
 
 3. **Add Environment Variables**

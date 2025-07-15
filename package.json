@@ -12,9 +12,10 @@
     "dev:web": "cd apps/web && npm run dev",
     "dev:mobile": "cd apps/mobile && npm start",
     "dev:all": "concurrently \"npm run dev:web\" \"npm run dev:mobile\"",
-    "build": "turbo run build",
+    "build": "cd apps/web && npm run build",
     "build:web": "cd apps/web && npm run build",
     "build:mobile": "cd apps/mobile && npm run build",
+    "start": "cd apps/web && npm run start",
     "test": "turbo run test",
     "test:unit": "npm run test --workspace=@job-board/web",
     "test:e2e": "playwright test",
@@ -28,6 +29,12 @@
     "deploy:web": "cd apps/web && npm run deploy",
     "clean": "turbo run clean && rm -rf node_modules"
   },
+  "dependencies": {
+    "next": "^14.2.30",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.8"
+  },
   "devDependencies": {
     "@playwright/test": "^1.53.2",
     "@types/node": "^20.11.0",
@@ -39,8 +46,5 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "packageManager": "npm@10.8.2",
-  "dependencies": {
-    "react-dropzone": "^14.3.8"
-  }
+  "packageManager": "npm@10.8.2"
 }
