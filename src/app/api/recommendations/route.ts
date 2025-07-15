@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jobService, individualProfileService, userSkillService } from '@job-board/database'
+import { jobService, individualProfileService, userSkillService } from '../../../lib/database'
 
 export async function GET(request: NextRequest) {
   try {

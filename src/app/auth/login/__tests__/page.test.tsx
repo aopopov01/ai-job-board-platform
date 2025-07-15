@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { TestUtils, mockUser, mockProfile } from '@job-board/testing'
+import { TestUtils, mockUser, mockProfile } from '../../../../lib/test-utils'
 import LoginPage from '../page'
 
 describe('LoginPage', () => {

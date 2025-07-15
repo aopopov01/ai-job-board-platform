@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { userSkillService } from '@job-board/database'
+import { userSkillService } from '../../../../lib/database'
 
 export async function POST(request: NextRequest) {
   try {

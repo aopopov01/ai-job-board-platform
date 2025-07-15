@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@job-board/database'
-import { cvDocumentService } from '@job-board/database'
+import { supabase } from '../../../../lib/supabase'
+import { cvDocumentService } from '../../../../lib/database'
 
 export async function POST(request: NextRequest) {
   try {

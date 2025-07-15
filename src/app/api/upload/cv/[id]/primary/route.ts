@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cvDocumentService } from '@job-board/database'
+import { cvDocumentService } from '../../../../../../lib/database'
 
 export async function PUT(
   request: NextRequest,

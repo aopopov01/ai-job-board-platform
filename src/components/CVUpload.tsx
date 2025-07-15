@@ -2,10 +2,10 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Button } from '@job-board/ui'
-import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
-import { Input } from '@job-board/ui'
-import { useAuthStore } from '@job-board/shared/client'
+import { Button } from './ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Input } from './ui/input'
+import { useAuthStore } from '../lib/auth'
 import { Upload, FileText, X, Download, Eye, Star } from 'lucide-react'
 
 interface CVDocument {

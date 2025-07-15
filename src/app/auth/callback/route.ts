@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@job-board/database'
+import { supabase } from '../../../lib/supabase'
 import { logger, toError } from '@/lib/logger'
 
 export async function GET(request: NextRequest) {

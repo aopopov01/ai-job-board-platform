@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuthStore } from '@job-board/shared/client'
-import { Button } from '@job-board/ui'
-import { messageService } from '@job-board/database'
-import { Card, CardContent, CardHeader, CardTitle } from '@job-board/ui'
-import { Input } from '@job-board/ui'
+import { useAuthStore } from '../lib/auth'
+import { Button } from './ui/button'
+import { messageService } from '../lib/database'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Input } from './ui/input'
 import { logComponentError, toError } from '@/lib/logger'
 
 interface MessageCandidateButtonProps {

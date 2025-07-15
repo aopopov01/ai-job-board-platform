@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@job-board/ui'
-import { Button } from '@job-board/ui'
-import { Input } from '@job-board/ui'
-import { useAuthStore } from '@job-board/shared/client'
-import { jobService, applicationService } from '@job-board/database'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card'
+import { Button } from '../../../components/ui/button'
+import { Input } from '../../../components/ui/input'
+import { useAuthStore } from '../../../lib/auth'
+import { jobService, applicationService } from '../../../lib/database'
 import NeuronicLayout from '../../../components/layout/NeuronicLayout'
 import { 
   ArrowLeft,

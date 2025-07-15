@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useAuthStore } from '@job-board/shared/client'
-import { messageService } from '@job-board/database'
-import { Card, CardContent } from '@job-board/ui'
-import { Button } from '@job-board/ui'
+import { useAuthStore } from '../lib/auth'
+import { messageService } from '../lib/database'
+import { Card, CardContent } from './ui/card'
+import { Button } from './ui/button'
 import Link from 'next/link'
 import { logComponentError, toError } from '@/lib/logger'
 
