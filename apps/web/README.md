@@ -5,7 +5,8 @@ This is the Next.js web application for the AI-powered job board platform.
 ## Deployment on Vercel
 
 ### Root Directory Setting
-When deploying to Vercel, set the **Root Directory** to: `apps/web`
+- **Option 1**: Leave Root Directory as **/** (root) - vercel.json will handle routing
+- **Option 2**: If prompted, set Root Directory to: `apps/web`
 
 ### Environment Variables
 Add these environment variables in your Vercel project settings:
