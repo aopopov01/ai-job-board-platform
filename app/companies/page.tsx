@@ -31,6 +31,7 @@ import {
   ChevronUp
 } from 'lucide-react'
 import { ShimmerButton, MagicCard, AnimatedList, TextReveal, SimpleNeural } from '../components/ui'
+import CompanyLogo from '../components/CompanyLogo'
 
 // Company subscription tiers
 type SubscriptionTier = 'premium' | 'professional' | 'free'
@@ -87,16 +88,19 @@ const loadCompaniesData = async (): Promise<Company[]> => {
 
 // Helper functions to enhance the data
 const assignSubscriptionTier = (company: any): SubscriptionTier => {
-  // Premium tier for large companies or well-known brands
-  if (company.company_size === 'Large' || 
-      ['Mastercard', 'JetBrains', 'MY.GAMES', 'Iron Mountain', 'Depositphotos'].includes(company.name)) {
+  // Premium tier - Featured Partners
+  const premiumCompanies = ['Mastercard', 'JetBrains', 'MY.GAMES', 'Iron Mountain', 'Depositphotos']
+  if (premiumCompanies.includes(company.name)) {
     return 'premium'
   }
-  // Professional tier for medium companies
-  if (company.company_size === 'Medium') {
+  
+  // Professional tier - Verified Companies
+  const verifiedCompanies = ['CPM', 'JCC Payment Systems Ltd', 'Cyta', 'ECOMMPAY', 'INKTECH', 'H.S Data Ltd', 'DC Sport Soft', 'Quadcode', 'easyMarkets', 'DECTA']
+  if (verifiedCompanies.includes(company.name)) {
     return 'professional'
   }
-  // Free tier for others
+  
+  // Free tier - Other Companies
   return 'free'
 }
 
@@ -350,20 +354,16 @@ function AdvancedFilters({ onFilterChange, filters, companies }: {
 }
 
 // Company Card Component
-function CompanyCard({ company, isFirst = false }: { company: Company, isFirst?: boolean }) {
+function CompanyCard({ company }: { company: Company }) {
   const tierStyling = getTierStyling(company.subscriptionTier || 'free')
   const BadgeIcon = tierStyling.badgeIcon
   const WorkStyleIcon = getWorkStyleIcon(company.workType || 'Hybrid')
 
-  // Get logo URL - use actual logo or fallback
-  const logoUrl = company.logo_path 
-    ? `/${company.logo_path}` 
-    : `https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=80&h=80&fit=crop&crop=center`
 
   return (
-    <MagicCard variant="holographic" className={`p-4 pb-12 cursor-pointer h-72 flex flex-col relative ${isFirst ? 'bg-grid-white/[0.1] bg-[size:20px_20px]' : ''}`}>
+    <MagicCard variant="holographic" className="p-4 cursor-pointer h-72 flex flex-col relative">
 
-      <div className="flex gap-3 flex-1">
+      <div className="flex gap-3 flex-1 pb-20">
         {/* Company Logo with Crown - Fixed Width Column */}
         <div className="w-12 flex-shrink-0 flex flex-col items-center">
           {/* Crown Icon or spacer - Fixed Height */}
@@ -373,18 +373,7 @@ function CompanyCard({ company, isFirst = false }: { company: Company, isFirst?:
             )}
           </div>
           {/* Logo - Fixed Size */}
-          <div className="w-12 h-12 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white/5">
-            <img 
-              src={logoUrl} 
-              alt={`${company.name} logo`}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                // Fallback for broken images
-                const target = e.target as HTMLImageElement
-                target.src = `https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=64&h=64&fit=crop&crop=center`
-              }}
-            />
-          </div>
+          <CompanyLogo companyName={company.name} size="md" />
         </div>
         
         {/* Company Info - Flexible Column with Fixed Structure */}
@@ -449,21 +438,136 @@ function CompanyCard({ company, isFirst = false }: { company: Company, isFirst?:
         </div>
       )}
       
-      {/* Bottom Left - View Jobs Button (flush with bottom edge) */}
-      <div className="absolute bottom-0 left-0">
+      {/* Bottom Left - View Jobs Button (flush with card bottom) */}
+      <div className="absolute bottom-4 left-4 m-0">
         <Link href="/jobs">
-          <ShimmerButton variant="electric" className="px-3 py-1.5 text-xs rounded-b-none rounded-t-lg">
+          <ShimmerButton variant="electric" className="px-4 py-2 text-sm rounded-xl h-10">
             View Jobs
           </ShimmerButton>
         </Link>
       </div>
       
-      {/* Bottom Right - Profile Button (flush with bottom edge) */}
-      <div className="absolute bottom-0 right-0">
+      {/* Bottom Right - Profile Button (flush with card bottom) */}
+      <div className="absolute bottom-4 right-4 m-0">
+        {/* Show Profile link for premium and verified companies */}
+        {(company.subscriptionTier === 'premium' || company.subscriptionTier === 'professional') ? (
+          <Link href={`/company/${company.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+            <button className="px-4 py-2 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-sm relative overflow-hidden group flex items-center gap-1 whitespace-nowrap h-10">
+              <span className="relative z-10">Profile</span>
+              <Users className="w-4 h-4 relative z-10 flex-shrink-0" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
+            </button>
+          </Link>
+        ) : (
+          <Link href={company.website} target="_blank" rel="noopener noreferrer">
+            <button className="px-4 py-2 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-sm relative overflow-hidden group flex items-center gap-1 whitespace-nowrap h-10">
+              <span className="relative z-10">Visit Website</span>
+              <ExternalLink className="w-4 h-4 relative z-10 flex-shrink-0" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
+            </button>
+          </Link>
+        )}
+      </div>
+    </MagicCard>
+  )
+}
+
+// Company Card Component for "Other Companies" section only
+function OtherCompanyCard({ company }: { company: Company }) {
+  const tierStyling = getTierStyling(company.subscriptionTier || 'free')
+  const BadgeIcon = tierStyling.badgeIcon
+  const WorkStyleIcon = getWorkStyleIcon(company.workType || 'Hybrid')
+
+
+  return (
+    <MagicCard variant="holographic" className="p-4 cursor-pointer h-72 flex flex-col relative">
+
+      <div className="flex gap-3 flex-1 pb-20">
+        {/* Company Logo with Crown - Fixed Width Column */}
+        <div className="w-12 flex-shrink-0 flex flex-col items-center">
+          {/* Crown Icon or spacer - Fixed Height */}
+          <div className="h-5 mb-1 flex items-center justify-center">
+            {company.subscriptionTier === 'premium' && (
+              <Crown className="w-5 h-5 text-yellow-400" />
+            )}
+          </div>
+          {/* Logo - Fixed Size */}
+          <CompanyLogo companyName={company.name} size="md" />
+        </div>
+        
+        {/* Company Info - Flexible Column with Fixed Structure */}
+        <div className="flex-1 flex flex-col">
+          {/* Header Section - Fixed Height (NO OPEN JOBS for Other Companies) */}
+          <div className="mb-2">
+            <div className="flex items-start justify-between">
+              <div className="flex-1 mr-3">
+                <h3 className="text-xl font-bold text-white leading-tight hover:text-blue-300 transition-colors">
+                  {company.name}
+                </h3>
+              </div>
+            </div>
+          </div>
+          
+          {/* Metadata Section */}
+          <div className="mb-3">
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="flex items-center gap-1 text-white/60">
+                <Users className="w-4 h-4 flex-shrink-0" />
+                <span className="font-medium truncate">{company.employees}</span>
+              </div>
+              <div className="flex items-center gap-1 text-white/60">
+                <WorkStyleIcon className="w-4 h-4 flex-shrink-0" />
+                <span className="font-medium truncate">{company.workType}</span>
+              </div>
+              <div className="flex items-center gap-1 text-white/60 col-span-2">
+                <Building2 className="w-4 h-4 flex-shrink-0" />
+                <span className="font-medium truncate">{company.industry_category}</span>
+              </div>
+              {company.founded_year && (
+                <div className="flex items-center gap-1 text-white/60">
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{company.founded_year}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Description Section - Flexible Height */}
+          <div className="flex-1 mb-3">
+            <p className="text-white/70 text-sm leading-relaxed font-medium line-clamp-2">
+              {company.description.length > 100 
+                ? `${company.description.substring(0, 100)}...` 
+                : company.description
+              }
+            </p>
+          </div>
+          
+
+        </div>
+      </div>
+      
+      {/* Verified Badge - Top Left Corner */}
+      {company.subscriptionTier === 'professional' && (
+        <div className="absolute top-0 left-0">
+          <Award className="w-6 h-6 text-blue-400" />
+        </div>
+      )}
+      
+      {/* Bottom Left - View Jobs Button (flush with card bottom) */}
+      <div className="absolute bottom-4 left-4 m-0">
+        <Link href="/jobs">
+          <ShimmerButton variant="electric" className="px-4 py-2 text-sm rounded-xl h-10">
+            View Jobs
+          </ShimmerButton>
+        </Link>
+      </div>
+      
+      {/* Bottom Right - Visit Website Button (flush with card bottom) */}
+      <div className="absolute bottom-4 right-4 m-0">
         <Link href={company.website} target="_blank" rel="noopener noreferrer">
-          <button className="px-3 py-1.5 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-b-none rounded-t-lg backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-xs relative overflow-hidden group flex items-center gap-1 whitespace-nowrap">
-            <span className="relative z-10">Profile</span>
-            <ExternalLink className="w-3 h-3 relative z-10 flex-shrink-0" />
+          <button className="px-4 py-2 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-sm relative overflow-hidden group flex items-center gap-1 whitespace-nowrap h-10">
+            <span className="relative z-10">Visit Website</span>
+            <ExternalLink className="w-4 h-4 relative z-10 flex-shrink-0" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
           </button>
         </Link>
@@ -672,13 +776,12 @@ export default function CompaniesPage() {
                     <div className="flex items-center gap-4 mb-6">
                       <Crown className="w-6 h-6 text-yellow-400" />
                       <h3 className="text-2xl font-black text-white">Featured Partners</h3>
-                      <div className="flex-1 h-px bg-gradient-to-r from-yellow-400/50 to-transparent"></div>
                     </div>
                     <AnimatedList variant="neural" delay={200} stagger={150} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
                       {companies
                         .filter(c => c.subscriptionTier === 'premium')
-                        .map((company, index) => (
-                          <CompanyCard key={company.id} company={company} isFirst={index === 0} />
+                        .map((company) => (
+                          <CompanyCard key={company.id} company={company} />
                         ))
                       }
                     </AnimatedList>
@@ -691,7 +794,6 @@ export default function CompaniesPage() {
                     <div className="flex items-center gap-4 mb-6">
                       <Award className="w-6 h-6 text-blue-400" />
                       <h3 className="text-2xl font-black text-white">Verified Companies</h3>
-                      <div className="flex-1 h-px bg-gradient-to-r from-blue-400/50 to-transparent"></div>
                     </div>
                     <AnimatedList variant="neural" delay={300} stagger={100} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
                       {companies
@@ -710,13 +812,12 @@ export default function CompaniesPage() {
                     <div className="flex items-center gap-4 mb-6">
                       <Building2 className="w-6 h-6 text-gray-400" />
                       <h3 className="text-2xl font-black text-white">Other Companies</h3>
-                      <div className="flex-1 h-px bg-gradient-to-r from-gray-400/50 to-transparent"></div>
                     </div>
                     <AnimatedList variant="neural" delay={400} stagger={50} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
                       {companies
                         .filter(c => c.subscriptionTier === 'free')
                         .map((company) => (
-                          <CompanyCard key={company.id} company={company} />
+                          <OtherCompanyCard key={company.id} company={company} />
                         ))
                       }
                     </AnimatedList>

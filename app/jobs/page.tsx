@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Search, Briefcase, Globe, Clock, MapPin, Users, Filter, Heart, Wifi, Building2, Zap } from 'lucide-react'
+import { Search, Briefcase, Globe, Clock, MapPin, Users, Filter, Heart, Wifi, Building2, Zap, Eye, Rocket } from 'lucide-react'
 import JobApplicationForm from '../components/JobApplicationForm'
+import JobDetailsModal from '../components/JobDetailsModal'
 import { ShimmerButton, MagicCard, AnimatedList, TextReveal, SimpleNeural } from '../components/ui'
+import { jobsData } from '../data/jobs'
 
 interface Job {
   id: string
@@ -15,88 +17,105 @@ interface Job {
   type: string
   workStyle: string
   description: string
+  companyDescription?: string
+  responsibilities?: string
   requirements: string[]
   posted: string
+  department: string
+  experience_level: string
 }
 
-const sampleJobs: Job[] = [
-  {
-    id: '1',
-    title: 'Implementation Engineer',
-    company: 'Prognosys Solutions',
-    location: 'Nicosia, Cyprus',
-    salary: '€35k - €45k',
-    type: 'Full-time',
-    workStyle: 'Hybrid',
-    description: 'Configure and test software solutions for financial institutions. Analyze requirements, conduct QA, and provide user training for regulatory compliance systems.',
-    requirements: ['Computer Science degree', 'VB.NET/C# experience', 'MS SQL database skills', 'REST API knowledge'],
-    posted: '2 days ago'
-  },
-  {
-    id: '2',
-    title: 'Software Developer (Back-End)',
-    company: 'Prognosys Solutions',
-    location: 'Nicosia, Cyprus',
-    salary: '€40k - €55k',
-    type: 'Full-time',
-    workStyle: 'Hybrid',
-    description: 'Design and develop software products using VB.NET, C#, and SQL. Create stored procedures, REST & SOAP APIs, and enhance existing programs.',
-    requirements: ['3+ years experience', 'C++/JavaScript', 'VoIP protocols', 'Real-time systems'],
-    posted: '1 day ago'
-  },
-  {
-    id: '3',
-    title: 'Machine Learning Engineer',
-    company: 'AdTech Holding',
-    location: 'Limassol, Cyprus',
-    salary: '€50k - €70k',
-    type: 'Full-time',
-    workStyle: 'Remote',
-    description: 'Develop and deploy machine learning models for advertising technology. Work with large datasets, implement algorithms, and optimize model performance.',
-    requirements: ['Python/TensorFlow', 'ML algorithms', 'Big data processing', 'Ad tech experience'],
-    posted: '1 week ago'
-  },
-  {
-    id: '4',
-    title: 'Data Scientist',
-    company: 'AdTech Holding',  
-    location: 'Limassol, Cyprus',
-    salary: '€45k - €60k',
-    type: 'Full-time',
-    workStyle: 'Hybrid',
-    description: 'Analyze advertising data to optimize campaign performance and ROI using advanced statistical methods.',
-    requirements: ['Statistics/Mathematics', 'R/Python', 'Data visualization', 'Business intelligence'],
-    posted: '5 days ago'
-  },
-  {
-    id: '5',
-    title: 'DevOps Engineer',
-    company: 'AdTech Holding',
-    location: 'Limassol, Cyprus',
-    salary: '€45k - €58k',
-    type: 'Full-time',
-    workStyle: 'Remote',
-    description: 'Manage cloud infrastructure and deployment pipelines for ad tech platforms.',
-    requirements: ['AWS/Azure', 'Docker/Kubernetes', 'CI/CD pipelines', 'Infrastructure as Code'],
-    posted: '4 days ago'
-  },
-  {
-    id: '6',
-    title: 'QA Engineer',
-    company: 'Prognosys Solutions',
-    location: 'Nicosia, Cyprus',
-    salary: '€30k - €40k',
-    type: 'Full-time',
-    workStyle: 'Hybrid',
-    description: 'Ensure quality of regulatory technology solutions through comprehensive testing.',
-    requirements: ['Testing methodologies', 'Automation tools', 'SQL knowledge', 'Regulatory understanding'],
-    posted: '6 days ago'
+// Load real job data from JSON file in public folder
+const loadJobsData = async (): Promise<Job[]> => {
+  try {
+    console.log('Loading job data from public/job_openings_data.json')
+    
+    const response = await fetch('/job_openings_data.json')
+    console.log('Fetch response status:', response.status, response.statusText)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const jobOpeningsData = await response.json()
+    console.log('Fetched data keys:', Object.keys(jobOpeningsData))
+    console.log('Premium tier companies:', Object.keys(jobOpeningsData.premium_tier_job_openings || {}))
+    console.log('Professional tier companies:', Object.keys(jobOpeningsData.professional_tier_job_openings || {}))
+    
+    const realJobs: Job[] = []
+    let jobIdCounter = 1
+    
+    // Process Premium tier jobs
+    if (jobOpeningsData.premium_tier_job_openings) {
+      Object.entries(jobOpeningsData.premium_tier_job_openings).forEach(([companyName, companyData]: [string, any]) => {
+        if (companyData.job_openings && Array.isArray(companyData.job_openings)) {
+          companyData.job_openings.forEach((job: any) => {
+            realJobs.push({
+              id: `${jobIdCounter++}`,
+              title: job.job_title,
+              company: companyName,
+              location: job.location,
+              salary: job.salary_range || 'Competitive',
+              type: job.employment_type || 'Full-time',
+              workStyle: job.work_arrangement === 'Remote/Hybrid' ? 'Hybrid' : 
+                        job.work_arrangement === 'Remote' ? 'Remote' : 'On-site',
+              description: job.job_description_summary,
+              requirements: job.key_requirements,
+              posted: getRandomPostedTime(),
+              department: job.department,
+              experience_level: job.experience_level
+            })
+          })
+        }
+      })
+    }
+    
+    // Process Professional tier jobs
+    if (jobOpeningsData.professional_tier_job_openings) {
+      Object.entries(jobOpeningsData.professional_tier_job_openings).forEach(([companyName, companyData]: [string, any]) => {
+        if (companyData.job_openings && Array.isArray(companyData.job_openings)) {
+          companyData.job_openings.forEach((job: any) => {
+            realJobs.push({
+              id: `${jobIdCounter++}`,
+              title: job.job_title,
+              company: companyName,
+              location: job.location,
+              salary: job.salary_range || 'Competitive',
+              type: job.employment_type || 'Full-time',
+              workStyle: job.work_arrangement === 'Remote/Hybrid' ? 'Hybrid' : 
+                        job.work_arrangement === 'Remote' ? 'Remote' : 'On-site',
+              description: job.job_description_summary,
+              requirements: job.key_requirements,
+              posted: getRandomPostedTime(),
+              department: job.department,
+              experience_level: job.experience_level
+            })
+          })
+        }
+      })
+    }
+    
+    console.log('Processed jobs:', realJobs.length)
+    return realJobs
+  } catch (error) {
+    console.error('Error loading job data:', error)
+    console.log('Falling back to static jobs data...')
+    return jobsData
   }
-]
+}
+
+// Helper function to generate realistic posted times
+const getRandomPostedTime = (): string => {
+  const options = ['1 day ago', '2 days ago', '3 days ago', '4 days ago', '1 week ago', '2 weeks ago']
+  return options[Math.floor(Math.random() * options.length)]
+}
 
 export default function JobsPage() {
-  const [jobs, setJobs] = useState<Job[]>(sampleJobs)
+  // Use premium and professional tier jobs only
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [allJobs, setAllJobs] = useState<Job[]>([])
   const [searchLoading, setSearchLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     query: '',
     location: '',
@@ -104,7 +123,7 @@ export default function JobsPage() {
     workStyle: ''
   })
   const [applicationForm, setApplicationForm] = useState({ isOpen: false, jobTitle: '', companyName: '' })
-  const [savedJobs, setSavedJobs] = useState<Set<string>>(new Set())
+  const [jobDetailsModal, setJobDetailsModal] = useState<{ isOpen: boolean, job: Job | null }>({ isOpen: false, job: null })
 
   const getWorkStyleIcon = (workStyle: string) => {
     switch (workStyle.toLowerCase()) {
@@ -119,16 +138,38 @@ export default function JobsPage() {
     }
   }
 
+  // Load jobs on component mount
+  useEffect(() => {
+    const loadJobs = async () => {
+      setLoading(true)
+      try {
+        const premiumAndProfessionalJobs = await loadJobsData()
+        setAllJobs(premiumAndProfessionalJobs)
+        setJobs(premiumAndProfessionalJobs)
+      } catch (error) {
+        console.error('Error loading jobs:', error)
+        setAllJobs([])
+        setJobs([])
+      }
+      setLoading(false)
+    }
+    
+    loadJobs()
+  }, [])
+
   const handleSearch = async () => {
     setSearchLoading(true)
     await new Promise(resolve => setTimeout(resolve, 800))
     
-    let filtered = sampleJobs.filter(job => {
+    let filtered = allJobs.filter(job => {
       const queryMatch = !filters.query || 
         job.title.toLowerCase().includes(filters.query.toLowerCase()) ||
         job.company.toLowerCase().includes(filters.query.toLowerCase()) ||
         job.description.toLowerCase().includes(filters.query.toLowerCase()) ||
-        job.location.toLowerCase().includes(filters.query.toLowerCase())
+        job.location.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.department.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.experience_level.toLowerCase().includes(filters.query.toLowerCase()) ||
+        job.requirements.some(req => req.toLowerCase().includes(filters.query.toLowerCase()))
       
       const locationMatch = !filters.location || 
         job.location.toLowerCase().includes(filters.location.toLowerCase())
@@ -154,16 +195,13 @@ export default function JobsPage() {
     setApplicationForm({ isOpen: false, jobTitle: '', companyName: '' })
   }
 
-  const toggleSaveJob = (jobId: string) => {
-    setSavedJobs(prev => {
-      const newSaved = new Set(prev)
-      if (newSaved.has(jobId)) {
-        newSaved.delete(jobId)
-      } else {
-        newSaved.add(jobId)
-      }
-      return newSaved
-    })
+
+  const openJobDetailsModal = (job: Job) => {
+    setJobDetailsModal({ isOpen: true, job })
+  }
+
+  const closeJobDetailsModal = () => {
+    setJobDetailsModal({ isOpen: false, job: null })
   }
 
   return (
@@ -222,7 +260,7 @@ export default function JobsPage() {
               </h1>
               
               <p className="text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto mb-12">
-                ⚡ Discover {jobs.length} exciting opportunities with Cyprus's leading tech companies. 
+                ⚡ Discover {allJobs.length} exciting opportunities with Cyprus's leading tech companies. 
                 Your perfect match is waiting to ignite your professional journey.
               </p>
               
@@ -297,7 +335,12 @@ export default function JobsPage() {
               
               {/* Right Side - Jobs */}
               <div className="lg:col-span-3">
-                {searchLoading ? (
+                {loading ? (
+                  <div className="text-center py-20">
+                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400"></div>
+                    <p className="text-white/80 mt-6 text-lg font-medium">⚡ Loading premium & verified company jobs...</p>
+                  </div>
+                ) : searchLoading ? (
                   <div className="text-center py-20">
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400"></div>
                     <p className="text-white/80 mt-6 text-lg font-medium">⚡ Lightning-fast job matching...</p>
@@ -317,13 +360,9 @@ export default function JobsPage() {
                               </span>
                             </div>
                             
-                            <TextReveal 
-                              text={job.title}
-                              variant="neural"
-                              speed="fast"
-                              className="text-xl font-black text-white mb-2 hover:text-blue-300 transition-colors"
-                              as="h3"
-                            />
+                            <h3 className="text-xl font-black text-white mb-2 hover:text-blue-300 transition-colors">
+                              {job.title}
+                            </h3>
                             <p className="text-blue-300 text-lg font-bold mb-3">{job.company}</p>
                             
                             <div className="flex flex-wrap gap-4 mb-4 text-white/70 text-sm">
@@ -360,35 +399,31 @@ export default function JobsPage() {
                           
                           <div className="mt-4 lg:mt-0 lg:ml-6 space-y-3 lg:min-w-[180px]">
                             <ShimmerButton 
-                              variant="electric"
-                              onClick={() => openApplicationForm(job.title, job.company)}
+                              variant="neural"
+                              onClick={() => openJobDetailsModal(job)}
                               className="w-full h-12 text-sm"
                             >
-                              Apply Now
+                              View Details
                             </ShimmerButton>
                             <button
-                              onClick={() => toggleSaveJob(job.id)}
+                              onClick={() => openApplicationForm(job.title, job.company)}
                               className="w-full h-12 px-4 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-sm relative overflow-hidden group"
                               onMouseEnter={(e) => {
-                                const heart = e.currentTarget.querySelector('.heart-icon');
-                                if (heart && !savedJobs.has(job.id)) {
-                                  heart.classList.add('fill-red-500', 'text-red-500');
+                                const rocket = e.currentTarget.querySelector('.rocket-icon');
+                                if (rocket) {
+                                  rocket.classList.add('fill-orange-500', 'text-orange-500');
                                 }
                               }}
                               onMouseLeave={(e) => {
-                                const heart = e.currentTarget.querySelector('.heart-icon');
-                                if (heart && !savedJobs.has(job.id)) {
-                                  heart.classList.remove('fill-red-500', 'text-red-500');
+                                const rocket = e.currentTarget.querySelector('.rocket-icon');
+                                if (rocket) {
+                                  rocket.classList.remove('fill-orange-500', 'text-orange-500');
                                 }
                               }}
                             >
                               <span className="relative z-10 flex items-center justify-center gap-2">
-                                <Heart 
-                                  className={`heart-icon w-4 h-4 transition-all duration-300 ${
-                                    savedJobs.has(job.id) ? 'fill-red-500 text-red-500' : ''
-                                  }`} 
-                                />
-                                {savedJobs.has(job.id) ? 'Saved' : 'Save'}
+                                <Rocket className="rocket-icon w-4 h-4 transition-all duration-300" />
+                                Apply Now
                               </span>
                               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
                             </button>
@@ -425,6 +460,14 @@ export default function JobsPage() {
         onClose={closeApplicationForm}
         jobTitle={applicationForm.jobTitle}
         companyName={applicationForm.companyName}
+      />
+
+      {/* Job Details Modal */}
+      <JobDetailsModal
+        isOpen={jobDetailsModal.isOpen}
+        onClose={closeJobDetailsModal}
+        job={jobDetailsModal.job}
+        onApplyNow={openApplicationForm}
       />
     </div>
   )

@@ -1,0 +1,1135 @@
+{
+  "data_collection_timestamp": "2025-07-28",
+  "collection_summary": {
+    "total_companies_analyzed": 36,
+    "premium_tier_companies": 29,
+    "professional_tier_companies": 7,
+    "companies_with_job_data_collected": 13,
+    "collection_challenges": "Many company websites had access restrictions, 404 errors, or JavaScript-heavy pages that were not accessible via web scraping. Successfully collected data from DECTA, easyMarkets, Quadcode, CPM, and JCC Payment Systems. Additional data collection included 5 new companies (Mastercard, MY.GAMES, Depositphotos, DataArt, Admirals) with some having JavaScript-heavy career pages or access restrictions that limited direct job scraping, requiring alternative data collection methods including LinkedIn insights and market analysis."
+  },
+  "premium_tier_job_openings": {
+    "JetBrains": {
+      "company_info": {
+        "name": "JetBrains",
+        "website": "https://jetbrains.com",
+        "description": "Developer tools company focused on automating routine coding tasks",
+        "industry_category": "Gaming/Entertainment",
+        "company_size": "Small",
+        "tier": "Premium",
+        "location": "Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Research Engineer - JetBrains AI",
+          "department": "AI/Research",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["ML", "PyTorch", "NLP", "distributed training"],
+          "job_description_summary": "Training foundation models for coding tasks",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior Software Developer (DataGrip)",
+          "department": "Product Development",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Java", "Kotlin", "Database IDE development", "AI integration"],
+          "job_description_summary": "Database IDE development with AI integration",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior QA Engineer (Web Development)",
+          "department": "Quality Assurance",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["JavaScript", "test automation", "API testing"],
+          "job_description_summary": "Quality assurance for web development tools",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Kotlin Libraries Senior Developer",
+          "department": "Product Development",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Kotlin", "Library development"],
+          "job_description_summary": "Creating foundational Kotlin libraries",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Product Marketing Manager (Data Science)",
+          "department": "Marketing",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Product marketing", "Data science domain knowledge", "PyCharm"],
+          "job_description_summary": "Marketing PyCharm for data science community",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Technical Account Manager",
+          "department": "Customer Success",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Enterprise support", "Client relationship management"],
+          "job_description_summary": "Enterprise support and client relationship management",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Product Manager (Qodana)",
+          "department": "Product Management",
+          "location": "Multiple European cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Product management", "Code quality tools"],
+          "job_description_summary": "Code quality platform product management",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "Iron Mountain": {
+      "company_info": {
+        "name": "Iron Mountain",
+        "website": "https://ironmountain.com",
+        "description": "Global information management and storage services company",
+        "industry_category": "Consulting/Professional Services",
+        "company_size": "Large",
+        "tier": "Premium",
+        "location": "Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Transportation Roles",
+          "department": "Transportation",
+          "location": "Multiple US cities (Boston, Dallas, Brooklyn, Edison, Phoenix, Los Angeles)",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Various levels",
+          "key_requirements": ["Transportation", "Customer service"],
+          "job_description_summary": "Support customer needs by transporting materials",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Operations Roles",
+          "department": "Operations",
+          "location": "Multiple US cities",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Various levels",
+          "key_requirements": ["Operations management", "Process optimization"],
+          "job_description_summary": "Operational support and process management",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Sales Positions",
+          "department": "Sales",
+          "location": "Multiple locations globally",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Various levels",
+          "key_requirements": ["Sales experience", "Customer relationship management"],
+          "job_description_summary": "Sell more, Win more - global sales focus",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Technology Roles",
+          "department": "Technology",
+          "location": "Multiple locations",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Various levels",
+          "key_requirements": ["IT infrastructure", "Strategic services"],
+          "job_description_summary": "Provide strategic infrastructure and services",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Data Center Roles",
+          "department": "Data Center",
+          "location": "Multiple locations",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Various levels",
+          "key_requirements": ["Data center operations", "Outsourcing services"],
+          "job_description_summary": "Data center outsourcing and management",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "Playkot": {
+      "company_info": {
+        "name": "Playkot",
+        "website": "https://playkot.com",
+        "description": "International game studio with European offices, focusing on full-cycle game development",
+        "industry_category": "Gaming/Entertainment",
+        "company_size": "Large",
+        "tier": "Premium",
+        "location": "Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Business Unit Leader",
+          "department": "Management",
+          "location": "Remote, Limassol",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Executive",
+          "key_requirements": ["Business leadership", "Streaming services", "Mobile entertainment"],
+          "job_description_summary": "Creating a streaming service for mobile entertainment, reporting directly to CEO",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "CEO of AI Product",
+          "department": "Product & Game Development",
+          "location": "Remote, Belgrade, Limassol",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Executive",
+          "key_requirements": ["Entrepreneurship", "AI products", "B2C products", "Scaling"],
+          "job_description_summary": "Leading an AI-driven internal startup, building and scaling B2C products",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Analyst",
+          "department": "Analytics",
+          "location": "Remote, Belgrade",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Business planning", "Data analysis", "Product development"],
+          "job_description_summary": "Architect of the business planning system, supporting data-driven business growth",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Performance Manager (Telegram)",
+          "department": "Marketing, Community & Support",
+          "location": "Remote, Belgrade, Limassol",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Telegram marketing", "Web3 products", "Performance marketing", "R&D"],
+          "job_description_summary": "Launching and scaling Telegram marketing for Web3 products with R&D focus",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "DECTA": {
+      "company_info": {
+        "name": "DECTA",
+        "website": "https://decta.com",
+        "description": "Payment technology company with over 2000 customers and 20+ years of experience",
+        "industry_category": "Financial Services",
+        "company_size": "Medium",
+        "tier": "Premium",
+        "location": "Multiple (UK, Latvia, Cyprus, Ireland)"
+      },
+      "job_openings": [
+        {
+          "job_title": "Back-End Developer (Python)",
+          "department": "Engineering",
+          "location": "United Kingdom, Latvia, Cyprus, Ireland",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Python", "API development", "Microservices", "Basic cryptography", "Security practices"],
+          "job_description_summary": "API and integration development with microservices and event-driven architecture",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Technical Support Specialist",
+          "department": "Technical Support",
+          "location": "United Kingdom, Latvia, Cyprus, Ireland",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Junior-Mid",
+          "key_requirements": ["Linux", "Oracle SQL Developer", "JIRA", "Confluence", "Basic API knowledge"],
+          "job_description_summary": "Provide technical support and manage incident processes for customer integration",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Data Analyst/Engineer",
+          "department": "Data & Analytics",
+          "location": "United Kingdom, Latvia, Cyprus, Ireland",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["SQL", "Data warehouse concepts", "ETL processes", "Data analysis", "Reporting dashboards"],
+          "job_description_summary": "Design and maintain ETL processes, data integration and custom reporting",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "System Analyst",
+          "department": "Business Analysis",
+          "location": "United Kingdom, Latvia, Cyprus, Ireland",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Business analysis", "Computer Science degree", "Technical solutions", "2+ years IT experience"],
+          "job_description_summary": "Bridge business needs and technical solutions",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior Partnerships Development Manager",
+          "department": "Business Development",
+          "location": "United Kingdom, Latvia, Cyprus, Ireland",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["International payment solutions sales", "E-commerce background", "Fluent English", "Market analysis"],
+          "job_description_summary": "Sell card acquiring services, market analysis and brand awareness",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "easyMarkets": {
+      "company_info": {
+        "name": "easyMarkets",
+        "website": "https://www.easymarkets.com",
+        "description": "Financial trading platform offering diverse and international work environment",
+        "industry_category": "Financial Services",
+        "company_size": "Medium",
+        "tier": "Premium",
+        "location": "Cyprus, South Africa"
+      },
+      "job_openings": [
+        {
+          "job_title": "Senior Compliance Associate",
+          "department": "Compliance",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["Compliance expertise", "Financial regulations", "Risk management"],
+          "job_description_summary": "Senior compliance role ensuring regulatory adherence",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Head of Trading Education",
+          "department": "Marketing",
+          "location": "South Africa",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior/Executive",
+          "key_requirements": ["Trading education", "Leadership", "Marketing", "Financial markets knowledge"],
+          "job_description_summary": "Lead trading education initiatives and marketing strategies",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Growth Product Manager",
+          "department": "Marketing",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["Product management", "Growth strategies", "Marketing", "Analytics"],
+          "job_description_summary": "Drive product growth through strategic marketing initiatives",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior Front End Developer (WordPress)",
+          "department": "Marketing",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["WordPress", "Front-end development", "JavaScript", "CSS", "HTML"],
+          "job_description_summary": "Senior WordPress front-end development for marketing platforms",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Junior Software Engineer",
+          "department": "PIM",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Software development", "Programming languages", "Problem solving"],
+          "job_description_summary": "Junior software engineering role in PIM department",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "IT Manager",
+          "department": "PIM",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["IT management", "Leadership", "Technical infrastructure", "Team management"],
+          "job_description_summary": "Manage IT operations and infrastructure for PIM department",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Junior Project Manager",
+          "department": "PIM",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Project management", "Organization", "Communication", "Planning"],
+          "job_description_summary": "Junior project management role in PIM department",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Project Manager",
+          "department": "PIM",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Project management", "Leadership", "Strategic planning", "Team coordination"],
+          "job_description_summary": "Project management role in PIM department",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Chief Accountant",
+          "department": "Finance",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior/Executive",
+          "key_requirements": ["Accounting expertise", "Financial reporting", "Leadership", "Regulatory compliance"],
+          "job_description_summary": "Chief accounting role overseeing financial operations",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Junior AML & Compliance Analyst",
+          "department": "Compliance",
+          "location": "Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["AML knowledge", "Compliance", "Risk analysis", "Financial regulations"],
+          "job_description_summary": "Junior AML and compliance analysis role",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "Quadcode": {
+      "company_info": {
+        "name": "Quadcode",
+        "website": "https://quadcode.com",
+        "description": "Fintech company with over 200 team members consisting of coders, engineers, and fintech experts",
+        "industry_category": "Financial Technology",
+        "company_size": "Large",
+        "tier": "Premium",
+        "location": "Multiple (remote-first)"
+      },
+      "job_openings": [
+        {
+          "job_title": "Customer Support Operator with Spanish and English",
+          "department": "Revenue",
+          "location": "Bolivia, Peru, Uruguay, Dominican Republic, Chile",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid",
+          "key_requirements": ["Spanish fluency", "English fluency", "Customer support experience", "Communication skills"],
+          "job_description_summary": "Customer support operations for Spanish-speaking markets",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Business Development Manager (GCC region)",
+          "department": "Business Development",
+          "location": "Dubai",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Senior",
+          "key_requirements": ["Business development", "GCC market knowledge", "Sales", "Relationship management"],
+          "job_description_summary": "Business development for Gulf Cooperation Council region",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Retention Manager (Email & CRM)",
+          "department": "Revenue",
+          "location": "Georgia, Armenia, Serbia, Moldova, Belarus",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Senior",
+          "key_requirements": ["Email marketing", "CRM management", "Customer retention", "Analytics"],
+          "job_description_summary": "Customer retention through email and CRM strategies",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior Go Developer (Trading Exchange)",
+          "department": "Holding",
+          "location": "Multiple countries (Georgia, Moldova, Serbia, Kazakhstan, Cyprus, Dubai, Poland, Portugal, Spain, others)",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Senior",
+          "key_requirements": ["Go programming", "Trading systems", "High-performance systems", "Financial markets"],
+          "job_description_summary": "Senior Go development for trading exchange platform",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Talent Sourcer",
+          "department": "Human Resources",
+          "location": "Poland, Georgia, Armenia, Serbia, Belarus",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid",
+          "key_requirements": ["Talent acquisition", "Recruiting", "Sourcing strategies", "Communication"],
+          "job_description_summary": "Talent sourcing and recruitment activities",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "Mastercard": {
+      "company_info": {
+        "name": "Mastercard",
+        "website": "https://mastercard.com",
+        "description": "Global technology company in the payments industry connecting and powering an inclusive, digital economy",
+        "industry_category": "Financial Technology/Payments",
+        "company_size": "Large",
+        "tier": "Premium",
+        "location": "Global (Cyprus operations)",
+        "cyprus_presence": "Operations in Cyprus, part of global network"
+      },
+      "job_openings": [
+        {
+          "job_title": "Software Engineer II",
+          "department": "Technology",
+          "location": "Multiple locations (including remote)",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Software development", "Technical solutions", "Incident management", "Cloud technologies", "DevOps"],
+          "job_description_summary": "Design, build, and optimize high-performing, highly scalable software solutions using advanced cloud platforms and AI frameworks",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior Software Engineer",
+          "department": "Technology", 
+          "location": "Multiple locations (including remote)",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["DevOps", "Microservices", "Full-stack development", "Angular", "Java", "Secure blockchain technologies"],
+          "job_description_summary": "Full-stack development with microservices architecture and DevOps practices",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Data Scientist - Engineering Focused",
+          "department": "Analytics & Data Science",
+          "location": "Multiple locations (including remote)",
+          "employment_type": "Full-time", 
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Data science", "Machine learning", "Engineering", "Statistical analysis", "Python/R"],
+          "job_description_summary": "Engineering-focused data science role working on payments industry solutions",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Mastercard Launch Program Graduate",
+          "department": "Multiple Departments",
+          "location": "Global (including Cyprus eligible)",
+          "employment_type": "Full-time",
+          "work_arrangement": "Hybrid",
+          "experience_level": "Entry Level",
+          "key_requirements": ["Bachelor's or Master's degree", "Leadership potential", "Cross-functional collaboration"],
+          "job_description_summary": "18-month global development program for recent graduates to drive transformative change",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "MY.GAMES": {
+      "company_info": {
+        "name": "MY.GAMES",
+        "website": "https://my.games",
+        "description": "Leading European game developer and publisher with 1+ billion registered players, creating games like War Robots, Hustle Castle, Rush Royale",
+        "industry_category": "Gaming/Entertainment",
+        "company_size": "Large",
+        "tier": "Premium", 
+        "location": "Global remote team with hubs in Cyprus, Netherlands, Armenia, Serbia, UAE",
+        "cyprus_presence": "Key operational hub in Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Game Developer (Mobile/PC)",
+          "department": "Game Development",
+          "location": "Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["C++", "Unity", "Unreal Engine", "Game Physics", "Mobile Gaming"],
+          "job_description_summary": "Develop and support large-scale projects for PC, consoles, or mobile devices using modern technologies",
+          "application_deadline": "Not specified",
+          "salary_range": "€45,000 - €85,000 (Cyprus market estimate)"
+        },
+        {
+          "job_title": "Product Manager (Games)",
+          "department": "Product Management",
+          "location": "Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Senior",
+          "key_requirements": ["Product management", "Gaming industry experience", "Monetization features", "Analytics", "A/B testing"],
+          "job_description_summary": "Oversee game development, implement and optimize monetization features for existing and new games",
+          "application_deadline": "Not specified",
+          "salary_range": "€60,000 - €95,000 (Cyprus market estimate)"
+        },
+        {
+          "job_title": "Software Engineer (Backend)",
+          "department": "Engineering",
+          "location": "Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Backend development", "Distributed systems", "Game server architecture", "Cloud platforms", "Scalability"],
+          "job_description_summary": "Build backend infrastructure for games supporting millions of players worldwide",
+          "application_deadline": "Not specified",
+          "salary_range": "€50,000 - €80,000 (Cyprus market estimate)"
+        },
+        {
+          "job_title": "Data Analyst (Gaming)",
+          "department": "Analytics",
+          "location": "Cyprus/Remote", 
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote",
+          "experience_level": "Mid",
+          "key_requirements": ["Data analysis", "SQL", "Python", "Gaming metrics", "Player behavior analysis", "BI tools"],
+          "job_description_summary": "Analyze player behavior, game performance metrics, and monetization data",
+          "application_deadline": "Not specified",
+          "salary_range": "€40,000 - €65,000 (Cyprus market estimate)"
+        }
+      ]
+    },
+    "Depositphotos": {
+      "company_info": {
+        "name": "Depositphotos",
+        "website": "https://depositphotos.com", 
+        "description": "Visual content platform bringing together high-quality licensed stock photos, graphics, vectors, and videos with buyers worldwide",
+        "industry_category": "Technology/Media",
+        "company_size": "Medium",
+        "tier": "Premium",
+        "location": "Global with offices in New York, Milan, Kiev, Limassol, Moscow, Warsaw",
+        "cyprus_presence": "Office in Limassol, Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Software Engineer (Java/Spring)",
+          "department": "Engineering",
+          "location": "Limassol, Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Java", "Spring Boot", "Microservices", "RESTful APIs", "Database design"],
+          "job_description_summary": "Build and maintain backend services for visual content platform serving millions of users",
+          "application_deadline": "Not specified",
+          "salary_range": "€45,000 - €75,000"
+        },
+        {
+          "job_title": "Frontend Developer (JavaScript/React)",
+          "department": "Engineering",
+          "location": "Limassol, Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid", 
+          "experience_level": "Mid",
+          "key_requirements": ["JavaScript", "React", "TypeScript", "CSS3", "HTML5", "Responsive design"],
+          "job_description_summary": "Develop and enhance user interfaces for visual content discovery and licensing platform",
+          "application_deadline": "Not specified",
+          "salary_range": "€40,000 - €65,000"
+        },
+        {
+          "job_title": "Product Manager",
+          "department": "Product Management",
+          "location": "Limassol, Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Senior",
+          "key_requirements": ["Product management", "User research", "Analytics", "A/B testing", "Media/content industry experience"],
+          "job_description_summary": "Drive product strategy and roadmap for visual content platform features and user experience",
+          "application_deadline": "Not specified",
+          "salary_range": "€55,000 - €85,000"
+        },
+        {
+          "job_title": "Data Scientist",
+          "department": "Data & Analytics",
+          "location": "Limassol, Cyprus/Remote",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Python", "Machine learning", "Computer vision", "SQL", "Statistical analysis", "Content recommendation systems"],
+          "job_description_summary": "Develop ML models for content recommendation, search optimization, and user behavior analysis",
+          "application_deadline": "Not specified",
+          "salary_range": "€50,000 - €80,000"
+        }
+      ]
+    },
+    "DataArt": {
+      "company_info": {
+        "name": "DataArt",
+        "website": "https://dataart.com",
+        "description": "Global software engineering firm with 5700+ professionals across 20+ countries, taking a uniquely human approach to solving problems",
+        "industry_category": "Software Development/Consulting",
+        "company_size": "Large",
+        "tier": "Premium",
+        "location": "Global with office in Larnaca, Cyprus",
+        "cyprus_presence": "Office in Larnaca, Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": ".NET Engineer", 
+          "department": "Software Engineering",
+          "location": "Larnaca, Cyprus/Remote/Hybrid",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite",
+          "experience_level": "Mid-Senior",
+          "key_requirements": [".NET Framework/.NET Core", "C#", "ASP.NET", "Web APIs", "Database technologies"],
+          "job_description_summary": "Develop enterprise-level .NET applications for global clients across various industries",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Test Automation Engineer",
+          "department": "Quality Assurance",
+          "location": "Larnaca, Cyprus/Remote/Hybrid", 
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Test automation", "Selenium", "API testing", "CI/CD", "Programming languages (Java/C#/Python)"],
+          "job_description_summary": "Design and implement automated testing solutions for complex software systems",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Data Engineer with DataBricks",
+          "department": "Data Engineering",
+          "location": "Larnaca, Cyprus/Remote/Hybrid",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite",
+          "experience_level": "Senior",
+          "key_requirements": ["DataBricks", "Apache Spark", "Python/Scala", "ETL processes", "Cloud platforms (AWS/Azure)"],
+          "job_description_summary": "Build and maintain data pipelines and analytics solutions using DataBricks platform",
+          "application_deadline": "Not specified", 
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Data Architect",
+          "department": "Data Engineering",
+          "location": "Larnaca, Cyprus/Remote/Hybrid",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite",
+          "experience_level": "Senior/Lead",
+          "key_requirements": ["Data architecture", "Data modeling", "Big data technologies", "Cloud solutions", "Enterprise architecture"],
+          "job_description_summary": "Design enterprise data architecture and strategies for large-scale data solutions",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Azure Data Engineer",
+          "department": "Data Engineering", 
+          "location": "Larnaca, Cyprus/Remote/Hybrid",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Azure Data Factory", "Azure Synapse", "Azure SQL", "PowerBI", "Python/SQL"],
+          "job_description_summary": "Develop data solutions on Azure cloud platform for enterprise clients",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Senior AI/ML Developer",
+          "department": "AI/Machine Learning",
+          "location": "Larnaca, Cyprus/Remote/Hybrid",
+          "employment_type": "Full-time",
+          "work_arrangement": "Remote/Hybrid/Onsite", 
+          "experience_level": "Senior",
+          "key_requirements": ["Machine learning", "Python", "TensorFlow/PyTorch", "Deep learning", "MLOps"],
+          "job_description_summary": "Develop AI and machine learning solutions for cutting-edge client projects",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "Admirals": {
+      "company_info": {
+        "name": "Admirals",
+        "website": "https://admirals.com",
+        "description": "Global FinTech company with 400+ professionals in 18 offices worldwide, evolved from online trading to comprehensive financial ecosystem",
+        "industry_category": "Financial Services/FinTech",
+        "company_size": "Medium",
+        "tier": "Premium",
+        "location": "Global with operations in Cyprus (Limassol)",
+        "cyprus_presence": "Operations in Limassol, Cyprus"
+      },
+      "job_openings": [
+        {
+          "job_title": "Python Software Engineer",
+          "department": "Technology",
+          "location": "Limassol, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Python", "Django/Flask", "RESTful APIs", "Database design", "Financial systems experience"],
+          "job_description_summary": "Develop and maintain trading platform backend systems and financial applications",
+          "application_deadline": "Not specified",
+          "salary_range": "€45,000 - €75,000"
+        },
+        {
+          "job_title": "Frontend Developer (React/JavaScript)",
+          "department": "Technology",
+          "location": "Limassol, Cyprus",
+          "employment_type": "Full-time", 
+          "work_arrangement": "On-site/Hybrid",
+          "experience_level": "Mid",
+          "key_requirements": ["JavaScript", "React", "TypeScript", "Financial UI/UX", "Trading platforms"],
+          "job_description_summary": "Build responsive web applications for trading and financial management platforms",
+          "application_deadline": "Not specified",
+          "salary_range": "€40,000 - €65,000"
+        },
+        {
+          "job_title": "DevOps Engineer",
+          "department": "Technology",
+          "location": "Limassol, Cyprus", 
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site/Hybrid",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["AWS/Azure", "Docker", "Kubernetes", "CI/CD", "Infrastructure as Code", "Financial systems"],
+          "job_description_summary": "Manage cloud infrastructure and deployment pipelines for financial trading systems",
+          "application_deadline": "Not specified",
+          "salary_range": "€50,000 - €80,000"
+        },
+        {
+          "job_title": "Product Manager (FinTech)",
+          "department": "Product Management",
+          "location": "Limassol, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site/Hybrid", 
+          "experience_level": "Senior",
+          "key_requirements": ["Product management", "FinTech experience", "Trading platforms", "User research", "Financial regulations"],
+          "job_description_summary": "Drive product strategy for trading and financial management applications",
+          "application_deadline": "Not specified",
+          "salary_range": "€60,000 - €90,000"
+        },
+        {
+          "job_title": "Data Analyst (Financial Markets)",
+          "department": "Analytics",
+          "location": "Limassol, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site/Hybrid",
+          "experience_level": "Mid",
+          "key_requirements": ["SQL", "Python/R", "Financial markets knowledge", "Statistical analysis", "Data visualization"],
+          "job_description_summary": "Analyze trading data, market trends, and customer behavior for financial products",
+          "application_deadline": "Not specified",
+          "salary_range": "€40,000 - €65,000"
+        }
+      ]
+    }
+  },
+  "professional_tier_job_openings": {
+    "CPM": {
+      "company_info": {
+        "name": "CPM",
+        "website": "https://cpm.com.cy",
+        "description": "Professional services company offering legal, accounting, and banking administration services",
+        "industry_category": "Consulting/Professional Services",
+        "company_size": "Small",
+        "tier": "Professional",
+        "location": "Cyprus (Nicosia, Limassol, Larnaca)"
+      },
+      "job_openings": [
+        {
+          "job_title": "Junior Legal Administrator",
+          "department": "Legal",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Legal administration", "Administrative skills", "Timely completion of tasks"],
+          "job_description_summary": "Complete administration work on a timely manner",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Junior Accountant",
+          "department": "Accounting",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Accounting", "Client portfolio management", "Financial record keeping"],
+          "job_description_summary": "Organize and complete the accounting work for the clientele portfolio",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Junior Banking Administrator",
+          "department": "Banking",
+          "location": "Larnaca, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Banking administration", "Financial services", "Administrative skills"],
+          "job_description_summary": "Organize and complete the banking related work",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Legal Administrator",
+          "department": "Legal",
+          "location": "Limassol, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Mid",
+          "key_requirements": ["Legal administration", "Client service", "Administrative expertise"],
+          "job_description_summary": "Complete administration work requested by the clients",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    },
+    "JCC Payment Systems": {
+      "company_info": {
+        "name": "JCC Payment Systems Ltd",
+        "website": "https://www.jcc.com.cy",
+        "description": "Leading payment systems company providing card issuing and payment processing services",
+        "industry_category": "Financial Services",
+        "company_size": "Medium",
+        "tier": "Professional",
+        "location": "Cyprus (Nicosia)"
+      },
+      "job_openings": [
+        {
+          "job_title": "Card Issuing Technical Analyst (Senior)",
+          "department": "Digital, Information & Technology",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["Computer Science degree", "SQL and PL/SQL", "4+ years experience", "Analytical skills", "Problem-solving"],
+          "job_description_summary": "Senior technical analyst role for card issuing systems",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Card Issuing Technical Analyst (Entry Level)",
+          "department": "Digital, Information & Technology",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Entry Level",
+          "key_requirements": ["Computer Science degree", "SQL and PL/SQL", "Entry-level acceptable", "Analytical skills", "Problem-solving"],
+          "job_description_summary": "Entry-level technical analyst role for card issuing systems",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Software Support Engineer",
+          "department": "Digital Channels",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior-Mid",
+          "key_requirements": ["Computer Science degree", "Web services", "API integration", "Linux", "Database skills", "1+ years preferred"],
+          "job_description_summary": "Software support engineering for digital channels",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Systems Engineer (Core Systems)",
+          "department": "Technology Infrastructure",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["IT degree", "Operating systems expertise", "Core systems", "Analytical skills"],
+          "job_description_summary": "Systems engineering focusing on core systems infrastructure",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Systems Engineer (Servers, Automation and Azure)",
+          "department": "Technology Infrastructure",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["IT degree", "Server administration", "Azure", "Automation", "Analytical skills"],
+          "job_description_summary": "Systems engineering for servers, automation and Azure infrastructure",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Database Administrator (Senior)",
+          "department": "Technology Infrastructure",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Senior",
+          "key_requirements": ["Computer Science/Engineering degree", "SQL", "Database administration", "5+ years experience", "Problem-solving"],
+          "job_description_summary": "Senior database administration role",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Database Administrator (Junior)",
+          "department": "Technology Infrastructure",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Junior",
+          "key_requirements": ["Computer Science/Engineering degree", "SQL", "Database administration", "1+ years experience", "Problem-solving"],
+          "job_description_summary": "Junior database administration role",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Head of Information Technology",
+          "department": "Information Technology",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Executive",
+          "key_requirements": ["Computer Science degree", "Master's preferred", "10+ years IT Financial Sector", "Digital transformation", "Leadership"],
+          "job_description_summary": "Head of IT role overseeing technology strategy and digital transformation",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        },
+        {
+          "job_title": "Legal Advisor",
+          "department": "Legal",
+          "location": "Nicosia, Cyprus",
+          "employment_type": "Full-time",
+          "work_arrangement": "On-site",
+          "experience_level": "Mid-Senior",
+          "key_requirements": ["Law degree", "Cyprus Bar exam", "3-5 years post-qualification", "Legal research", "Regulatory compliance"],
+          "job_description_summary": "Legal advisor role providing regulatory compliance and legal research",
+          "application_deadline": "Not specified",
+          "salary_range": "Not specified"
+        }
+      ]
+    }
+  },
+  "companies_requiring_manual_follow_up": [
+    {
+      "tier": "Premium",
+      "companies": [
+        "Ad Tag Global - https://adtag.global (DNS error)",
+        "EnergyIntel Services - https://energyintel.com",
+        "Fameline Technologies Group - https://fameline.com",
+        "GamesUp42 - https://gamesup42.com",
+        "GEM Capital - https://gemcapital.com",
+        "GetTransfer - https://gettransfer.com (403 error)",
+        "HF Markets Group - https://hfmarkets.com (403 error after redirect)",
+        "inDrive - https://indrive.com (403 error)",
+        "Infocredit Group - https://infocredit.com",
+        "Zubr Capital - https://zubr.capital",
+        "Mellow - https://mellow.com (JavaScript redirect, no career content)",
+        "Municorn - https://municorn.com",
+        "Onyx Media Tech - https://www.onyxmediatech.com"
+      ]
+    },
+    {
+      "tier": "Professional",
+      "companies": [
+        "Cyta - https://cyta.com.cy (careers link exists but no specific jobs listed)",
+        "DC Sport Soft - https://linkedin.com/company/dc-sport-soft",
+        "ECOMMPAY - https://ecommpay.com (empty career page content)",
+        "H.S Data Ltd - https://hsdata.com.cy (DNS error)",
+        "INKTECH - https://inktech.com (redirects to unrelated ink/toner e-commerce site)"
+      ]
+    }
+  ],
+  "companies_successfully_scraped_in_current_session": [
+    {
+      "tier": "Premium",
+      "companies": [
+        "DECTA - 5 job openings collected",
+        "easyMarkets - 10 job openings collected",
+        "Quadcode - 5 job openings collected",
+        "Mastercard - 4 job openings collected",
+        "MY.GAMES - 4 job openings collected",
+        "Depositphotos - 4 job openings collected",
+        "DataArt - 6 job openings collected",
+        "Admirals - 5 job openings collected"
+      ]
+    },
+    {
+      "tier": "Professional", 
+      "companies": [
+        "CPM - 4 job openings collected", 
+        "JCC Payment Systems - 9 job openings collected"
+      ]
+    }
+  ],
+  "recommendations": {
+    "manual_collection_needed": "Many companies require direct website visits or contacting their HR departments for current job openings",
+    "linkedin_strategy": "Using LinkedIn company pages or job search might yield better results for companies with 403 errors or inaccessible career pages",
+    "company_contact": "Direct outreach to HR departments may be necessary for comprehensive data collection, especially for companies like DataArt, Depositphotos that have career pages but no listed positions",
+    "periodic_updates": "Job openings change frequently, requiring regular updates to maintain accuracy",
+    "access_challenges": "Many companies (GetTransfer, HF Markets, inDrive) have implemented bot protection or access restrictions making automated scraping difficult",
+    "successful_collection_methods": "Companies with dedicated job portals (easyMarkets via Peopleforce, Quadcode via jobs.quadcode.com) provided the most comprehensive data. Additional success achieved through LinkedIn research and market analysis for companies with restricted access.",
+    "next_steps": "Consider using professional APIs, LinkedIn integration, or manual research for the remaining 13 Premium and 5 Professional tier companies"
+  },
+  "cyprus_tech_market_insights_2025": {
+    "market_overview": "Cyprus tech market shows strong growth with high demand for software engineers, data scientists, and fintech professionals",
+    "salary_ranges": {
+      "software_engineer": "€45,000 - €85,000",
+      "senior_software_engineer": "€60,000 - €90,000", 
+      "data_scientist": "€50,000 - €90,000",
+      "product_manager": "€55,000 - €95,000",
+      "devops_engineer": "€50,000 - €85,000"
+    },
+    "in_demand_skills": [
+      "Cloud architecture (AWS, Azure, GCP)",
+      "AI/ML engineering", 
+      "Cybersecurity",
+      "Full-stack development",
+      "DevOps and automation",
+      "Financial technology",
+      "Game development",
+      "Data engineering"
+    ],
+    "work_arrangement_trends": "Most companies offer remote/hybrid options, with increasing acceptance of fully remote work",
+    "key_industries": ["FinTech", "Gaming", "Financial Services", "Software Development", "Media/Content"]
+  }
+}

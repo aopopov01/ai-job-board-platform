@@ -1,22 +1,24 @@
 'use client'
 
 import React, { useState } from 'react'
-import { X, MapPin, Clock, Briefcase, Building2, DollarSign, Users, Globe, Heart, Brain, Zap, Star, CheckCircle, ArrowRight } from 'lucide-react'
+import { X, MapPin, Clock, Briefcase, Building2, DollarSign, Users, Globe, Heart, Brain, Zap, Star, CheckCircle, ArrowRight, Rocket } from 'lucide-react'
 import JobApplicationForm from './JobApplicationForm'
 
 interface Job {
   id: string
   title: string
-  description: string
   company: string
   location: string
   salary: string
   type: string
   workStyle: string
+  description: string
+  companyDescription?: string
+  responsibilities?: string
+  requirements: string[]
   posted: string
-  applicants?: number
-  featured?: boolean
-  matchScore?: number
+  department: string
+  experience_level: string
 }
 
 interface JobDetailsModalProps {
@@ -43,69 +45,104 @@ export default function JobDetailsModal({ isOpen, onClose, job, onApplyNow }: Jo
     })
   }
 
-  // Extended job details for the modal
-  const jobRequirements = [
-    'Bachelor\'s degree in Computer Science or related field',
-    '3+ years of experience in software development',
-    'Proficiency in modern programming languages',
-    'Experience with cloud technologies and databases',
-    'Strong problem-solving and communication skills',
-    'Experience with agile development methodologies'
-  ]
-
-  const jobBenefits = [
-    'Competitive salary and equity package',
-    'Comprehensive health insurance',
-    'Flexible working hours and remote options',
-    'Professional development budget',
-    'Modern office with latest technology',
-    'Team building events and company retreats'
-  ]
-
-  const companyInfo = {
-    size: '50-200 employees',
-    industry: 'Technology / SaaS',
-    founded: '2018',
-    website: 'www.company.com'
+  const getWorkStyleIcon = () => {
+    switch (job.workStyle.toLowerCase()) {
+      case 'remote':
+        return <Globe className="w-4 h-4 text-emerald-300" />
+      case 'on-site':
+        return <Building2 className="w-4 h-4 text-emerald-300" />
+      case 'hybrid':
+        return <Zap className="w-4 h-4 text-emerald-300" />
+      default:
+        return <Globe className="w-4 h-4 text-emerald-300" />
+    }
   }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        {/* Background overlay */}
+        {/* Background overlay with Neural Effect */}
         <div 
-          className="fixed inset-0 transition-opacity bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 transition-opacity bg-black/80 backdrop-blur-md"
           onClick={onClose}
-        ></div>
+        >
+          <div className="absolute inset-0 opacity-30">
+            <svg className="w-full h-full" viewBox="0 0 1000 800">
+              <defs>
+                <radialGradient id="neural-backdrop" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="rgba(59,130,246,0.3)" />
+                  <stop offset="50%" stopColor="rgba(0,200,255,0.2)" />
+                  <stop offset="100%" stopColor="transparent" />
+                </radialGradient>
+                <linearGradient id="connection-line" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="transparent" />
+                  <stop offset="50%" stopColor="rgba(59,130,246,0.4)" />
+                  <stop offset="100%" stopColor="transparent" />
+                </linearGradient>
+              </defs>
+              
+              {/* Neural Network Background */}
+              {Array.from({ length: 20 }).map((_, i) => (
+                <g key={i}>
+                  <circle
+                    cx={Math.random() * 1000}
+                    cy={Math.random() * 800}
+                    r="2"
+                    fill="url(#neural-backdrop)"
+                    className="animate-pulse"
+                    style={{ animationDelay: `${i * 0.2}s`, animationDuration: '3s' }}
+                  />
+                </g>
+              ))}
+              
+              {/* Connection Lines */}
+              {Array.from({ length: 10 }).map((_, i) => (
+                <line
+                  key={i}
+                  x1={Math.random() * 1000}
+                  y1={Math.random() * 800}
+                  x2={Math.random() * 1000}
+                  y2={Math.random() * 800}
+                  stroke="url(#connection-line)"
+                  strokeWidth="1"
+                  className="animate-pulse"
+                  style={{ animationDelay: `${i * 0.5}s`, animationDuration: '4s' }}
+                />
+              ))}
+            </svg>
+          </div>
+        </div>
 
         {/* Modal */}
-        <div className="relative inline-block w-full max-w-4xl p-0 my-8 text-left align-middle transition-all transform bg-black/80 backdrop-blur-md border-2 border-white/20 rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden">
+        <div className="relative inline-block w-full max-w-4xl p-0 my-8 text-left align-middle transition-all transform bg-slate-900/95 backdrop-blur-md border-2 border-slate-600/40 rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden flex flex-col">
           
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-black/90 backdrop-blur-md border-b-2 border-white/20 p-8">
+          <div className="flex-shrink-0 bg-slate-800/90 backdrop-blur-md border-b-2 border-slate-600/30 p-8">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-6">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
                   <Building2 className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 mb-3">
                     <h2 className="text-3xl font-black text-white">{job.title}</h2>
-                    {job.featured && (
-                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full text-xs font-bold text-white shadow-lg">
-                        <Zap className="w-3 h-3" />
-                        Featured
-                      </div>
-                    )}
-                    {job.matchScore && (
-                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/20 border border-emerald-400/40 rounded-full text-emerald-300 text-xs font-bold">
-                        <Brain className="w-3 h-3" />
-                        {job.matchScore}% Match
-                      </div>
-                    )}
                   </div>
-                  <p className="text-white/70 font-medium text-xl mb-2">{job.company}</p>
-                  <div className="flex items-center gap-6 text-white/60">
+                  <p className="text-slate-300 font-medium text-xl mb-3">{job.company}</p>
+                  
+                  {/* Job Badges */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="px-4 py-2 bg-emerald-500/20 border border-emerald-400/40 rounded-full text-emerald-300 text-sm font-bold">
+                      {job.type}
+                    </span>
+                    <span className="px-4 py-2 bg-blue-500/20 border border-blue-400/40 rounded-full text-blue-300 text-sm font-bold">
+                      {job.department}
+                    </span>
+                    <span className="px-4 py-2 bg-purple-500/20 border border-purple-400/40 rounded-full text-purple-300 text-sm font-bold">
+                      {job.experience_level}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center gap-6 text-slate-400">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       {job.location}
@@ -115,8 +152,8 @@ export default function JobDetailsModal({ isOpen, onClose, job, onApplyNow }: Jo
                       {job.posted}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      {job.applicants || 0} applicants
+                      <DollarSign className="w-4 h-4" />
+                      {job.salary}
                     </div>
                   </div>
                 </div>
@@ -131,140 +168,107 @@ export default function JobDetailsModal({ isOpen, onClose, job, onApplyNow }: Jo
           </div>
 
           {/* Content */}
-          <div className="overflow-y-auto max-h-[calc(90vh-200px)]">
-            <div className="p-8 space-y-8">
-              
-              {/* Quick Info Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                      <Briefcase className="w-4 h-4 text-blue-300" />
-                    </div>
-                    <span className="text-white/60 text-sm">Type</span>
-                  </div>
-                  <p className="text-white font-bold">{job.type}</p>
-                </div>
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-8 space-y-8 pb-6">
 
-                <div className="p-4 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                      <Globe className="w-4 h-4 text-emerald-300" />
-                    </div>
-                    <span className="text-white/60 text-sm">Work Style</span>
-                  </div>
-                  <p className="text-white font-bold">{job.workStyle}</p>
+              {/* Company Description */}
+              {job.companyDescription && (
+                <div className="mb-8">
+                  <h3 className="text-white font-black text-2xl mb-4 flex items-center gap-3">
+                    <Building2 className="w-6 h-6 text-blue-400" />
+                    About {job.company}
+                  </h3>
+                  <p className="text-slate-300 text-lg leading-relaxed">{job.companyDescription}</p>
                 </div>
-
-                <div className="p-4 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                      <DollarSign className="w-4 h-4 text-yellow-300" />
-                    </div>
-                    <span className="text-white/60 text-sm">Salary</span>
-                  </div>
-                  <p className="text-white font-bold">{job.salary}</p>
-                </div>
-
-                <div className="p-4 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                      <Users className="w-4 h-4 text-purple-300" />
-                    </div>
-                    <span className="text-white/60 text-sm">Applicants</span>
-                  </div>
-                  <p className="text-white font-bold">{job.applicants || 0}</p>
-                </div>
-              </div>
+              )}
 
               {/* Job Description */}
-              <div>
-                <h3 className="text-white font-black text-2xl mb-4">Job Description</h3>
-                <div className="p-6 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <p className="text-white/80 text-lg leading-relaxed mb-4">
-                    {job.description}
-                  </p>
-                  <p className="text-white/80 text-lg leading-relaxed">
-                    We are looking for a talented professional to join our growing team. This role offers excellent opportunities for career growth and the chance to work with cutting-edge technologies in a collaborative environment. You'll be working on exciting projects that impact thousands of users worldwide.
-                  </p>
-                </div>
+              <div className="mb-8">
+                <h3 className="text-white font-black text-2xl mb-4 flex items-center gap-3">
+                  <Briefcase className="w-6 h-6 text-blue-400" />
+                  Job Overview
+                </h3>
+                <p className="text-slate-300 text-lg leading-relaxed">{job.description}</p>
               </div>
+
+              {/* Responsibilities */}
+              {job.responsibilities && (
+                <div className="mb-8">
+                  <h3 className="text-white font-black text-2xl mb-4 flex items-center gap-3">
+                    <Users className="w-6 h-6 text-blue-400" />
+                    Key Responsibilities
+                  </h3>
+                  <p className="text-slate-300 text-lg leading-relaxed">{job.responsibilities}</p>
+                </div>
+              )}
 
               {/* Requirements */}
-              <div>
-                <h3 className="text-white font-black text-2xl mb-4">Requirements</h3>
-                <div className="p-6 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <ul className="space-y-3">
-                    {jobRequirements.map((requirement, index) => (
-                      <li key={index} className="flex items-start gap-3 text-white/80">
-                        <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                        <span>{requirement}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="mb-8">
+                <h3 className="text-white font-black text-2xl mb-4 flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-blue-400" />
+                  Requirements
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {job.requirements.map((req, index) => (
+                    <span 
+                      key={index} 
+                      className="px-3 py-1 bg-blue-500/20 border border-blue-400/40 rounded-full text-blue-300 text-xs font-semibold"
+                    >
+                      {req}
+                    </span>
+                  ))}
                 </div>
               </div>
 
-              {/* Benefits */}
-              <div>
-                <h3 className="text-white font-black text-2xl mb-4">Benefits & Perks</h3>
-                <div className="p-6 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <ul className="space-y-3">
-                    {jobBenefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-3 text-white/80">
-                        <Star className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Company Information */}
-              <div>
-                <h3 className="text-white font-black text-2xl mb-4">About {job.company}</h3>
-                <div className="p-6 bg-black/40 border-2 border-white/20 rounded-xl backdrop-blur-sm">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div>
-                      <p className="text-white/60 text-sm mb-1">Company Size</p>
-                      <p className="text-white font-bold">{companyInfo.size}</p>
-                    </div>
-                    <div>
-                      <p className="text-white/60 text-sm mb-1">Industry</p>
-                      <p className="text-white font-bold">{companyInfo.industry}</p>
-                    </div>
-                    <div>
-                      <p className="text-white/60 text-sm mb-1">Founded</p>
-                      <p className="text-white font-bold">{companyInfo.founded}</p>
-                    </div>
-                    <div>
-                      <p className="text-white/60 text-sm mb-1">Website</p>
-                      <p className="text-blue-300 font-bold">{companyInfo.website}</p>
-                    </div>
-                  </div>
-                  <p className="text-white/80 leading-relaxed">
-                    {job.company} is a rapidly growing technology company focused on innovation and excellence. We're building the future of digital solutions and are looking for passionate individuals to join our mission. Our culture values creativity, collaboration, and continuous learning.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 
           {/* Footer Actions */}
-          <div className="sticky bottom-0 bg-black/90 backdrop-blur-md border-t-2 border-white/20 p-6">
+          <div className="flex-shrink-0 bg-slate-800/90 backdrop-blur-md border-t-2 border-slate-600/30 p-6">
             <div className="flex gap-4">
               <button
                 onClick={onClose}
-                className="flex-1 h-14 px-6 bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 rounded-xl font-bold transition-all backdrop-blur-md"
+                className="flex-1 h-12 px-4 bg-gradient-to-r from-blue-600/30 via-blue-500/30 to-blue-600/30 hover:from-blue-500/40 hover:via-blue-400/40 hover:to-blue-500/40 text-white border-2 border-blue-400/50 hover:border-blue-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-blue-500/20 hover:shadow-blue-400/30 font-bold text-sm relative overflow-hidden group"
+                onMouseEnter={(e) => {
+                  const heart = e.currentTarget.querySelector('.heart-icon');
+                  if (heart) {
+                    heart.classList.add('fill-red-500', 'text-red-500');
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const heart = e.currentTarget.querySelector('.heart-icon');
+                  if (heart) {
+                    heart.classList.remove('fill-red-500', 'text-red-500');
+                  }
+                }}
               >
-                Close
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Heart className="heart-icon w-4 h-4 transition-all duration-300" />
+                  Save Job
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
               </button>
               <button
                 onClick={handleApplyNow}
-                className="flex-1 h-14 px-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
+                className="flex-1 h-12 px-4 bg-gradient-to-r from-emerald-600/30 via-teal-500/30 to-emerald-600/30 hover:from-emerald-500/40 hover:via-teal-400/40 hover:to-emerald-500/40 text-white border-2 border-emerald-400/50 hover:border-teal-400/60 rounded-xl backdrop-blur-md transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-teal-400/30 font-bold text-sm relative overflow-hidden group"
+                onMouseEnter={(e) => {
+                  const rocket = e.currentTarget.querySelector('.rocket-icon');
+                  if (rocket) {
+                    rocket.classList.add('fill-orange-500', 'text-orange-500');
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const rocket = e.currentTarget.querySelector('.rocket-icon');
+                  if (rocket) {
+                    rocket.classList.remove('fill-orange-500', 'text-orange-500');
+                  }
+                }}
               >
-                <ArrowRight className="w-5 h-5" />
-                Apply Now
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Rocket className="rocket-icon w-4 h-4 transition-all duration-300" />
+                  Apply Now
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700 transform -translate-x-full"></div>
               </button>
             </div>
           </div>
